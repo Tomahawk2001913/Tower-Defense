@@ -48,6 +48,8 @@ public abstract class Button extends Sprite {
 			return true;
 		}
 		
+		pressed = false;
+		
 		return false;
 	}
 	
