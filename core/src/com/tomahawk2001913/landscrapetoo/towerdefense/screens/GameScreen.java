@@ -3,6 +3,8 @@ package com.tomahawk2001913.landscrapetoo.towerdefense.screens;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.tomahawk2001913.landscrapetoo.towerdefense.gamestates.GameStateManager;
 import com.tomahawk2001913.landscrapetoo.towerdefense.gamestates.GameStates;
 
@@ -14,6 +16,10 @@ public class GameScreen implements Screen {
 	
 	private float scale, gameHeight, gameWidth;
 	
+	// Rendering
+	private OrthographicCamera cam;
+	private SpriteBatch batch;
+	
 	public GameScreen() {
 		Gdx.app.log("GameScreen", "Created.");
 		gsm = new GameStateManager(GameStates.MAINMENU);
@@ -22,6 +28,12 @@ public class GameScreen implements Screen {
 	@Override
 	public void show() {
 		resize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+		
+		batch = new SpriteBatch();
+		cam = new OrthographicCamera();
+		cam.setToOrtho(true, gameWidth, gameHeight);
+		
+		batch.setProjectionMatrix(cam.combined);
 	}
 
 	@Override
@@ -29,8 +41,10 @@ public class GameScreen implements Screen {
 		Gdx.gl.glClearColor(0, 0, 1, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		
-		gsm.render();
+		batch.begin();
+		gsm.render(batch);
 		gsm.update(delta);
+		batch.end();
 	}
 
 	@Override
@@ -42,6 +56,10 @@ public class GameScreen implements Screen {
 		Gdx.app.log("GameScreen", "Resized to a width/height/scale of " + gameWidth + "/" + gameHeight + "/" + scale);
 		
 		gsm.resize(gameWidth, gameHeight);
+	}
+	
+	public void changeGameState(GameStates gs) {
+		gsm.changeGameState(gs);
 	}
 
 	@Override
