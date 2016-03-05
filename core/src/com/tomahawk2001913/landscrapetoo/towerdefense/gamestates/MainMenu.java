@@ -9,7 +9,7 @@ public class MainMenu extends GameState {
 	private PlayButton pb;
 	
 	public MainMenu() {
-		pb = new PlayButton(40, 30, 80, 80, this);
+		pb = new PlayButton(40, 40, 60, 60, this);
 	}
 	
 	@Override
