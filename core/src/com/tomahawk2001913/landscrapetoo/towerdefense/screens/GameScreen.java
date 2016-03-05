@@ -2,10 +2,16 @@ package com.tomahawk2001913.landscrapetoo.towerdefense.screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.GL20;
+import com.tomahawk2001913.landscrapetoo.towerdefense.gamestates.GameStateManager;
+import com.tomahawk2001913.landscrapetoo.towerdefense.gamestates.GameStates;
 
 public class GameScreen implements Screen {
+	private GameStateManager gsm;
+	
 	public GameScreen() {
 		Gdx.app.log("GameScreen", "Created.");
+		gsm = new GameStateManager(GameStates.MAINMENU);
 	}
 	
 	@Override
@@ -15,7 +21,11 @@ public class GameScreen implements Screen {
 
 	@Override
 	public void render(float delta) {
-		Gdx.app.log("GameScreen", "render(" + delta + ")");
+		Gdx.gl.glClearColor(0, 0, 1, 1);
+		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+		
+		gsm.render();
+		gsm.update(delta);
 	}
 
 	@Override
