@@ -24,5 +24,13 @@ public abstract class Button extends Sprite {
 		}
 	}
 	
+	public void setLocation(float x, float y) {
+		super.setPosition(x, y);
+	}
+	
+	public void setSize(float width, float height) {
+		super.setSize(width, height);
+	}
+	
 	public abstract void action();
 }
