@@ -42,9 +42,8 @@ public abstract class Button extends Sprite {
 	}
 	
 	public boolean touchUp(float x, float y) {
-		pressed = false;
-		
 		if(super.getBoundingRectangle().contains(x, y) && pressed) {
+			pressed = false;
 			action();
 			return true;
 		}
