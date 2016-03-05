@@ -1,14 +1,14 @@
 package com.tomahawk2001913.landscrapetoo.towerdefense.io;
 
 import com.badlogic.gdx.InputProcessor;
-import com.tomahawk2001913.landscrapetoo.towerdefense.gamestates.MainMenu;
+import com.tomahawk2001913.landscrapetoo.towerdefense.gamestates.GameState;
 import com.tomahawk2001913.landscrapetoo.towerdefense.screens.GameScreen;
 
-public class MainMenuInputHandler implements InputProcessor {
-	private MainMenu mm;
+public class GameStateInputHandler implements InputProcessor {
+	private GameState gs;
 	
-	public MainMenuInputHandler(MainMenu mm) {
-		this.mm = mm;
+	public GameStateInputHandler(GameState gs) {
+		this.gs = gs;
 	}
 	
 	@Override
@@ -31,12 +31,12 @@ public class MainMenuInputHandler implements InputProcessor {
 
 	@Override
 	public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-		return mm.touchDown(screenX * GameScreen.scale, screenY * GameScreen.scale);
+		return gs.touchDown(screenX * GameScreen.scale, screenY * GameScreen.scale);
 	}
 
 	@Override
 	public boolean touchUp(int screenX, int screenY, int pointer, int button) {
-		return mm.touchUp(screenX * GameScreen.scale, screenY * GameScreen.scale);
+		return gs.touchUp(screenX * GameScreen.scale, screenY * GameScreen.scale);
 	}
 
 	@Override

@@ -1,12 +1,20 @@
 package com.tomahawk2001913.landscrapetoo.towerdefense.gamestates;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.tomahawk2001913.landscrapetoo.towerdefense.io.GameStateInputHandler;
 
 public abstract class GameState {
+	private GameStateInputHandler gsih;
 	private GameStateManager superManager;
+	
+	public GameState() {
+		gsih = new GameStateInputHandler(this);
+	}
 	
 	public void changeTo(GameStateManager superManager) {
 		this.superManager = superManager;
+		Gdx.input.setInputProcessor(gsih);
 	}
 	
 	public GameStateManager getCurrentGameStateManager() {

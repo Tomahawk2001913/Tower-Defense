@@ -1,6 +1,7 @@
 package com.tomahawk2001913.landscrapetoo.towerdefense.gamestates;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.tomahawk2001913.landscrapetoo.towerdefense.io.GameStateInputHandler;
 import com.tomahawk2001913.landscrapetoo.towerdefense.screens.GameScreen;
 import com.tomahawk2001913.landscrapetoo.towerdefense.ui.PlayButton;
 
@@ -39,12 +40,12 @@ public class MainMenu extends GameState {
 	
 	@Override
 	public boolean touchDown(float x, float y) {
-		return false;
+		return pb.touchDown(x, y);
 	}
 	
 	@Override
 	public boolean touchUp(float x, float y) {
-		return false;
+		return pb.touchUp(x, y);
 	}
 	
 	@Override
