@@ -32,5 +32,25 @@ public abstract class Button extends Sprite {
 		super.setSize(width, height);
 	}
 	
+	public boolean touchDown(float x, float y) {
+		if(super.getBoundingRectangle().contains(x, y)) {
+			pressed = true;
+			return true;
+		}
+		
+		return false;
+	}
+	
+	public boolean touchUp(float x, float y) {
+		pressed = false;
+		
+		if(super.getBoundingRectangle().contains(x, y) && pressed) {
+			action();
+			return true;
+		}
+		
+		return false;
+	}
+	
 	public abstract void action();
 }
