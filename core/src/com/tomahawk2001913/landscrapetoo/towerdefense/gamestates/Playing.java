@@ -20,4 +20,9 @@ public class Playing extends GameState {
 	public void update(float delta) {
 		
 	}
+	
+	@Override
+	public void resize(float width, float height) {
+		
+	}
 }

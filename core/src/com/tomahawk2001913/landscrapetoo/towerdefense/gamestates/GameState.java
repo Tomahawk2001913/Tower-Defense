@@ -8,4 +8,6 @@ public abstract class GameState {
 	public abstract void render();
 	
 	public abstract void update(float delta);
+	
+	public abstract void resize(float width, float height);
 }

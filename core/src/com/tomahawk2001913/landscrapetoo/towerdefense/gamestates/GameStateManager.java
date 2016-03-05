@@ -21,4 +21,8 @@ public class GameStateManager {
 		currentGameState = gm;
 		currentGameState.getGameState().changeTo();
 	}
+	
+	public void resize(float width, float height) {
+		currentGameState.getGameState().resize(width, height);
+	}
 }
