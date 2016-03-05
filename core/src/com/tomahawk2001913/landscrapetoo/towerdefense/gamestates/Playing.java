@@ -7,7 +7,7 @@ public class Playing extends GameState {
 	private TileMap tm;
 	
 	public Playing() {
-		tm = new TileMap(2, 2);
+		tm = new TileMap(16, 16);
 	}
 	
 	@Override
