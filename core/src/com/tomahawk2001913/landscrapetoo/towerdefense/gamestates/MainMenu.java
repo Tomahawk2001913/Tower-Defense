@@ -1,11 +1,22 @@
 package com.tomahawk2001913.landscrapetoo.towerdefense.gamestates;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.tomahawk2001913.landscrapetoo.towerdefense.screens.GameScreen;
 import com.tomahawk2001913.landscrapetoo.towerdefense.ui.PlayButton;
 
 public class MainMenu extends GameState {
 	private PlayButton pb;
-
+	
+	public MainMenu() {
+		pb = new PlayButton(0, 0, 20, 20, this);
+	}
+	
+	@Override
+	public void changeTo(GameStateManager superManager) {
+		super.changeTo(superManager);
+		resize(GameScreen.gameWidth, GameScreen.gameHeight);
+	}
+	
 	@Override
 	public void changeFrom() {
 		

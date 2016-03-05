@@ -57,8 +57,4 @@ public class MainMenuInputHandler implements InputProcessor {
 		
 		return false;
 	}
-	
-	public void setToPlaying() {
-		
-	}
 }

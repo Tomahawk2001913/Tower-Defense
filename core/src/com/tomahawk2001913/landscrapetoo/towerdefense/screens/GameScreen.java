@@ -14,7 +14,7 @@ public class GameScreen implements Screen {
 	// Constants
 	public static final float optimalGameHeight = 350.0f;
 	
-	private float scale, gameHeight, gameWidth;
+	public static float scale, gameHeight, gameWidth;
 	
 	// Rendering
 	private OrthographicCamera cam;
