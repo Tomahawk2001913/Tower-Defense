@@ -1,15 +1,17 @@
 package com.tomahawk2001913.landscrapetoo.towerdefense.gamestates;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.tomahawk2001913.landscrapetoo.towerdefense.io.GameStateInputHandler;
 import com.tomahawk2001913.landscrapetoo.towerdefense.screens.GameScreen;
 import com.tomahawk2001913.landscrapetoo.towerdefense.ui.PlayButton;
 
 public class MainMenu extends GameState {
 	private PlayButton pb;
 	
+	// Constants
+	public static final float PLAY_DIMENSIONS = 90;
+	
 	public MainMenu() {
-		pb = new PlayButton(40, 40, 60, 60, this);
+		pb = new PlayButton(0, 0, PLAY_DIMENSIONS, PLAY_DIMENSIONS, this);
 	}
 	
 	@Override
@@ -35,7 +37,7 @@ public class MainMenu extends GameState {
 	
 	@Override
 	public void resize(float width, float height) {
-		
+		pb.setLocation(width / 2 - pb.getWidth() / 2, height / 2 - pb.getHeight() / 2);
 	}
 	
 	@Override
