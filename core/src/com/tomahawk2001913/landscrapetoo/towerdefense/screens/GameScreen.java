@@ -9,6 +9,11 @@ import com.tomahawk2001913.landscrapetoo.towerdefense.gamestates.GameStates;
 public class GameScreen implements Screen {
 	private GameStateManager gsm;
 	
+	// Constants
+	public static final float optimalGameHeight = 350.0f;
+	
+	private float scale, gameHeight, gameWidth;
+	
 	public GameScreen() {
 		Gdx.app.log("GameScreen", "Created.");
 		gsm = new GameStateManager(GameStates.MAINMENU);
@@ -16,7 +21,7 @@ public class GameScreen implements Screen {
 	
 	@Override
 	public void show() {
-		
+		resize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 	}
 
 	@Override
@@ -30,7 +35,13 @@ public class GameScreen implements Screen {
 
 	@Override
 	public void resize(int width, int height) {
-		gsm.resize(width, height);
+		gameHeight = optimalGameHeight;
+		scale = gameHeight / Gdx.graphics.getHeight();
+		gameWidth = Gdx.graphics.getWidth() * scale;
+		
+		Gdx.app.log("GameScreen", "Resized to a width/height/scale of " + gameWidth + "/" + gameHeight + "/" + scale);
+		
+		gsm.resize(gameWidth, gameHeight);
 	}
 
 	@Override
