@@ -1,5 +1,7 @@
 package com.tomahawk2001913.landscrapetoo.towerdefense.ui;
 
+import com.badlogic.gdx.Gdx;
+import com.tomahawk2001913.landscrapetoo.towerdefense.gamestates.GameStates;
 import com.tomahawk2001913.landscrapetoo.towerdefense.gamestates.MainMenu;
 import com.tomahawk2001913.landscrapetoo.towerdefense.io.AssetHandler;
 
@@ -14,6 +16,7 @@ public class PlayButton extends Button {
 
 	@Override
 	public void action() {
-		mm.getCurrentGameStateManager();
+		Gdx.app.log("PlayButton", "action()");
+		mm.getCurrentGameStateManager().changeGameState(GameStates.PLAYING);
 	}
 }

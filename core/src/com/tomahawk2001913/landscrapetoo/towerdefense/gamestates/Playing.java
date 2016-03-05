@@ -1,5 +1,6 @@
 package com.tomahawk2001913.landscrapetoo.towerdefense.gamestates;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public class Playing extends GameState {
@@ -10,7 +11,7 @@ public class Playing extends GameState {
 
 	@Override
 	public void render(SpriteBatch batch) {
-		
+		Gdx.app.log("Playing", "render()");
 	}
 
 	@Override
