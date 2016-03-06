@@ -1,12 +1,10 @@
 package com.tomahawk2001913.landscrapetoo.towerdefense.io;
 
 import java.io.BufferedReader;
-import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.tomahawk2001913.landscrapetoo.towerdefense.map.GrassTile;
@@ -23,9 +21,6 @@ public class AssetHandler {
 	public static void create() {
 		texture = new Texture(Gdx.files.internal("Textures/Texture.png"));
 		
-		button = new TextureRegion(texture, 0, 0, 7, 7);
-		
-		// Temporary grass loading.
 		grassTile = new TextureRegion(new Texture(Gdx.files.internal("Textures/grasstile.png")));
 	}
 	
