@@ -9,8 +9,10 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Animation.PlayMode;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.tomahawk2001913.landscrapetoo.towerdefense.map.GrassTile;
-import com.tomahawk2001913.landscrapetoo.towerdefense.map.Tile;
+import com.tomahawk2001913.landscrapetoo.towerdefense.map.AnimatedGrassTile;
+import com.tomahawk2001913.landscrapetoo.towerdefense.map.TileMap;
+import com.tomahawk2001913.landscrapetoo.towerdefense.map.Tiles;
+import com.tomahawk2001913.landscrapetoo.towerdefense.map.TopTile;
 
 public class AssetHandler {
 	public static Texture texture, tiles;
@@ -47,38 +49,52 @@ public class AssetHandler {
 		animatedGrass.setPlayMode(PlayMode.LOOP_PINGPONG);
 	}
 	
-	public static Tile[][] loadMap(String internalPath) {
+	public static TileMap loadMap(String internalPath) {
 		try {
 			BufferedReader br = new BufferedReader(Gdx.files.internal(internalPath).reader());
 			String currentLine;
 			
-			ArrayList<ArrayList<Tile>> tilesList = new ArrayList<ArrayList<Tile>>();
+			ArrayList<ArrayList<Tiles>> tilesList = new ArrayList<ArrayList<Tiles>>();
+			ArrayList<ArrayList<TopTile>> topList = new ArrayList<ArrayList<TopTile>>();
 			
 			while((currentLine = br.readLine()) != null) {
 				if(currentLine.isEmpty()) continue;
 				
-				ArrayList<Tile> tileColumn = new ArrayList<Tile>();
+				ArrayList<Tiles> tileColumn = new ArrayList<Tiles>();
+				ArrayList<TopTile> topColumn = new ArrayList<TopTile>();
 				
 				String values[] = currentLine.trim().split(" ");
 				for(String string : values) {
 					if(!string.isEmpty()) {
 						int id = Integer.parseInt(string);
-						Gdx.app.log("AssetHandler", "" + id);
 						switch(id) {
-						case 1: tileColumn.add(new GrassTile(true));
+						case 1:  {
+							tileColumn.add(Tiles.GRASS);
+							topColumn.add(null);
+							break;
+						}
+						case 2: {
+							topColumn.add(new AnimatedGrassTile());
+							tileColumn.add(Tiles.GRASS);
+							break;
+						}
 						}
 					}
 				}
 				tilesList.add(tileColumn);
+				topList.add(topColumn);
 			}
 			
-			Tile tiles[][] = new Tile[tilesList.get(0).size()][tilesList.size()];
+			Tiles tiles[][] = new Tiles[tilesList.get(0).size()][tilesList.size()];
+			TopTile tops[][] = new TopTile[tiles.length][tiles[0].length];
 			for(int x = 0; x < tiles[0].length; x++) {
 				for(int y = 0; y < tiles.length; y++) {
 					tiles[y][x] = tilesList.get(x).get(y);
+					tops[y][x] = topList.get(x).get(y);
 				}
 			}
-			return tiles;
+			
+			return new TileMap(tiles, tops);
 			
 		} catch(IOException e) {
 			e.printStackTrace();
