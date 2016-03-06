@@ -6,6 +6,8 @@ import java.util.ArrayList;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Animation;
+import com.badlogic.gdx.graphics.g2d.Animation.PlayMode;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.tomahawk2001913.landscrapetoo.towerdefense.map.GrassTile;
 import com.tomahawk2001913.landscrapetoo.towerdefense.map.Tile;
@@ -16,12 +18,33 @@ public class AssetHandler {
 	public static TextureRegion button;
 	
 	// Tiles
-	public static TextureRegion grassTile;
+	public static TextureRegion grassTile, stoneTile, sandTile, waterTile, dirtTile;
+	
+	// Animated grass!
+	public static TextureRegion grass1, grass2, grass3;
+	public static Animation animatedGrass;
 	
 	public static void create() {
+		// Load everything-texture.
 		texture = new Texture(Gdx.files.internal("Textures/Texture.png"));
 		
-		grassTile = new TextureRegion(new Texture(Gdx.files.internal("Textures/grasstile.png")));
+		// Load tiles.
+		grassTile = new TextureRegion(texture, 0, 0, 16, 16);
+		stoneTile = new TextureRegion(texture, 16, 0, 16, 16);
+		sandTile = new TextureRegion(texture, 32, 0, 16, 16);
+		waterTile = new TextureRegion(texture, 48, 0, 16, 16);
+		dirtTile = new TextureRegion(texture, 64, 0, 16, 16);
+		
+		// Load animated grass!
+		grass1 = new TextureRegion(texture, 0, 16, 16, 16);
+		grass1.flip(false, true);
+		grass2 = new TextureRegion(texture, 16, 16, 16, 16);
+		grass2.flip(false, true);
+		grass3 = new TextureRegion(texture, 32, 16, 16, 16);
+		grass3.flip(false, true);
+		
+		animatedGrass = new Animation(0.3f, new TextureRegion[] {grass1, grass2, grass3});
+		animatedGrass.setPlayMode(PlayMode.LOOP_PINGPONG);
 	}
 	
 	public static Tile[][] loadMap(String internalPath) {
@@ -42,7 +65,7 @@ public class AssetHandler {
 						int id = Integer.parseInt(string);
 						Gdx.app.log("AssetHandler", "" + id);
 						switch(id) {
-						case 1: tileColumn.add(new GrassTile());
+						case 1: tileColumn.add(new GrassTile(true));
 						}
 					}
 				}

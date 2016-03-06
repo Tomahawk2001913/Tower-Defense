@@ -9,7 +9,7 @@ public class PlayButton extends Button {
 	private MainMenu mm;
 	
 	public PlayButton(float x, float y, float width, float height, MainMenu mm) {
-		super(x, y, width, height, true, AssetHandler.button);
+		super(x, y, width, height, true, AssetHandler.stoneTile);
 		
 		this.mm = mm;
 	}
