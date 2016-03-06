@@ -78,6 +78,26 @@ public class AssetHandler {
 							tileColumn.add(Tiles.GRASS);
 							break;
 						}
+						case 3: {
+							tileColumn.add(Tiles.STONE);
+							topColumn.add(null);
+							break;
+						}
+						case 4: {
+							tileColumn.add(Tiles.SAND);
+							topColumn.add(null);
+							break;
+						}
+						case 5: {
+							tileColumn.add(Tiles.WATER);
+							topColumn.add(null);
+							break;
+						}
+						case 6: {
+							tileColumn.add(Tiles.DIRT);
+							topColumn.add(null);
+							break;
+						}
 						}
 					}
 				}

@@ -43,4 +43,20 @@ public class TileMap {
 			}
 		}
 	}
+	
+	public void replaceTile(int x, int y, Tiles tile) {
+		tiles[x][y] = tile;
+	}
+	
+	public void placeTopTile(int x, int y, TopTile topTile) {
+		topTiles[x][y] = topTile;
+	}
+	
+	public Tiles getTile(int x, int y) {
+		return tiles[x][y];
+	}
+	
+	public TopTile getTopTile(int x, int y) {
+		return topTiles[x][y];
+	}
 }
