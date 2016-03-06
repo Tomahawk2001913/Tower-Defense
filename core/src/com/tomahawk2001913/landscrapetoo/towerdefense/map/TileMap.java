@@ -18,6 +18,7 @@ public class TileMap {
 		for(int x = 0; x < tiles.length; x++) {
 			for(int y = 0; y < tiles[0].length; y++) {
 				tiles[x][y] = Tiles.GRASS;
+				topTiles[x][y] = null;
 			}
 		}
 	}
