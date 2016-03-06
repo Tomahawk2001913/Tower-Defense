@@ -4,14 +4,17 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public class TileMap {
-	Tiles tiles[][];
-	TopTile topTiles[][];
+	private Tiles tiles[][];
+	private TopTile topTiles[][];
+	
+	private float xOffset = 40, yOffset = 40;
 	
 	// Constants
 	public static final float TILE_DIMENSION = 30;
 	
 	public TileMap(int width, int height) {
 		tiles = new Tiles[width][height];
+		topTiles = new TopTile[width][height];
 		for(int x = 0; x < tiles.length; x++) {
 			for(int y = 0; y < tiles[0].length; y++) {
 				tiles[x][y] = Tiles.GRASS;
@@ -27,9 +30,9 @@ public class TileMap {
 	public void render(SpriteBatch batch) {
 		for(int x = 0; x < tiles.length; x++) {
 			for(int y = 0; y < tiles[0].length; y++) {
-				//tiles[x][y].render(batch, x * Tile.TILE_DIMENSION, y * Tile.TILE_DIMENSION);
-				batch.draw(tiles[x][y].getTextureRegion(), x * TILE_DIMENSION, y * TILE_DIMENSION, TILE_DIMENSION, TILE_DIMENSION);
-				if(topTiles[x][y] != null) topTiles[x][y].render(batch, x * TILE_DIMENSION, y * TILE_DIMENSION);
+				float figX = x * TILE_DIMENSION + xOffset, figY = y * TILE_DIMENSION + yOffset;
+				batch.draw(tiles[x][y].getTextureRegion(), figX, figY, TILE_DIMENSION, TILE_DIMENSION);
+				if(topTiles[x][y] != null) topTiles[x][y].render(batch, figX, figY);
 			}
 		}
 		
