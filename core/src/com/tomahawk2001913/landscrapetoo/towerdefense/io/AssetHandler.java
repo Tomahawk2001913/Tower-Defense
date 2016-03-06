@@ -30,10 +30,8 @@ public class AssetHandler {
 	}
 	
 	public static Tile[][] loadMap(String internalPath) {
-		FileHandle handle = new FileHandle(internalPath);
-		
 		try {
-			BufferedReader br = new BufferedReader(handle.reader());
+			BufferedReader br = new BufferedReader(Gdx.files.internal(internalPath).reader());
 			String currentLine;
 			
 			ArrayList<ArrayList<Tile>> tilesList = new ArrayList<ArrayList<Tile>>();
@@ -47,7 +45,7 @@ public class AssetHandler {
 				for(String string : values) {
 					if(!string.isEmpty()) {
 						int id = Integer.parseInt(string);
-						
+						Gdx.app.log("AssetHandler", "" + id);
 						switch(id) {
 						case 1: tileColumn.add(new GrassTile());
 						}
@@ -56,7 +54,12 @@ public class AssetHandler {
 				tilesList.add(tileColumn);
 			}
 			
-			Tile tiles[][] = new Tile[tilesList.size()][tilesList.get(0).size()];
+			Tile tiles[][] = new Tile[tilesList.get(0).size()][tilesList.size()];
+			for(int x = 0; x < tiles[0].length; x++) {
+				for(int y = 0; y < tiles.length; y++) {
+					tiles[y][x] = tilesList.get(x).get(y);
+				}
+			}
 			return tiles;
 			
 		} catch(IOException e) {

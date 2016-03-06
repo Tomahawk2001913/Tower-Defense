@@ -8,6 +8,13 @@ public class Playing extends GameState {
 	private TileMap tm;
 	
 	public Playing() {
+		
+		//tm = new TileMap(3, 3);
+	}
+	
+	@Override
+	public void changeTo(GameStateManager superManager) {
+		super.changeTo(superManager);
 		tm = new TileMap(AssetHandler.loadMap("Maps/GrassyArea.tdm"));
 	}
 	
