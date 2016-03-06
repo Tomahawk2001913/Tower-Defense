@@ -1,7 +1,7 @@
 package com.tomahawk2001913.landscrapetoo.towerdefense.map;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.math.Vector2;
 
 public class TileMap {
 	Tile tiles[][];
@@ -10,7 +10,7 @@ public class TileMap {
 		tiles = new Tile[width][height];
 		for(int x = 0; x < tiles.length; x++) {
 			for(int y = 0; y < tiles[0].length; y++) {
-				tiles[x][y] = new GrassTile(new Vector2(x * Tile.TILE_DIMENSION, y * Tile.TILE_DIMENSION));
+				tiles[x][y] = new GrassTile();
 			}
 		}
 	}
@@ -22,9 +22,11 @@ public class TileMap {
 	public void render(SpriteBatch batch) {
 		for(int x = 0; x < tiles.length; x++) {
 			for(int y = 0; y < tiles[0].length; y++) {
-				tiles[x][y].render(batch);
+				tiles[x][y].render(batch, x * Tile.TILE_DIMENSION, y * Tile.TILE_DIMENSION);
 			}
 		}
+		
+		Gdx.app.log("TileMap", "" + Gdx.graphics.getFramesPerSecond());
 	}
 	
 	public void update(float delta) {

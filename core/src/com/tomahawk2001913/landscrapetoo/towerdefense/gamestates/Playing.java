@@ -1,13 +1,14 @@
 package com.tomahawk2001913.landscrapetoo.towerdefense.gamestates;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.tomahawk2001913.landscrapetoo.towerdefense.io.AssetHandler;
 import com.tomahawk2001913.landscrapetoo.towerdefense.map.TileMap;
 
 public class Playing extends GameState {
 	private TileMap tm;
 	
 	public Playing() {
-		tm = new TileMap(16, 16);
+		tm = new TileMap(AssetHandler.loadMap("Maps/GrassyArea.tdm"));
 	}
 	
 	@Override
