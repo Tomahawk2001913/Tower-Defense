@@ -10,9 +10,11 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Animation.PlayMode;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.tomahawk2001913.landscrapetoo.towerdefense.map.AnimatedGrassTile;
+import com.tomahawk2001913.landscrapetoo.towerdefense.map.PineTree;
 import com.tomahawk2001913.landscrapetoo.towerdefense.map.TileMap;
 import com.tomahawk2001913.landscrapetoo.towerdefense.map.Tiles;
 import com.tomahawk2001913.landscrapetoo.towerdefense.map.TopTile;
+import com.tomahawk2001913.landscrapetoo.towerdefense.map.Tree;
 
 public class AssetHandler {
 	public static Texture texture, tiles;
@@ -21,6 +23,9 @@ public class AssetHandler {
 	
 	// Tiles
 	public static TextureRegion grassTile, stoneTile, sandTile, waterTile, dirtTile;
+	
+	// Top Tiles
+	public static TextureRegion tree, pineTree;
 	
 	// Animated grass!
 	public static TextureRegion grass1, grass2, grass3;
@@ -36,6 +41,12 @@ public class AssetHandler {
 		sandTile = new TextureRegion(texture, 32, 0, 16, 16);
 		waterTile = new TextureRegion(texture, 48, 0, 16, 16);
 		dirtTile = new TextureRegion(texture, 64, 0, 16, 16);
+		
+		// Load top tiles.
+		tree = new TextureRegion(texture, 48, 16, 16, 16);
+		tree.flip(false, true);
+		pineTree = new TextureRegion(texture, 64, 16, 16, 16);
+		pineTree.flip(false, true);
 		
 		// Load animated grass!
 		grass1 = new TextureRegion(texture, 0, 16, 16, 16);
@@ -54,12 +65,14 @@ public class AssetHandler {
 			BufferedReader br = new BufferedReader(Gdx.files.internal(internalPath).reader());
 			String currentLine;
 			
+			// Holds multiple columns.
 			ArrayList<ArrayList<Tiles>> tilesList = new ArrayList<ArrayList<Tiles>>();
 			ArrayList<ArrayList<TopTile>> topList = new ArrayList<ArrayList<TopTile>>();
 			
 			while((currentLine = br.readLine()) != null) {
 				if(currentLine.isEmpty()) continue;
 				
+				// Holds a column of values.
 				ArrayList<Tiles> tileColumn = new ArrayList<Tiles>();
 				ArrayList<TopTile> topColumn = new ArrayList<TopTile>();
 				
@@ -98,15 +111,27 @@ public class AssetHandler {
 							topColumn.add(null);
 							break;
 						}
+						case 7: {
+							tileColumn.add(Tiles.GRASS);
+							topColumn.add(new Tree());
+							break;
+						}
+						case 8: {
+							tileColumn.add(Tiles.GRASS);
+							topColumn.add(new PineTree());
+							break;
+						}
 						}
 					}
 				}
+				// Adds the columns to the list.
 				tilesList.add(tileColumn);
 				topList.add(topColumn);
 			}
 			
 			Tiles tiles[][] = new Tiles[tilesList.get(0).size()][tilesList.size()];
 			TopTile tops[][] = new TopTile[tiles.length][tiles[0].length];
+			// Translates ArrayLists into normal multidimensional arrays.
 			for(int x = 0; x < tiles[0].length; x++) {
 				for(int y = 0; y < tiles.length; y++) {
 					tiles[y][x] = tilesList.get(x).get(y);
