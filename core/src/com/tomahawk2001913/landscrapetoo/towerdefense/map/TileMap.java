@@ -33,7 +33,7 @@ public class TileMap {
 			for(int y = 0; y < tiles[0].length; y++) {
 				float figX = x * TILE_DIMENSION + xOffset, figY = y * TILE_DIMENSION + yOffset;
 				batch.draw(tiles[x][y].getTextureRegion(), figX, figY, TILE_DIMENSION, TILE_DIMENSION);
-				if(topTiles[x][y] != null) topTiles[x][y].render(batch, figX, figY);
+				if(topTiles[x][y] != null) topTiles[x][y].render(batch, xOffset, yOffset);
 			}
 		}
 		

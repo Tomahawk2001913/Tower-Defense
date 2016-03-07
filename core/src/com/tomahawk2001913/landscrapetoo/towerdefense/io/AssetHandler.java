@@ -11,6 +11,7 @@ import com.badlogic.gdx.graphics.g2d.Animation.PlayMode;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.tomahawk2001913.landscrapetoo.towerdefense.map.AnimatedGrassTile;
 import com.tomahawk2001913.landscrapetoo.towerdefense.map.PineTree;
+import com.tomahawk2001913.landscrapetoo.towerdefense.map.RobotSpawner;
 import com.tomahawk2001913.landscrapetoo.towerdefense.map.TileMap;
 import com.tomahawk2001913.landscrapetoo.towerdefense.map.Tiles;
 import com.tomahawk2001913.landscrapetoo.towerdefense.map.TopTile;
@@ -22,10 +23,10 @@ public class AssetHandler {
 	public static TextureRegion button;
 	
 	// Tiles
-	public static TextureRegion grassTile, stoneTile, sandTile, waterTile, dirtTile;
+	public static TextureRegion grassTile, stoneTile, sandTile, waterTile, dirtTile, snowTile, barrierTile;
 	
 	// Top Tiles
-	public static TextureRegion tree, pineTree;
+	public static TextureRegion tree, pineTree, robotSpawn;
 	
 	// Animated grass!
 	public static TextureRegion grass1, grass2, grass3;
@@ -41,12 +42,15 @@ public class AssetHandler {
 		sandTile = new TextureRegion(texture, 32, 0, 16, 16);
 		waterTile = new TextureRegion(texture, 48, 0, 16, 16);
 		dirtTile = new TextureRegion(texture, 64, 0, 16, 16);
+		snowTile = new TextureRegion(texture, 80, 0, 16, 16);
+		barrierTile = new TextureRegion(texture, 112, 0, 16, 16);
 		
 		// Load top tiles.
 		tree = new TextureRegion(texture, 48, 16, 16, 16);
 		tree.flip(false, true);
 		pineTree = new TextureRegion(texture, 64, 16, 16, 16);
 		pineTree.flip(false, true);
+		robotSpawn = new TextureRegion(texture, 96, 0, 16, 16);
 		
 		// Load animated grass!
 		grass1 = new TextureRegion(texture, 0, 16, 16, 16);
@@ -81,6 +85,11 @@ public class AssetHandler {
 					if(!string.isEmpty()) {
 						int id = Integer.parseInt(string);
 						switch(id) {
+						case 0: {
+							tileColumn.add(Tiles.STONE);
+							topColumn.add(new RobotSpawner());
+							break;
+						}
 						case 1:  {
 							tileColumn.add(Tiles.GRASS);
 							topColumn.add(null);
@@ -119,6 +128,11 @@ public class AssetHandler {
 						case 8: {
 							tileColumn.add(Tiles.GRASS);
 							topColumn.add(new PineTree());
+							break;
+						}
+						case 9: {
+							tileColumn.add(Tiles.BARRIER);
+							topColumn.add(null);
 							break;
 						}
 						}
