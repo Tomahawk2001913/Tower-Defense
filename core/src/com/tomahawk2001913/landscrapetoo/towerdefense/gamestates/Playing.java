@@ -18,7 +18,8 @@ public class Playing extends GameState {
 	public void changeTo(GameStateManager superManager) {
 		super.changeTo(superManager);
 		tm = AssetHandler.loadMap("Maps/GrassyArea.tdm");
-		tm.placeTopTile(1, 1, new GatlingCannonTower(new Vector2(1, 1)));
+		tm.placeTopTile(0, 0, new GatlingCannonTower(new Vector2(0, 0)));
+		tm.placeTopTile(5, 4, new GatlingCannonTower(new Vector2(5, 4)));
 	}
 	
 	@Override
