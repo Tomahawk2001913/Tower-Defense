@@ -32,6 +32,10 @@ public class AssetHandler {
 	public static TextureRegion grass1, grass2, grass3;
 	public static Animation animatedGrass;
 	
+	// Tower stuff
+	public static TextureRegion gatlingCannonTower, gatlingCannonTowerShooting, laserCannonTower, laserCannonTowerShooting, zapperTower, zapperTowerShooting; 
+	public static TextureRegion laserBeam, zapperBolt;
+	
 	public static void create() {
 		// Load everything-texture.
 		texture = new Texture(Gdx.files.internal("Textures/Texture.png"));
@@ -60,6 +64,29 @@ public class AssetHandler {
 		grass3 = new TextureRegion(texture, 32, 16, 16, 16);
 		grass3.flip(false, true);
 		
+		// Load tower stuff
+		gatlingCannonTower = new TextureRegion(texture, 80, 16, 16, 16);
+		gatlingCannonTower.flip(false, true);
+		gatlingCannonTowerShooting = new TextureRegion(texture, 96, 16, 16, 16);
+		gatlingCannonTowerShooting.flip(false, true);
+		
+		laserCannonTower = new TextureRegion(texture, 0, 32, 16, 16);
+		laserCannonTower.flip(false, true);
+		laserCannonTowerShooting = new TextureRegion(texture, 16, 32, 16, 16);
+		laserCannonTowerShooting.flip(false, true);
+		
+		zapperTower = new TextureRegion(texture, 48, 32, 16, 16);
+		zapperTower.flip(false, true);
+		zapperTowerShooting = new TextureRegion(texture, 64, 32, 16, 16);
+		zapperTowerShooting.flip(false, true);
+		
+		laserBeam = new TextureRegion(texture, 112, 16, 16, 16);
+		laserBeam.flip(false, true);
+		
+		zapperBolt = new TextureRegion(texture, 80, 32, 16, 16);
+		zapperBolt.flip(false, true);
+		
+		// Create Animation
 		animatedGrass = new Animation(0.3f, new TextureRegion[] {grass1, grass2, grass3});
 		animatedGrass.setPlayMode(PlayMode.LOOP_PINGPONG);
 	}
@@ -126,7 +153,7 @@ public class AssetHandler {
 							break;
 						}
 						case 8: {
-							tileColumn.add(Tiles.GRASS);
+							tileColumn.add(Tiles.SNOW);
 							topColumn.add(new PineTree());
 							break;
 						}

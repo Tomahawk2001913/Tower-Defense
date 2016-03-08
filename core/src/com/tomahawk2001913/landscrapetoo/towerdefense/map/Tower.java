@@ -12,6 +12,9 @@ public class Tower implements TopTile {
 	
 	private static float originValue;
 	
+	// Constants
+	public static final float DEFAULT_ROTATION = 180;
+	
 	public Tower(Vector2 location, float rotation, TextureRegion img) {
 		this.location = location;
 		this.rotation = rotation;
@@ -22,7 +25,6 @@ public class Tower implements TopTile {
 	
 	@Override
 	public void render(SpriteBatch batch, float xOffset, float yOffset) {
-		//batch.draw(img, location.x + xOffset, location.y + yOffset, TileMap.TILE_DIMENSION, TileMap.TILE_DIMENSION);
 		batch.draw(img, location.x, location.y, originValue, originValue, TileMap.TILE_DIMENSION, TileMap.TILE_DIMENSION, 0, 0, rotation);
 	}
 	
