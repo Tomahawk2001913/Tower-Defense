@@ -5,31 +5,38 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 
 public class Tower implements TopTile {
-	private TextureRegion img;
+	private TextureRegion idleTextureRegion, shootingTextureRegion;
 	private Vector2 location;
 	
 	private float rotation;
 	
+	private boolean isShooting;
+	
 	private static float originValue;
 	
 	// Constants
-	public static final float DEFAULT_ROTATION = 180;
+	public static final float DEFAULT_ROTATION = 90;
 	
-	public Tower(Vector2 location, float rotation, TextureRegion img) {
+	public Tower(Vector2 location, float rotation, TextureRegion idle, TextureRegion shooting) {
 		this.location = location;
 		this.rotation = rotation;
-		this.img = img;
+		idleTextureRegion = idle;
+		shootingTextureRegion = shooting;
 		
 		originValue = TileMap.TILE_DIMENSION / 2;
 	}
 	
 	@Override
 	public void render(SpriteBatch batch, float xOffset, float yOffset) {
-		batch.draw(img, location.x, location.y, originValue, originValue, TileMap.TILE_DIMENSION, TileMap.TILE_DIMENSION, 0, 0, rotation);
+		if(isShooting) {
+			batch.draw(shootingTextureRegion, location.x + xOffset, location.y + yOffset, originValue, originValue, TileMap.TILE_DIMENSION, TileMap.TILE_DIMENSION, 1, 1, rotation);
+		} else {
+			batch.draw(idleTextureRegion, location.x + xOffset, location.y + yOffset, originValue, originValue, TileMap.TILE_DIMENSION, TileMap.TILE_DIMENSION, 1, 1, rotation);
+		}
 	}
 	
 	@Override
 	public void update(float delta) {
-		
+		rotation += 10 * delta;
 	}
 }

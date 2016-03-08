@@ -1,7 +1,9 @@
 package com.tomahawk2001913.landscrapetoo.towerdefense.gamestates;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.Vector2;
 import com.tomahawk2001913.landscrapetoo.towerdefense.io.AssetHandler;
+import com.tomahawk2001913.landscrapetoo.towerdefense.map.GatlingCannonTower;
 import com.tomahawk2001913.landscrapetoo.towerdefense.map.TileMap;
 
 public class Playing extends GameState {
@@ -16,6 +18,7 @@ public class Playing extends GameState {
 	public void changeTo(GameStateManager superManager) {
 		super.changeTo(superManager);
 		tm = AssetHandler.loadMap("Maps/GrassyArea.tdm");
+		tm.placeTopTile(1, 1, new GatlingCannonTower(new Vector2(1, 1)));
 	}
 	
 	@Override
