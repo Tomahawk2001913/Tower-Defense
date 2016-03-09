@@ -3,8 +3,8 @@ package com.tomahawk2001913.landscrapetoo.towerdefense.gamestates;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.tomahawk2001913.landscrapetoo.towerdefense.io.AssetHandler;
-import com.tomahawk2001913.landscrapetoo.towerdefense.map.GatlingCannonTower;
 import com.tomahawk2001913.landscrapetoo.towerdefense.map.TileMap;
+import com.tomahawk2001913.landscrapetoo.towerdefense.map.towers.GatlingCannonTower;
 
 public class Playing extends GameState {
 	private TileMap tm;

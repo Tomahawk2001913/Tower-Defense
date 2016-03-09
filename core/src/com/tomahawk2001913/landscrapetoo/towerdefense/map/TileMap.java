@@ -2,6 +2,7 @@ package com.tomahawk2001913.landscrapetoo.towerdefense.map;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.tomahawk2001913.landscrapetoo.towerdefense.map.towers.Tower;
 
 public class TileMap {
 	private Tiles tiles[][];

@@ -1,8 +1,10 @@
-package com.tomahawk2001913.landscrapetoo.towerdefense.map;
+package com.tomahawk2001913.landscrapetoo.towerdefense.map.towers;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
+import com.tomahawk2001913.landscrapetoo.towerdefense.map.TileMap;
+import com.tomahawk2001913.landscrapetoo.towerdefense.map.TopTile;
 
 public class Tower implements TopTile {
 	private TextureRegion idleTextureRegion, shootingTextureRegion;
