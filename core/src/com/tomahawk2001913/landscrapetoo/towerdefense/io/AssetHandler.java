@@ -36,6 +36,10 @@ public class AssetHandler {
 	public static TextureRegion gatlingCannonTower, gatlingCannonTowerShooting, laserCannonTower, laserCannonTowerShooting, zapperTower, zapperTowerShooting; 
 	public static TextureRegion laserBeam, zapperBolt;
 	
+	// Entities
+	public static TextureRegion robotInfantry1, robotInfantry2, drillBot;
+	public static Animation robotInfantryAnimation;
+	
 	public static void create() {
 		// Load everything-texture.
 		texture = new Texture(Gdx.files.internal("Textures/Texture.png"));
@@ -86,7 +90,19 @@ public class AssetHandler {
 		zapperBolt = new TextureRegion(texture, 80, 32, 16, 16);
 		zapperBolt.flip(false, true);
 		
-		// Create Animation
+		// Load entity stuff
+		robotInfantry1 = new TextureRegion(texture, 0, 48, 16, 16);
+		robotInfantry1.flip(false, true);
+		robotInfantry2 = new TextureRegion(texture, 16, 48, 16, 16);
+		robotInfantry2.flip(false, true);
+		
+		robotInfantryAnimation = new Animation(0.1f, new TextureRegion[] {robotInfantry1, robotInfantry2});
+		robotInfantryAnimation.setPlayMode(PlayMode.LOOP);
+		
+		drillBot = new TextureRegion(texture, 32, 48, 16, 16);
+		drillBot.flip(false, true);
+		
+		// Create Animation for grass
 		animatedGrass = new Animation(0.3f, new TextureRegion[] {grass1, grass2, grass3});
 		animatedGrass.setPlayMode(PlayMode.LOOP_PINGPONG);
 	}
