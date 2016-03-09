@@ -1,7 +1,11 @@
 package com.tomahawk2001913.landscrapetoo.towerdefense.map;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.Vector2;
 import com.tomahawk2001913.landscrapetoo.towerdefense.map.towers.Tower;
 
 public class TileMap {
@@ -50,6 +54,40 @@ public class TileMap {
 				if(topTiles[x][y] != null) topTiles[x][y].update(delta);
 			}
 		}
+	}
+	
+	public List<Vector2> findPath(Vector2 start, Vector2 finish) {
+		List<Vector2> open = new ArrayList<Vector2>();
+		List<Vector2> use = new ArrayList<Vector2>();
+		
+		Vector2 current = new Vector2(start);
+		use.add(current);
+		
+		if(current.equals(finish)) return use;
+		
+		while(open.size() > 0) {
+			current = open.get(0);
+			
+			if(current == null) {
+				open.remove(current);
+				continue;
+			}
+			
+			for(int x = 0; x < 3; x++) {
+				for(int y = 0; y < 3; y++) {
+					float cX = current.x - 3 + x;
+					float cY = current.y - 3 + y;
+					
+					if(Math.abs(cX - finish.x) > Math.abs(current.x - finish.x) && Math.abs(cY - finish.y) < Math.abs(cY - finish.y)) {
+						if(!getTile((int) cX, (int) cY).isSolid() && getTopTile((int) cX, (int) cY) == null) {
+							use.add(new Vector2(cX, cY));
+						}
+					}
+				}
+			}
+		}
+		
+		return use;
 	}
 	
 	public void replaceTile(int x, int y, Tiles tile) {
