@@ -7,6 +7,7 @@ import com.badlogic.gdx.math.Vector2;
 public class Tower implements TopTile {
 	private TextureRegion idleTextureRegion, shootingTextureRegion;
 	private Vector2 location;
+	private TileMap tm;
 	
 	private float rotation;
 	
@@ -17,11 +18,12 @@ public class Tower implements TopTile {
 	// Constants
 	public static final float DEFAULT_ROTATION = 90;
 	
-	public Tower(Vector2 location, float rotation, TextureRegion idle, TextureRegion shooting) {
+	public Tower(Vector2 location, float rotation, TextureRegion idle, TextureRegion shooting, TileMap tm) {
 		this.location = location;
 		this.rotation = rotation;
 		idleTextureRegion = idle;
 		shootingTextureRegion = shooting;
+		this.tm = tm;
 		
 		originValue = TileMap.TILE_DIMENSION / 2;
 	}
@@ -38,5 +40,9 @@ public class Tower implements TopTile {
 	@Override
 	public void update(float delta) {
 		rotation += 50 * delta;
+	}
+	
+	public void aimNearestTarget() {
+		
 	}
 }
