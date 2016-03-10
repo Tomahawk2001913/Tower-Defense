@@ -20,4 +20,9 @@ public class Tree implements TopTile {
 	public void update(float delta) {
 		// Nothing needed here for now...
 	}
+	
+	@Override
+	public boolean isSolid() {
+		return true;
+	}
 }

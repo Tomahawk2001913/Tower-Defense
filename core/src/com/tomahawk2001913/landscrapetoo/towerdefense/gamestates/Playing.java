@@ -1,9 +1,13 @@
 package com.tomahawk2001913.landscrapetoo.towerdefense.gamestates;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.tomahawk2001913.landscrapetoo.towerdefense.io.AssetHandler;
 import com.tomahawk2001913.landscrapetoo.towerdefense.map.TileMap;
+import com.tomahawk2001913.landscrapetoo.towerdefense.map.entities.RobotInfantry;
 import com.tomahawk2001913.landscrapetoo.towerdefense.map.towers.GatlingCannonTower;
 
 public class Playing extends GameState {
@@ -20,6 +24,8 @@ public class Playing extends GameState {
 		tm = AssetHandler.loadMap("Maps/GrassyArea.tdm");
 		tm.placeTopTile(0, 0, new GatlingCannonTower(new Vector2(0, 0), tm));
 		tm.placeTopTile(5, 4, new GatlingCannonTower(new Vector2(5, 4), tm));
+		
+		tm.addEntity(new RobotInfantry(new Vector2(5, 2), tm, tm.findPath(new Vector2(5, 2), new Vector2(1, 1))));
 	}
 	
 	@Override

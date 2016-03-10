@@ -6,11 +6,14 @@ import java.util.List;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
+import com.tomahawk2001913.landscrapetoo.towerdefense.map.entities.Entity;
 import com.tomahawk2001913.landscrapetoo.towerdefense.map.towers.Tower;
 
 public class TileMap {
 	private Tiles tiles[][];
 	private TopTile topTiles[][];
+	private List<Entity> entities;
+	private Base base;
 	
 	private float xOffset = 40, yOffset = 40;
 	
@@ -20,6 +23,8 @@ public class TileMap {
 	public TileMap(int width, int height) {
 		tiles = new Tiles[width][height];
 		topTiles = new TopTile[width][height];
+		entities = new ArrayList<Entity>();
+		
 		for(int x = 0; x < tiles.length; x++) {
 			for(int y = 0; y < tiles[0].length; y++) {
 				tiles[x][y] = Tiles.GRASS;
@@ -31,6 +36,7 @@ public class TileMap {
 	public TileMap(Tiles tiles[][], TopTile topTiles[][]) {
 		this.tiles = tiles;
 		this.topTiles = topTiles;
+		entities = new ArrayList<Entity>();
 	}
 	
 	public void render(SpriteBatch batch) {
@@ -45,7 +51,13 @@ public class TileMap {
 			}
 		}
 		
-		Gdx.app.log("TileMap", "" + Gdx.graphics.getFramesPerSecond());
+		for(Entity entity : entities) {
+			if(entity == null) continue;
+			
+			entity.render(batch, xOffset, yOffset);
+		}
+		
+		//Gdx.app.log("TileMap", "" + Gdx.graphics.getFramesPerSecond());
 	}
 	
 	public void update(float delta) {
@@ -53,6 +65,12 @@ public class TileMap {
 			for(int y = 0; y < tiles[0].length; y++) {
 				if(topTiles[x][y] != null) topTiles[x][y].update(delta);
 			}
+		}
+		
+		for(Entity entity : entities) {
+			if(entity == null) continue;
+			
+			entity.update(delta);
 		}
 	}
 	
@@ -62,10 +80,11 @@ public class TileMap {
 		
 		Vector2 current = new Vector2(start);
 		use.add(current);
+		open.add(current);
 		
 		if(current.equals(finish)) return use;
 		
-		while(open.size() > 0) {
+		WhileLoop: while(!use.contains(finish)) {
 			current = open.get(0);
 			
 			if(current == null) {
@@ -75,19 +94,38 @@ public class TileMap {
 			
 			for(int x = 0; x < 3; x++) {
 				for(int y = 0; y < 3; y++) {
-					float cX = current.x - 3 + x;
-					float cY = current.y - 3 + y;
+					float cX = current.x - 1 + x;
+					float cY = current.y - 1 + y;
+					Gdx.app.log("TileMap", cX + "/" + cY);
 					
-					if(Math.abs(cX - finish.x) > Math.abs(current.x - finish.x) && Math.abs(cY - finish.y) < Math.abs(cY - finish.y)) {
-						if(!getTile((int) cX, (int) cY).isSolid() && getTopTile((int) cX, (int) cY) == null) {
+					if(Math.sqrt(Math.pow(cX - finish.x, 2) + Math.pow(cY - finish.y, 2)) < Math.sqrt(Math.pow(current.x - finish.x, 2) + Math.pow(current.y - finish.y, 2))) {
+						Gdx.app.log("TileMap", "first if");
+						
+						int cXInt = (int) cX, cYInt = (int) cY;
+						
+						Tiles cT = getTile(cXInt, cYInt);
+						TopTile cTT = getTopTile(cXInt, cYInt);
+						
+						if(cT != null && (cTT == null || !cTT.isSolid()) && !cT.isSolid()) {
+							Gdx.app.log("TileMap", "IF passed");
 							use.add(new Vector2(cX, cY));
-						}
+							open.add(new Vector2(cX, cY));
+							open.remove(current);
+						} else if(x == 2 && y == 2) break WhileLoop;
 					}
 				}
 			}
 		}
-		
+		Gdx.app.log("TileMap", use.toString());
 		return use;
+	}
+	
+	public void addEntity(Entity entity) {
+		entities.add(entity);
+	}
+	
+	public void clearEntities() {
+		entities.clear();
 	}
 	
 	public void replaceTile(int x, int y, Tiles tile) {
@@ -99,10 +137,18 @@ public class TileMap {
 	}
 	
 	public Tiles getTile(int x, int y) {
-		return tiles[x][y];
+		try {
+			return tiles[x][y];
+		} catch(ArrayIndexOutOfBoundsException e) {
+			return null;
+		}
 	}
 	
 	public TopTile getTopTile(int x, int y) {
-		return topTiles[x][y];
+		try {
+			return topTiles[x][y];
+		} catch(ArrayIndexOutOfBoundsException e) {
+			return null;
+		}
 	}
 }

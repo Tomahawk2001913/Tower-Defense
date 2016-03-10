@@ -47,4 +47,9 @@ public class Tower implements TopTile {
 	public void aimNearestTarget() {
 		
 	}
+	
+	@Override
+	public boolean isSolid() {
+		return true;
+	}
 }

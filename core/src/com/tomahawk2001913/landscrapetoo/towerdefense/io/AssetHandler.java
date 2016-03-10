@@ -96,7 +96,7 @@ public class AssetHandler {
 		robotInfantry2 = new TextureRegion(texture, 16, 48, 16, 16);
 		robotInfantry2.flip(false, true);
 		
-		robotInfantryAnimation = new Animation(0.1f, new TextureRegion[] {robotInfantry1, robotInfantry2});
+		robotInfantryAnimation = new Animation(0.35f, new TextureRegion[] {robotInfantry1, robotInfantry2});
 		robotInfantryAnimation.setPlayMode(PlayMode.LOOP);
 		
 		drillBot = new TextureRegion(texture, 32, 48, 16, 16);

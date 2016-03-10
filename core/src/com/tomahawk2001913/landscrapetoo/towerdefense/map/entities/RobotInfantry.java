@@ -1,5 +1,7 @@
 package com.tomahawk2001913.landscrapetoo.towerdefense.map.entities;
 
+import java.util.List;
+
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
@@ -11,8 +13,8 @@ public class RobotInfantry extends Entity {
 	
 	private float time;
 	
-	public RobotInfantry(Vector2 location, TileMap tm) {
-		super(location, Entity.DEFAULT_ENTITY_DIMENSION, Entity.DEFAULT_ENTITY_DIMENSION, tm);
+	public RobotInfantry(Vector2 location, TileMap tm, List<Vector2> path) {
+		super(location, Entity.DEFAULT_ENTITY_DIMENSION, Entity.DEFAULT_ENTITY_DIMENSION, 0.3f, tm, path);
 		
 		ria = AssetHandler.robotInfantryAnimation;
 		
@@ -21,11 +23,12 @@ public class RobotInfantry extends Entity {
 
 	@Override
 	public void render(SpriteBatch batch, float xOffset, float yOffset) {
-		batch.draw(ria.getKeyFrame(time), getLocation().x + xOffset, getLocation().y + xOffset, getWidth(), getHeight());
+		batch.draw(ria.getKeyFrame(time), getLocation().x * TileMap.TILE_DIMENSION + xOffset, getLocation().y * TileMap.TILE_DIMENSION + xOffset, getWidth(), getHeight());
 	}
 
 	@Override
 	public void update(float delta) {
+		super.update(delta);
 		time += delta;
 	}
 }

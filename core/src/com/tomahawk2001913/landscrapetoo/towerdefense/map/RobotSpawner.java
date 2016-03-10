@@ -15,5 +15,9 @@ public class RobotSpawner implements TopTile {
 		// TODO Auto-generated method stub
 		
 	}
-
+	
+	@Override
+	public boolean isSolid() {
+		return false;
+	}
 }

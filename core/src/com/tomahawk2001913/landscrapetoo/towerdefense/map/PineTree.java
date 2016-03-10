@@ -21,4 +21,8 @@ public class PineTree implements TopTile {
 		// Nothing needed here for now...
 	}
 	
+	@Override
+	public boolean isSolid() {
+		return true;
+	}
 }

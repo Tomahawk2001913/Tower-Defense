@@ -22,4 +22,9 @@ public class AnimatedGrassTile implements TopTile {
 	public void update(float delta) {
 		time += delta;
 	}
+	
+	@Override
+	public boolean isSolid() {
+		return false;
+	}
 }
