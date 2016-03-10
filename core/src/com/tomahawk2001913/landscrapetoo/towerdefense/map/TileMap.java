@@ -56,8 +56,6 @@ public class TileMap {
 			
 			entity.render(batch, xOffset, yOffset);
 		}
-		
-		//Gdx.app.log("TileMap", "" + Gdx.graphics.getFramesPerSecond());
 	}
 	
 	public void update(float delta) {
@@ -96,18 +94,14 @@ public class TileMap {
 				for(int y = 0; y < 3; y++) {
 					float cX = current.x - 1 + x;
 					float cY = current.y - 1 + y;
-					Gdx.app.log("TileMap", cX + "/" + cY);
 					
 					if(Math.sqrt(Math.pow(cX - finish.x, 2) + Math.pow(cY - finish.y, 2)) < Math.sqrt(Math.pow(current.x - finish.x, 2) + Math.pow(current.y - finish.y, 2))) {
-						Gdx.app.log("TileMap", "first if");
-						
 						int cXInt = (int) cX, cYInt = (int) cY;
 						
 						Tiles cT = getTile(cXInt, cYInt);
 						TopTile cTT = getTopTile(cXInt, cYInt);
 						
 						if(cT != null && (cTT == null || !cTT.isSolid()) && !cT.isSolid()) {
-							Gdx.app.log("TileMap", "IF passed");
 							use.add(new Vector2(cX, cY));
 							open.add(new Vector2(cX, cY));
 							open.remove(current);
@@ -116,7 +110,7 @@ public class TileMap {
 				}
 			}
 		}
-		Gdx.app.log("TileMap", use.toString());
+		
 		return use;
 	}
 	
