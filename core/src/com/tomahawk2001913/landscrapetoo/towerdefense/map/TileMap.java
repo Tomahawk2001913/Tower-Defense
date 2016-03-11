@@ -73,45 +73,49 @@ public class TileMap {
 	}
 	
 	public List<Vector2> findPath(Vector2 start, Vector2 finish) {
-		List<Vector2> open = new ArrayList<Vector2>();
 		List<Vector2> use = new ArrayList<Vector2>();
+		List<Vector2> closed = new ArrayList<Vector2>();
 		
 		Vector2 current = new Vector2(start);
 		use.add(current);
-		open.add(current);
 		
 		if(current.equals(finish)) return use;
 		
 		WhileLoop: while(!use.contains(finish)) {
-			current = open.get(0);
+			current = use.get(use.size() - 1);
 			
 			if(current == null) {
-				open.remove(current);
 				continue;
 			}
 			
+			Vector2 closest = new Vector2(current);
 			for(int x = 0; x < 3; x++) {
 				for(int y = 0; y < 3; y++) {
 					float cX = current.x - 1 + x;
 					float cY = current.y - 1 + y;
 					
-					if(Math.sqrt(Math.pow(cX - finish.x, 2) + Math.pow(cY - finish.y, 2)) < Math.sqrt(Math.pow(current.x - finish.x, 2) + Math.pow(current.y - finish.y, 2))) {
+					Vector2 currentCoords = new Vector2(cX, cY);
+					
+					if(getDistance(currentCoords, finish) < getDistance(current, finish)) {
 						int cXInt = (int) cX, cYInt = (int) cY;
 						
 						Tiles cT = getTile(cXInt, cYInt);
 						TopTile cTT = getTopTile(cXInt, cYInt);
-						
-						if(cT != null && (cTT == null || !cTT.isSolid()) && !cT.isSolid()) {
-							use.add(new Vector2(cX, cY));
-							open.add(new Vector2(cX, cY));
-							open.remove(current);
-						} else if(x == 2 && y == 2) break WhileLoop;
-					}
+						Gdx.app.log("TileMap", "if1");
+						if(cT != null && (cTT == null || !cTT.isSolid()) && !cT.isSolid() && !closed.contains(currentCoords)) {
+							Gdx.app.log("TileMap", "if2");
+							use.add(currentCoords);
+						}
+					} else if(x == 2 && y == 2) break WhileLoop;
 				}
 			}
 		}
 		
 		return use;
+	}
+	
+	public double getDistance(Vector2 start, Vector2 finish) {
+		return Math.sqrt(Math.pow(start.x - finish.x, 2) + Math.pow(start.y - finish.y, 2));
 	}
 	
 	public void addEntity(Entity entity) {
