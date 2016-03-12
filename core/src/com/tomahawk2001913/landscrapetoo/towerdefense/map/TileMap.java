@@ -83,32 +83,46 @@ public class TileMap {
 		
 		WhileLoop: while(!use.contains(finish)) {
 			current = use.get(use.size() - 1);
+			System.out.println(current);
 			
 			if(current == null) {
 				continue;
 			}
 			
-			Vector2 closest = new Vector2(current);
+			Vector2 closest = null;
+			
+			ForLoops:
 			for(int x = 0; x < 3; x++) {
 				for(int y = 0; y < 3; y++) {
+					if(x == 1 && y == 1) continue;
+					
 					float cX = current.x - 1 + x;
 					float cY = current.y - 1 + y;
 					
 					Vector2 currentCoords = new Vector2(cX, cY);
 					
-					if(getDistance(currentCoords, finish) < getDistance(current, finish)) {
-						int cXInt = (int) cX, cYInt = (int) cY;
-						
-						Tiles cT = getTile(cXInt, cYInt);
-						TopTile cTT = getTopTile(cXInt, cYInt);
-						Gdx.app.log("TileMap", "if1");
-						if(cT != null && (cTT == null || !cTT.isSolid()) && !cT.isSolid() && !closed.contains(currentCoords)) {
-							Gdx.app.log("TileMap", "if2");
-							use.add(currentCoords);
+					// This conversion to int means it is much better to give integer arguments.
+					int cXInt = (int) cX, cYInt = (int) cY;
+
+					Tiles cT = getTile(cXInt, cYInt);
+					TopTile cTT = getTopTile(cXInt, cYInt);
+
+					if(cT != null && (cTT == null || !cTT.isSolid()) && !cT.isSolid()) {
+						if(closest == null || (!closest.equals(current) && !closed.contains(currentCoords) &&
+								!use.contains(currentCoords) && getDistance(currentCoords, finish) < getDistance(closest, finish))) {
+							closest = currentCoords;
 						}
-					} else if(x == 2 && y == 2) break WhileLoop;
+						
+						if(x == 2 && y == 2) {
+							break ForLoops;
+						}
+					} else if(x == 2 && y == 2 && closest.equals(current)) {
+						break WhileLoop;
+					}
 				}
 			}
+			
+			use.add(closest);
 		}
 		
 		return use;
