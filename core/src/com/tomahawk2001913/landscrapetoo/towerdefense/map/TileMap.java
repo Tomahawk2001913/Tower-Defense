@@ -3,7 +3,6 @@ package com.tomahawk2001913.landscrapetoo.towerdefense.map;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.tomahawk2001913.landscrapetoo.towerdefense.map.entities.Entity;
@@ -83,7 +82,6 @@ public class TileMap {
 		
 		WhileLoop: while(!use.contains(finish)) {
 			current = use.get(use.size() - 1);
-			System.out.println(current);
 			
 			if(current == null) {
 				continue;
@@ -138,6 +136,10 @@ public class TileMap {
 	
 	public void clearEntities() {
 		entities.clear();
+	}
+	
+	public List<Entity> getEntities() {
+		return entities;
 	}
 	
 	public void replaceTile(int x, int y, Tiles tile) {

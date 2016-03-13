@@ -14,17 +14,18 @@ public abstract class Entity {
 	
 	private List<Vector2> path;
 	
-	private float width, height, speed;
+	private float width, height, speed, health;
 	private float tileTransitionTime;
 	
 	// Constants
 	public static final float DEFAULT_ENTITY_DIMENSION = 30;
 	
-	public Entity(Vector2 location, float width, float height, float speed, TileMap tm, List<Vector2> path) {
+	public Entity(Vector2 location, float width, float height, float speed, float health, TileMap tm, List<Vector2> path) {
 		this.location = location;
 		this.width = width;
 		this.height = height;
 		this.speed = speed;
+		this.health = health;
 		this.tm = tm;
 		
 		velocity = new Vector2();
@@ -54,6 +55,10 @@ public abstract class Entity {
 	public void addPath(List<Vector2> path) {
 		this.path = path;
 		tileTransitionTime = 0;
+	}
+	
+	public void damage(float damage) {
+		health -= damage;
 	}
 	
 	public Vector2 getLocation() {
