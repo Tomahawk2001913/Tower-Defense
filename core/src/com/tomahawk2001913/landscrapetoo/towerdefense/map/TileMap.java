@@ -11,7 +11,7 @@ import com.tomahawk2001913.landscrapetoo.towerdefense.map.towers.Tower;
 public class TileMap {
 	private Tiles tiles[][];
 	private TopTile topTiles[][];
-	private List<Entity> entities;
+	private List<Entity> entities, deadEntities;
 	private Base base;
 	
 	private float xOffset = 40, yOffset = 40;
@@ -23,6 +23,7 @@ public class TileMap {
 		tiles = new Tiles[width][height];
 		topTiles = new TopTile[width][height];
 		entities = new ArrayList<Entity>();
+		deadEntities = new ArrayList<Entity>();
 		
 		for(int x = 0; x < tiles.length; x++) {
 			for(int y = 0; y < tiles[0].length; y++) {
@@ -36,6 +37,7 @@ public class TileMap {
 		this.tiles = tiles;
 		this.topTiles = topTiles;
 		entities = new ArrayList<Entity>();
+		deadEntities = new ArrayList<Entity>();
 	}
 	
 	public void render(SpriteBatch batch) {
@@ -58,6 +60,10 @@ public class TileMap {
 	}
 	
 	public void update(float delta) {
+		for(Entity entity : deadEntities) {
+			entities.remove(entity);
+		}
+		
 		for(int x = 0; x < tiles.length; x++) {
 			for(int y = 0; y < tiles[0].length; y++) {
 				if(topTiles[x][y] != null) topTiles[x][y].update(delta);
@@ -132,6 +138,10 @@ public class TileMap {
 	
 	public void addEntity(Entity entity) {
 		entities.add(entity);
+	}
+	
+	public void removeEntity(Entity entity) {
+		deadEntities.add(entity);
 	}
 	
 	public void clearEntities() {

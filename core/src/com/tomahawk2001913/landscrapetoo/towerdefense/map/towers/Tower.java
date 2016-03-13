@@ -19,6 +19,8 @@ public class Tower implements TopTile {
 	private TileMap tm;
 	private Entity target;
 	
+	private AimModes aimMode;
+	
 	private float rotation, range, damage;
 	
 	private boolean isShooting;
@@ -37,6 +39,8 @@ public class Tower implements TopTile {
 		shootingTextureRegion = shooting;
 		this.tm = tm;
 		
+		aimMode = AimModes.NEAREST;
+		
 		originValue = TileMap.TILE_DIMENSION / 2;
 	}
 	
@@ -54,9 +58,9 @@ public class Tower implements TopTile {
 		isShooting = false;
 		
 		findNearestTarget();
-		if(target != null) rotation = aimAngle(target, 1);
 		
 		if(target != null) {
+			rotation = aimAngle(target, 1);
 			isShooting = true;
 			target.damage(damage * delta);
 		}
