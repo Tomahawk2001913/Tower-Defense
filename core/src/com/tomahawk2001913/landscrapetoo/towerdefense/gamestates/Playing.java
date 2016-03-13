@@ -23,7 +23,6 @@ public class Playing extends GameState {
 		super.changeTo(superManager);
 		tm = AssetHandler.loadMap("Maps/GrassyArea.tdm");
 		tm.placeTopTile(0, 0, new GatlingCannonTower(new Vector2(0, 0), tm));
-		tm.placeTopTile(5, 4, new GatlingCannonTower(new Vector2(5, 4), tm));
 		
 		tm.addEntity(new RobotInfantry(new Vector2(5, 2), tm, tm.findPath(new Vector2(5, 2), new Vector2(1, 1))));
 	}
