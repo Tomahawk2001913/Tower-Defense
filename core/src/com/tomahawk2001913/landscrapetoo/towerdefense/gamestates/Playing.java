@@ -1,26 +1,26 @@
 package com.tomahawk2001913.landscrapetoo.towerdefense.gamestates;
 
-import java.util.ArrayList;
-import java.util.List;
-
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.tomahawk2001913.landscrapetoo.towerdefense.io.AssetHandler;
+import com.tomahawk2001913.landscrapetoo.towerdefense.io.GameStateInputHandler;
 import com.tomahawk2001913.landscrapetoo.towerdefense.map.TileMap;
 import com.tomahawk2001913.landscrapetoo.towerdefense.map.entities.RobotInfantry;
 import com.tomahawk2001913.landscrapetoo.towerdefense.map.towers.GatlingCannonTower;
 
 public class Playing extends GameState {
 	private TileMap tm;
+	private GameStateInputHandler gsih;
 	
 	public Playing() {
-		
-		//tm = new TileMap(3, 3);
+		gsih = new GameStateInputHandler(this);
 	}
 	
 	@Override
 	public void changeTo(GameStateManager superManager) {
 		super.changeTo(superManager);
+		Gdx.input.setInputProcessor(gsih);
 		tm = AssetHandler.loadMap("Maps/GrassyArea.tdm");
 		tm.placeTopTile(0, 0, new GatlingCannonTower(new Vector2(0, 0), tm));
 		
