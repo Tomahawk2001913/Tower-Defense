@@ -35,6 +35,7 @@ public class AssetHandler {
 	// Tower stuff
 	public static TextureRegion gatlingCannonTower, gatlingCannonTowerShooting, laserCannonTower, laserCannonTowerShooting, zapperTower, zapperTowerShooting; 
 	public static TextureRegion laserBeam, zapperBolt;
+	public static Animation gatlingCannonTowerShootingAnimation;
 	
 	// Entities
 	public static TextureRegion healthBarColor, robotInfantry1, robotInfantry2, drillBot;
@@ -73,6 +74,9 @@ public class AssetHandler {
 		gatlingCannonTower.flip(false, true);
 		gatlingCannonTowerShooting = new TextureRegion(texture, 96, 16, 16, 16);
 		gatlingCannonTowerShooting.flip(false, true);
+		
+		gatlingCannonTowerShootingAnimation = new Animation(0.06f, new TextureRegion[] {gatlingCannonTower, gatlingCannonTowerShooting});
+		gatlingCannonTowerShootingAnimation.setPlayMode(PlayMode.LOOP);
 		
 		laserCannonTower = new TextureRegion(texture, 0, 32, 16, 16);
 		laserCannonTower.flip(false, true);

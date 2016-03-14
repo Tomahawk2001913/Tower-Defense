@@ -6,6 +6,6 @@ import com.tomahawk2001913.landscrapetoo.towerdefense.map.TileMap;
 
 public class GatlingCannonTower extends Tower {
 	public GatlingCannonTower(Vector2 location, TileMap tm) {
-		super(location, Tower.DEFAULT_ROTATION, 3, 25, AssetHandler.gatlingCannonTower, AssetHandler.gatlingCannonTowerShooting, tm);
+		super(location, Tower.DEFAULT_ROTATION, 3, 25, AssetHandler.gatlingCannonTower, AssetHandler.gatlingCannonTowerShootingAnimation, tm);
 	}
 }

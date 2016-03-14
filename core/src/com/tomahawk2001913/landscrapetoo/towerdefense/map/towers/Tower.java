@@ -2,6 +2,7 @@ package com.tomahawk2001913.landscrapetoo.towerdefense.map.towers;
 
 import java.util.List;
 
+import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
@@ -15,13 +16,14 @@ public class Tower implements TopTile {
 	}
 	
 	private TextureRegion idleTextureRegion, shootingTextureRegion;
+	private Animation shootingAnimation;
 	private Vector2 location;
 	private TileMap tm;
 	private Entity target;
 	
 	private AimModes aimMode;
 	
-	private float rotation, range, damage;
+	private float rotation, range, damage, time;
 	
 	private boolean isShooting;
 	
@@ -42,12 +44,29 @@ public class Tower implements TopTile {
 		aimMode = AimModes.NEAREST;
 		
 		originValue = TileMap.TILE_DIMENSION / 2;
+		time = 0;
+	}
+	
+	public Tower(Vector2 location, float rotation, float range, float damage, TextureRegion idle, Animation shootingAnimation, TileMap tm) {
+		this.location = location;
+		this.rotation = rotation;
+		this.range = range;
+		this.damage = damage;
+		idleTextureRegion = idle;
+		this.shootingAnimation = shootingAnimation;
+		this.tm = tm;
+		
+		aimMode = AimModes.NEAREST;
+		
+		originValue = TileMap.TILE_DIMENSION / 2;
+		time = 0;
 	}
 	
 	@Override
 	public void render(SpriteBatch batch, float xOffset, float yOffset) {
 		if(isShooting) {
-			batch.draw(shootingTextureRegion, location.x * TileMap.TILE_DIMENSION + xOffset, location.y * TileMap.TILE_DIMENSION + yOffset, originValue, originValue, TileMap.TILE_DIMENSION, TileMap.TILE_DIMENSION, 1, 1, rotation);
+			if(shootingTextureRegion != null) batch.draw(shootingTextureRegion, location.x * TileMap.TILE_DIMENSION + xOffset, location.y * TileMap.TILE_DIMENSION + yOffset, originValue, originValue, TileMap.TILE_DIMENSION, TileMap.TILE_DIMENSION, 1, 1, rotation);
+			else batch.draw(shootingAnimation.getKeyFrame(time), location.x * TileMap.TILE_DIMENSION + xOffset, location.y * TileMap.TILE_DIMENSION + yOffset, originValue, originValue, TileMap.TILE_DIMENSION, TileMap.TILE_DIMENSION, 1, 1, rotation);
 		} else {
 			batch.draw(idleTextureRegion, location.x * TileMap.TILE_DIMENSION + xOffset, location.y * TileMap.TILE_DIMENSION + yOffset, originValue, originValue, TileMap.TILE_DIMENSION, TileMap.TILE_DIMENSION, 1, 1, rotation);
 		}
@@ -55,6 +74,7 @@ public class Tower implements TopTile {
 	
 	@Override
 	public void update(float delta) {
+		time += delta;
 		isShooting = false;
 		
 		findNearestTarget();

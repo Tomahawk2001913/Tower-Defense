@@ -20,7 +20,7 @@ public class Entity extends Sprite {
 	private float tileTransitionTime;
 	
 	// Constants
-	public static final float DEFAULT_ENTITY_DIMENSION = 30;
+	public static final float DEFAULT_ENTITY_DIMENSION = 30, FLICKER_INTERVAL = 0.1f, DAMAGE_ALPHA = 0.5f;
 	
 	public Entity(Vector2 location, float width, float height, float speed, float health, TileMap tm, List<Vector2> path) {
 		this.location = location;
@@ -51,7 +51,7 @@ public class Entity extends Sprite {
 		flickerTime -= delta;
 		
 		if(flickerTime > 0) {
-			alpha = 0.5f;
+			alpha = DAMAGE_ALPHA;
 		} else {
 			alpha = 1;
 		}
@@ -79,8 +79,8 @@ public class Entity extends Sprite {
 	
 	public void damage(float damage) {
 		health -= damage;
-		alpha = 0.5f;
-		if(flickerTime <= -0.5f) flickerTime = 0.5f;
+		
+		if(flickerTime <= -FLICKER_INTERVAL) flickerTime = FLICKER_INTERVAL;
 	}
 	
 	public void die() {
