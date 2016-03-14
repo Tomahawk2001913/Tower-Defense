@@ -37,7 +37,7 @@ public class AssetHandler {
 	public static TextureRegion laserBeam, zapperBolt;
 	
 	// Entities
-	public static TextureRegion robotInfantry1, robotInfantry2, drillBot;
+	public static TextureRegion healthBarColor, robotInfantry1, robotInfantry2, drillBot;
 	public static Animation robotInfantryAnimation;
 	
 	public static void create() {
@@ -89,6 +89,9 @@ public class AssetHandler {
 		
 		zapperBolt = new TextureRegion(texture, 80, 32, 16, 16);
 		zapperBolt.flip(false, true);
+		
+		// Load health bar color
+		healthBarColor = new TextureRegion(texture, 50, 53, 1, 1);
 		
 		// Load entity stuff
 		robotInfantry1 = new TextureRegion(texture, 0, 48, 16, 16);

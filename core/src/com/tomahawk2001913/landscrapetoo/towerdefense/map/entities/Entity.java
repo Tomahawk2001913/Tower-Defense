@@ -2,12 +2,13 @@ package com.tomahawk2001913.landscrapetoo.towerdefense.map.entities;
 
 import java.util.List;
 
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.tomahawk2001913.landscrapetoo.towerdefense.map.TileMap;
 import com.tomahawk2001913.landscrapetoo.towerdefense.ui.HealthBar;
 
-public class Entity {
+public class Entity extends Sprite {
 	private Vector2 location;
 	private Vector2 velocity;
 	private TileMap tm;
@@ -15,7 +16,7 @@ public class Entity {
 	
 	private List<Vector2> path;
 	
-	private float width, height, speed, health;
+	private float width, height, speed, health, alpha, time, flickerTime;
 	private float tileTransitionTime;
 	
 	// Constants
@@ -32,6 +33,10 @@ public class Entity {
 		velocity = new Vector2();
 		this.path = path;
 		
+		alpha = 1;
+		time = 0;
+		flickerTime = -0.5f;
+		
 		hb = new HealthBar(this);
 		
 		tileTransitionTime = 0;
@@ -42,6 +47,14 @@ public class Entity {
 	}
 	
 	public void update(float delta) {
+		time += delta;
+		flickerTime -= delta;
+		
+		if(flickerTime > 0) {
+			alpha = 0.5f;
+		} else {
+			alpha = 1;
+		}
 		location.add(velocity);
 		
 		if(path != null && path.size() > 0) {
@@ -59,13 +72,15 @@ public class Entity {
 		if(health <= 0) die();
 	}
 	
-	public void addPath(List<Vector2> path) {
+	public void setPath(List<Vector2> path) {
 		this.path = path;
 		tileTransitionTime = 0;
 	}
 	
 	public void damage(float damage) {
 		health -= damage;
+		alpha = 0.5f;
+		if(flickerTime <= -0.5f) flickerTime = 0.5f;
 	}
 	
 	public void die() {
@@ -86,6 +101,14 @@ public class Entity {
 	
 	public float getHeight() {
 		return height;
+	}
+	
+	public float getAlpha() {
+		return alpha;
+	}
+	
+	public float getTime() {
+		return time;
 	}
 	
 	public void setLocation(float x, float y) {
