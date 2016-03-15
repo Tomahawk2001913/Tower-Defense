@@ -52,7 +52,6 @@ public class Entity extends Sprite {
 	}
 	
 	public void update(float delta) {
-		delta /= 5;
 		if(health <= 0) die();
 		time += delta;
 		flickerTime -= delta;
@@ -76,9 +75,10 @@ public class Entity extends Sprite {
 			velocity.y = speed * currentYSignum;
 			
 			
-			if(path.get(pathSpot).x != path.get(pathSpot - 1).x) modifyX = true;
-			else if(path.get(pathSpot).y != path.get(pathSpot - 1).y) {
-				modifyX = false;
+			if(path.get(pathSpot).x != path.get(pathSpot - 1).x) {
+				modifyX = true;
+			}
+			if(path.get(pathSpot).y != path.get(pathSpot - 1).y) {
 				modifyY = true;
 			}
 			
