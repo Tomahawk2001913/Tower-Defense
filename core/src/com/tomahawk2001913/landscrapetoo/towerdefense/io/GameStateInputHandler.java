@@ -41,8 +41,7 @@ public class GameStateInputHandler implements InputProcessor {
 
 	@Override
 	public boolean touchDragged(int screenX, int screenY, int pointer) {
-		
-		return false;
+		return gs.touchDragged(screenX * GameScreen.scale, screenY * GameScreen.scale);
 	}
 
 	@Override

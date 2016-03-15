@@ -6,7 +6,7 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.tomahawk2001913.landscrapetoo.towerdefense.io.AssetHandler;
 
-public abstract class Panel {
+public class Panel {
 	private TextureRegion bg;
 	
 	private Vector2 location;
@@ -45,9 +45,8 @@ public abstract class Panel {
 	public boolean touchDown(float x, float y) {
 		if(bounds.contains(x, y)) {
 			touched = true;
-			
-			xTouchOffset = x - location.x;
-			yTouchOffset = y - location.y;
+			xTouchOffset = location.x - x;
+			yTouchOffset = location.y - y;
 			
 			return true;
 		}
@@ -56,7 +55,6 @@ public abstract class Panel {
 	
 	public boolean touchUp(float x, float y) {
 		touched = false;
-		
 		xTouchOffset = 0;
 		yTouchOffset = 0;
 		
@@ -64,7 +62,7 @@ public abstract class Panel {
 	}
 	
 	public boolean touchDragged(float x, float y) {
-		if(touched && bounds.contains(x, y)) {
+		if(touched) {
 			location.set(x + xTouchOffset, y + yTouchOffset);
 			return true;
 		}

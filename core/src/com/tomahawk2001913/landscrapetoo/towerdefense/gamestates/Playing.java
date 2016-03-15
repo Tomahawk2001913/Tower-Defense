@@ -8,13 +8,18 @@ import com.tomahawk2001913.landscrapetoo.towerdefense.io.GameStateInputHandler;
 import com.tomahawk2001913.landscrapetoo.towerdefense.map.TileMap;
 import com.tomahawk2001913.landscrapetoo.towerdefense.map.entities.RobotInfantry;
 import com.tomahawk2001913.landscrapetoo.towerdefense.map.towers.GatlingCannonTower;
+import com.tomahawk2001913.landscrapetoo.towerdefense.ui.Panel;
+import com.tomahawk2001913.landscrapetoo.towerdefense.ui.PanelHandler;
 
 public class Playing extends GameState {
 	private TileMap tm;
 	private GameStateInputHandler gsih;
+	private PanelHandler ph;
 	
 	public Playing() {
 		gsih = new GameStateInputHandler(this);
+		ph = new PanelHandler();
+		ph.addPanel(new Panel(new Vector2(20, 20), 80, 80));
 	}
 	
 	@Override
@@ -35,11 +40,13 @@ public class Playing extends GameState {
 	@Override
 	public void render(SpriteBatch batch) {
 		tm.render(batch);
+		ph.render(batch);
 	}
 
 	@Override
 	public void update(float delta) {
 		tm.update(delta);
+		ph.update(delta);
 	}
 	
 	@Override
@@ -49,16 +56,16 @@ public class Playing extends GameState {
 	
 	@Override
 	public boolean touchDown(float x, float y) {
-		return false;
+		return ph.touchDown(x, y);
 	}
 	
 	@Override
 	public boolean touchUp(float x, float y) {
-		return false;
+		return ph.touchUp(x, y);
 	}
 	
 	@Override
 	public boolean touchDragged(float x, float y) {
-		return false;
+		return ph.touchDragged(x, y);
 	}
 }

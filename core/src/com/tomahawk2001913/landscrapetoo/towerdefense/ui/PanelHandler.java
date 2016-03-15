@@ -10,6 +10,7 @@ public class PanelHandler {
 	
 	public PanelHandler() {
 		panels = new ArrayList<Panel>();
+		removePanels = new ArrayList<Panel>();
 	}
 	
 	public void render(SpriteBatch batch) {
