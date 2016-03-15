@@ -62,43 +62,19 @@ public class Entity extends Sprite {
 			alpha = 1;
 		}
 		
-		float currentXSignum = 0;
-		float currentYSignum = 0;
-		
 		velocity.set(0, 0);
 		
 		if(path != null && path.size() > 0 && pathSpot < path.size()) {
-			currentXSignum = -Math.signum(location.x - path.get(pathSpot).x);
-			currentYSignum = -Math.signum(location.y - path.get(pathSpot).y);
+			velocity.x = speed * Math.signum(path.get(pathSpot).x - location.x);
+			velocity.y = speed * Math.signum(path.get(pathSpot).y - location.y);
 			
-			velocity.x = speed * currentXSignum;
-			velocity.y = speed * currentYSignum;
+			System.out.println(velocity.x + " " + velocity.y);
 			
-			
-			if(path.get(pathSpot).x != path.get(pathSpot - 1).x) {
-				modifyX = true;
-			}
-			if(path.get(pathSpot).y != path.get(pathSpot - 1).y) {
-				modifyY = true;
-			}
-			
-			System.out.println(modifyX + " " + modifyY);
-			
-			float newX = location.x + velocity.x * delta, newY = location.y + velocity.y * delta;
-			
-			if(pathSpot < path.size() && (currentXSignum != 0 || currentYSignum != 0)) {
-				if(currentXSignum != 0 && currentXSignum != -Math.signum(newX - path.get(pathSpot).x)) {
-					pathSpot++;
-				} else if(currentYSignum != 0 && currentYSignum != -Math.signum(newY - path.get(pathSpot).y)) {
-					pathSpot++;
-				}
-			}
-			
-			if(!modifyX) newX = location.x;
-			if(!modifyY) newY = location.y;
-			
-			location.set(newX, newY);
+			if(tm.getDistance(path.get(pathSpot), location) < 0.1f) 
+				pathSpot++;
 		}
+		
+		location.add(velocity.x * delta, velocity.y * delta);
 	}
 	
 	public void setPath(List<Vector2> path) {

@@ -12,7 +12,7 @@ public class RobotInfantry extends Entity {
 	private Animation ria;
 	
 	public RobotInfantry(Vector2 location, TileMap tm, List<Vector2> path) {
-		super(location, Entity.DEFAULT_ENTITY_DIMENSION, Entity.DEFAULT_ENTITY_DIMENSION, 2, 75, tm, path);
+		super(location, Entity.DEFAULT_ENTITY_DIMENSION, Entity.DEFAULT_ENTITY_DIMENSION, 5, 75, tm, path);
 		
 		ria = AssetHandler.robotInfantryAnimation;
 	}
