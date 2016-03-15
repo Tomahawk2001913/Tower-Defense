@@ -1,5 +1,6 @@
 package com.tomahawk2001913.landscrapetoo.towerdefense.ui;
 
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
@@ -13,6 +14,9 @@ public class Panel {
 	private Rectangle bounds;
 	
 	private float width, height, xTouchOffset, yTouchOffset;
+	
+	// Constants.
+	public static final float ALPHA = 0.85f;
 	
 	private boolean touched;
 	
@@ -32,7 +36,10 @@ public class Panel {
 	}
 	
 	public void render(SpriteBatch batch) {
+		Color tempColor = batch.getColor();
+		batch.setColor(1, 1, 1, ALPHA);
 		batch.draw(bg, location.x, location.y, width, height);
+		batch.setColor(tempColor);
 	}
 	
 	public void update(float delta) {
