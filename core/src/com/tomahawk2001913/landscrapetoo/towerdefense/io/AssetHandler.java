@@ -20,7 +20,8 @@ import com.tomahawk2001913.landscrapetoo.towerdefense.map.Tree;
 public class AssetHandler {
 	public static Texture texture, tiles;
 	
-	public static TextureRegion button;
+	// UI
+	public static TextureRegion panelBg;
 	
 	// Tiles
 	public static TextureRegion grassTile, stoneTile, sandTile, waterTile, dirtTile, snowTile, barrierTile;
@@ -44,6 +45,9 @@ public class AssetHandler {
 	public static void create() {
 		// Load everything-texture.
 		texture = new Texture(Gdx.files.internal("Textures/Texture.png"));
+		
+		// Load UI.
+		panelBg = new TextureRegion(texture, 51, 53, 1, 1);
 		
 		// Load tiles.
 		grassTile = new TextureRegion(texture, 0, 0, 16, 16);
