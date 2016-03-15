@@ -23,8 +23,6 @@ public class RobotInfantry extends Entity {
 		super.setBounds(getLocation().x * TileMap.TILE_DIMENSION + xOffset, getLocation().y * TileMap.TILE_DIMENSION + xOffset, getWidth(), getHeight());
 		super.setRegion(ria.getKeyFrame(getTime()));
 		super.draw(batch, super.getAlpha());
-		//batch.draw(ria.getKeyFrame(time), getLocation().x * TileMap.TILE_DIMENSION + xOffset, getLocation().y * TileMap.TILE_DIMENSION + xOffset, getWidth(), getHeight());
-		
 	}
 
 	@Override
