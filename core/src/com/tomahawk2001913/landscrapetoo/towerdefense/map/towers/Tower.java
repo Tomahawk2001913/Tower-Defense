@@ -131,4 +131,8 @@ public class Tower implements TopTile {
 	public boolean isSolid() {
 		return true;
 	}
+	
+	public void setTileMap(TileMap tm) {
+		this.tm = tm;
+	}
 }

@@ -7,7 +7,7 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.tomahawk2001913.landscrapetoo.towerdefense.io.AssetHandler;
 
-public class Panel {
+public abstract class Panel {
 	private TextureRegion bg;
 	
 	private Vector2 location;
@@ -75,6 +75,10 @@ public class Panel {
 		}
 		
 		return false;
+	}
+	
+	public Vector2 getLocation() {
+		return location;
 	}
 	
 	public Rectangle getBounds() {
