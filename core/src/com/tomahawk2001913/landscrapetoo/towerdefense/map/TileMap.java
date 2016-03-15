@@ -41,6 +41,7 @@ public class TileMap {
 	}
 	
 	public void render(SpriteBatch batch) {
+		// Render everything but entities.
 		for(int x = 0; x < tiles.length; x++) {
 			for(int y = 0; y < tiles[0].length; y++) {
 				float figX = x * TILE_DIMENSION + xOffset, figY = y * TILE_DIMENSION + yOffset;
@@ -52,6 +53,7 @@ public class TileMap {
 			}
 		}
 		
+		// Render the previously ignored entities.
 		for(Entity entity : entities) {
 			if(entity == null) continue;
 			
@@ -63,6 +65,7 @@ public class TileMap {
 		for(Entity entity : deadEntities) {
 			entities.remove(entity);
 		}
+		deadEntities.clear();
 		
 		for(int x = 0; x < tiles.length; x++) {
 			for(int y = 0; y < tiles[0].length; y++) {

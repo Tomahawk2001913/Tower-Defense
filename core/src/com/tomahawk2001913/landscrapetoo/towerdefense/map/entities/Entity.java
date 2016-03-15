@@ -16,8 +16,11 @@ public class Entity extends Sprite {
 	
 	private List<Vector2> path;
 	
+	private boolean modifyX, modifyY;
+	
+	private int pathSpot;
+	
 	private float width, height, speed, health, alpha, time, flickerTime;
-	private float tileTransitionTime;
 	
 	// Constants
 	public static final float DEFAULT_ENTITY_DIMENSION = 30, FLICKER_INTERVAL = 0.1f, DAMAGE_ALPHA = 0.5f;
@@ -39,7 +42,9 @@ public class Entity extends Sprite {
 		
 		hb = new HealthBar(this);
 		
-		tileTransitionTime = 0;
+		pathSpot = 1;
+		modifyX = false;
+		modifyY = false;
 	}
 	
 	public void render(SpriteBatch batch, float xOffset, float yOffset) {
@@ -47,6 +52,8 @@ public class Entity extends Sprite {
 	}
 	
 	public void update(float delta) {
+		delta /= 5;
+		if(health <= 0) die();
 		time += delta;
 		flickerTime -= delta;
 		
@@ -55,26 +62,47 @@ public class Entity extends Sprite {
 		} else {
 			alpha = 1;
 		}
-		location.add(velocity);
 		
-		if(path != null && path.size() > 0) {
-			if(tileTransitionTime >= speed) {
-				tileTransitionTime -= speed;
-				if(path.get(0) != null) {
-					location.set(path.get(0));
-					path.remove(0);
+		float currentXSignum = 0;
+		float currentYSignum = 0;
+		
+		velocity.set(0, 0);
+		
+		if(path != null && path.size() > 0 && pathSpot < path.size()) {
+			currentXSignum = -Math.signum(location.x - path.get(pathSpot).x);
+			currentYSignum = -Math.signum(location.y - path.get(pathSpot).y);
+			
+			velocity.x = speed * currentXSignum;
+			velocity.y = speed * currentYSignum;
+			
+			
+			if(path.get(pathSpot).x != path.get(pathSpot - 1).x) modifyX = true;
+			else if(path.get(pathSpot).y != path.get(pathSpot - 1).y) {
+				modifyX = false;
+				modifyY = true;
+			}
+			
+			System.out.println(modifyX + " " + modifyY);
+			
+			float newX = location.x + velocity.x * delta, newY = location.y + velocity.y * delta;
+			
+			if(pathSpot < path.size() && (currentXSignum != 0 || currentYSignum != 0)) {
+				if(currentXSignum != 0 && currentXSignum != -Math.signum(newX - path.get(pathSpot).x)) {
+					pathSpot++;
+				} else if(currentYSignum != 0 && currentYSignum != -Math.signum(newY - path.get(pathSpot).y)) {
+					pathSpot++;
 				}
 			}
 			
-			tileTransitionTime += delta;
+			if(!modifyX) newX = location.x;
+			if(!modifyY) newY = location.y;
+			
+			location.set(newX, newY);
 		}
-		
-		if(health <= 0) die();
 	}
 	
 	public void setPath(List<Vector2> path) {
 		this.path = path;
-		tileTransitionTime = 0;
 	}
 	
 	public void damage(float damage) {
@@ -93,6 +121,10 @@ public class Entity extends Sprite {
 	
 	public Vector2 getLocation() {
 		return location;
+	}
+	
+	public Vector2 getVelocity() {
+		return velocity;
 	}
 	
 	public float getWidth() {
