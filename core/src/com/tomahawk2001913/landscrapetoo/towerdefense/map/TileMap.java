@@ -157,7 +157,8 @@ public class TileMap {
 	}
 	
 	public void replaceTile(int x, int y, Tiles tile) {
-		tiles[x][y] = tile;
+		if(x < tiles.length && x > -1 && y < tiles[0].length && y > -1)
+			tiles[x][y] = tile;
 	}
 	
 	public void placeTopTile(int x, int y, TopTile topTile) {

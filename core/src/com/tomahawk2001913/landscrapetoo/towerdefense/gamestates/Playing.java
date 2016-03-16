@@ -1,13 +1,19 @@
 package com.tomahawk2001913.landscrapetoo.towerdefense.gamestates;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.tomahawk2001913.landscrapetoo.towerdefense.io.AssetHandler;
 import com.tomahawk2001913.landscrapetoo.towerdefense.io.GameStateInputHandler;
 import com.tomahawk2001913.landscrapetoo.towerdefense.map.TileMap;
+import com.tomahawk2001913.landscrapetoo.towerdefense.map.Tiles;
 import com.tomahawk2001913.landscrapetoo.towerdefense.map.entities.RobotInfantry;
+import com.tomahawk2001913.landscrapetoo.towerdefense.screens.GameScreen;
 import com.tomahawk2001913.landscrapetoo.towerdefense.ui.PanelHandler;
+import com.tomahawk2001913.landscrapetoo.towerdefense.ui.TilePanel;
 import com.tomahawk2001913.landscrapetoo.towerdefense.ui.TowerPanel;
 
 public class Playing extends GameState {
@@ -27,8 +33,13 @@ public class Playing extends GameState {
 		
 		tm.addEntity(new RobotInfantry(new Vector2(5, 2), tm, tm.findPath(new Vector2(5, 2), new Vector2(1, 1))));
 		
+		List<Tiles> tiles = new ArrayList<Tiles>();
+		
+		tiles.add(Tiles.BARRIER);
+		
 		ph = new PanelHandler();
-		ph.addPanel(new TowerPanel(new Vector2(20, 20), this.tm));
+		ph.addPanel(new TowerPanel(new Vector2(GameScreen.gameWidth - TowerPanel.WIDTH, 0), this.tm));
+		ph.addPanel(new TilePanel(new Vector2(GameScreen.gameWidth - TowerPanel.WIDTH, TowerPanel.HEIGHT), tiles, this.tm));
 	}
 	
 	@Override
