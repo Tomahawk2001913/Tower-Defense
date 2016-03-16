@@ -3,8 +3,8 @@ package com.tomahawk2001913.landscrapetoo.towerdefense.map;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.tomahawk2001913.landscrapetoo.towerdefense.map.entities.Entity;
 import com.tomahawk2001913.landscrapetoo.towerdefense.map.towers.Tower;
@@ -15,7 +15,11 @@ public class TileMap {
 	private List<Entity> entities, deadEntities;
 	private Base base;
 	
-	private float xOffset = 40, yOffset = 40;
+	private Rectangle bounds;
+	
+	private float xOffset = 0, yOffset = 0, xTouchOffset = 0, yTouchOffset = 0;
+	
+	private boolean touched = false;
 	
 	// Constants
 	public static final float TILE_DIMENSION = 30;
@@ -32,6 +36,8 @@ public class TileMap {
 				topTiles[x][y] = null;
 			}
 		}
+		
+		bounds = new Rectangle(xOffset, yOffset, tiles.length * TileMap.TILE_DIMENSION, tiles[0].length * TileMap.TILE_DIMENSION);
 	}
 	
 	public TileMap(Tiles tiles[][], TopTile topTiles[][]) {
@@ -39,6 +45,8 @@ public class TileMap {
 		this.topTiles = topTiles;
 		entities = new ArrayList<Entity>();
 		deadEntities = new ArrayList<Entity>();
+		
+		bounds = new Rectangle(xOffset, yOffset, tiles.length * TileMap.TILE_DIMENSION, tiles[0].length * TileMap.TILE_DIMENSION);
 	}
 	
 	public void render(SpriteBatch batch) {
@@ -63,6 +71,8 @@ public class TileMap {
 	}
 	
 	public void update(float delta) {
+		bounds.set(xOffset, yOffset, tiles.length * TileMap.TILE_DIMENSION, tiles[0].length * TileMap.TILE_DIMENSION);
+		
 		for(Entity entity : deadEntities) {
 			entities.remove(entity);
 		}
@@ -134,6 +144,39 @@ public class TileMap {
 		}
 		
 		return use;
+	}
+	
+	public boolean touchDown(float x, float y) {
+		if(bounds.contains(x, y)) {
+			touched = true;
+			
+			xTouchOffset = xOffset - x;
+			yTouchOffset = yOffset - y;
+			
+			return true;
+		}
+		
+		return false;
+	}
+	
+	public boolean touchUp(float x, float y) {
+		xTouchOffset = 0;
+		yTouchOffset = 0;
+		if(touched) {
+			touched = false;
+			return true;
+		}
+		return false;
+	}
+	
+	public boolean touchDragged(float x, float y) {
+		if(touched) {
+			xOffset = x + xTouchOffset;
+			yOffset = y + yTouchOffset;
+			return true;
+		}
+		
+		return false;
 	}
 	
 	public double getDistance(Vector2 start, Vector2 finish) {

@@ -21,6 +21,7 @@ public class RobotInfantry extends Entity {
 	public void render(SpriteBatch batch, float xOffset, float yOffset) {
 		super.render(batch, xOffset, yOffset);
 		super.setBounds(getLocation().x * TileMap.TILE_DIMENSION + xOffset, getLocation().y * TileMap.TILE_DIMENSION + xOffset, getWidth(), getHeight());
+		super.setPosition(super.getLocation().x * TileMap.TILE_DIMENSION + xOffset, super.getLocation().y * TileMap.TILE_DIMENSION + yOffset);
 		super.setRegion(ria.getKeyFrame(getTime()));
 		super.draw(batch, super.getAlpha());
 	}

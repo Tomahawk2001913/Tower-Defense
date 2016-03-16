@@ -66,16 +66,16 @@ public class Playing extends GameState {
 	
 	@Override
 	public boolean touchDown(float x, float y) {
-		return ph.touchDown(x, y);
+		return ph.touchDown(x, y) || tm.touchDown(x, y);
 	}
 	
 	@Override
 	public boolean touchUp(float x, float y) {
-		return ph.touchUp(x, y);
+		return ph.touchUp(x, y) || tm.touchUp(x, y);
 	}
 	
 	@Override
 	public boolean touchDragged(float x, float y) {
-		return ph.touchDragged(x, y);
+		return ph.touchDragged(x, y) || tm.touchDragged(x, y);
 	}
 }
