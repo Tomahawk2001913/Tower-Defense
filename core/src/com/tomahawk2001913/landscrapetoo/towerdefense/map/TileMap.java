@@ -160,7 +160,8 @@ public class TileMap {
 	}
 	
 	public void placeTopTile(int x, int y, TopTile topTile) {
-		topTiles[x][y] = topTile;
+		if(x < topTiles.length  && x > -1 && y < topTiles[0].length && y > -1)
+			topTiles[x][y] = topTile;
 	}
 	
 	public Tiles getTile(int x, int y) {
@@ -177,5 +178,13 @@ public class TileMap {
 		} catch(ArrayIndexOutOfBoundsException e) {
 			return null;
 		}
+	}
+	
+	public float getXOffset() {
+		return xOffset;
+	}
+	
+	public float getYOffset() {
+		return yOffset;
 	}
 }

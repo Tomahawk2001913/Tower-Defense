@@ -7,7 +7,6 @@ import com.tomahawk2001913.landscrapetoo.towerdefense.io.AssetHandler;
 import com.tomahawk2001913.landscrapetoo.towerdefense.io.GameStateInputHandler;
 import com.tomahawk2001913.landscrapetoo.towerdefense.map.TileMap;
 import com.tomahawk2001913.landscrapetoo.towerdefense.map.entities.RobotInfantry;
-import com.tomahawk2001913.landscrapetoo.towerdefense.map.towers.GatlingCannonTower;
 import com.tomahawk2001913.landscrapetoo.towerdefense.ui.PanelHandler;
 import com.tomahawk2001913.landscrapetoo.towerdefense.ui.TowerPanel;
 
@@ -25,11 +24,9 @@ public class Playing extends GameState {
 		super.changeTo(superManager);
 		Gdx.input.setInputProcessor(gsih);
 		tm = AssetHandler.loadMap("Maps/GrassyArea.tdm");
-		tm.placeTopTile(0, 0, new GatlingCannonTower(new Vector2(0, 0), tm));
 		
 		tm.addEntity(new RobotInfantry(new Vector2(5, 2), tm, tm.findPath(new Vector2(5, 2), new Vector2(1, 1))));
 		
-
 		ph = new PanelHandler();
 		ph.addPanel(new TowerPanel(new Vector2(20, 20), this.tm));
 	}

@@ -32,6 +32,8 @@ public abstract class Panel {
 		
 		touched = false;
 		
+		moved();
+		
 		this.bg = AssetHandler.panelBg;
 	}
 	
@@ -71,11 +73,14 @@ public abstract class Panel {
 	public boolean touchDragged(float x, float y) {
 		if(touched) {
 			location.set(x + xTouchOffset, y + yTouchOffset);
+			moved();
 			return true;
 		}
 		
 		return false;
 	}
+	
+	public abstract void moved();
 	
 	public Vector2 getLocation() {
 		return location;

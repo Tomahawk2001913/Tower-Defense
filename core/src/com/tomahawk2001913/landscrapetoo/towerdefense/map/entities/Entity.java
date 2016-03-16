@@ -68,8 +68,6 @@ public class Entity extends Sprite {
 			velocity.x = speed * Math.signum(path.get(pathSpot).x - location.x);
 			velocity.y = speed * Math.signum(path.get(pathSpot).y - location.y);
 			
-			System.out.println(velocity.x + " " + velocity.y);
-			
 			if(tm.getDistance(path.get(pathSpot), location) < 0.1f) 
 				pathSpot++;
 		}

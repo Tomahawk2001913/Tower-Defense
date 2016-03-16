@@ -10,7 +10,7 @@ import com.tomahawk2001913.landscrapetoo.towerdefense.map.TileMap;
 import com.tomahawk2001913.landscrapetoo.towerdefense.map.TopTile;
 import com.tomahawk2001913.landscrapetoo.towerdefense.map.entities.Entity;
 
-public class Tower implements TopTile {
+public abstract class Tower implements TopTile {
 	public enum AimModes {
 		NEAREST, FIRST, STRONGEST;
 	}
@@ -135,4 +135,18 @@ public class Tower implements TopTile {
 	public void setTileMap(TileMap tm) {
 		this.tm = tm;
 	}
+	
+	public void setLocation(float x, float y) {
+		location.set(x, y);
+	}
+	
+	public Vector2 getLocation() {
+		return location;
+	}
+	
+	public TileMap getTileMap() {
+		return tm;
+	}
+	
+	public abstract Tower copy();
 }

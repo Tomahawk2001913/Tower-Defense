@@ -8,4 +8,9 @@ public class GatlingCannonTower extends Tower {
 	public GatlingCannonTower(Vector2 location, TileMap tm) {
 		super(location, Tower.DEFAULT_ROTATION, 3, 25, AssetHandler.gatlingCannonTower, AssetHandler.gatlingCannonTowerShootingAnimation, tm);
 	}
+	
+	@Override
+	public GatlingCannonTower copy() {
+		return new GatlingCannonTower(getLocation().cpy(), getTileMap());
+	}
 }
