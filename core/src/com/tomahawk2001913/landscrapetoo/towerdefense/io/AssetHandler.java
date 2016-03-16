@@ -9,7 +9,9 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Animation.PlayMode;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.Vector2;
 import com.tomahawk2001913.landscrapetoo.towerdefense.map.AnimatedGrassTile;
+import com.tomahawk2001913.landscrapetoo.towerdefense.map.Base;
 import com.tomahawk2001913.landscrapetoo.towerdefense.map.PineTree;
 import com.tomahawk2001913.landscrapetoo.towerdefense.map.RobotSpawner;
 import com.tomahawk2001913.landscrapetoo.towerdefense.map.TileMap;
@@ -141,7 +143,7 @@ public class AssetHandler {
 						switch(id) {
 						case 0: {
 							tileColumn.add(Tiles.STONE);
-							topColumn.add(new RobotSpawner());
+							topColumn.add(new RobotSpawner(new Vector2(0, 0), 1));
 							break;
 						}
 						case 1:  {
@@ -188,6 +190,10 @@ public class AssetHandler {
 							tileColumn.add(Tiles.BARRIER);
 							topColumn.add(null);
 							break;
+						}
+						case 10: {
+							tileColumn.add(Tiles.STONE);
+							topColumn.add(new Base());
 						}
 						}
 					}

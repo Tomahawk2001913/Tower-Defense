@@ -2,13 +2,12 @@ package com.tomahawk2001913.landscrapetoo.towerdefense.map.entities;
 
 import java.util.List;
 
-import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.tomahawk2001913.landscrapetoo.towerdefense.map.TileMap;
 import com.tomahawk2001913.landscrapetoo.towerdefense.ui.HealthBar;
 
-public class Entity extends Sprite {
+public class Entity {
 	private Vector2 location;
 	private Vector2 velocity;
 	private TileMap tm;

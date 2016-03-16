@@ -2,6 +2,7 @@ package com.tomahawk2001913.landscrapetoo.towerdefense.map.entities;
 
 import java.util.List;
 
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
@@ -20,10 +21,12 @@ public class RobotInfantry extends Entity {
 	@Override
 	public void render(SpriteBatch batch, float xOffset, float yOffset) {
 		super.render(batch, xOffset, yOffset);
-		super.setBounds(getLocation().x * TileMap.TILE_DIMENSION + xOffset, getLocation().y * TileMap.TILE_DIMENSION + xOffset, getWidth(), getHeight());
-		super.setPosition(super.getLocation().x * TileMap.TILE_DIMENSION + xOffset, super.getLocation().y * TileMap.TILE_DIMENSION + yOffset);
-		super.setRegion(ria.getKeyFrame(getTime()));
-		super.draw(batch, super.getAlpha());
+		
+		Color tempColor = batch.getColor();
+		batch.setColor(1, 1, 1, super.getAlpha());
+		batch.draw(ria.getKeyFrame(super.getTime()), super.getLocation().x * TileMap.TILE_DIMENSION + xOffset, super.getLocation().y * TileMap.TILE_DIMENSION + yOffset, 
+				TileMap.TILE_DIMENSION, TileMap.TILE_DIMENSION);
+		batch.setColor(tempColor);
 	}
 
 	@Override

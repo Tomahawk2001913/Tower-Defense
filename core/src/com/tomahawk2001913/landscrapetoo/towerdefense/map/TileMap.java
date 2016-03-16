@@ -3,6 +3,7 @@ package com.tomahawk2001913.landscrapetoo.towerdefense.map;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
@@ -46,6 +47,19 @@ public class TileMap {
 		entities = new ArrayList<Entity>();
 		deadEntities = new ArrayList<Entity>();
 		
+		for(int x = 0; x < topTiles.length; x++) {
+			for(int y = 0; y < topTiles[0].length; y++) {
+				if(getTopTile(x, y) instanceof Base) {
+					base = (Base) getTopTile(x, y);
+					base.setLocation(x * TileMap.TILE_DIMENSION, y * TileMap.TILE_DIMENSION);
+				} else if(getTopTile(x, y) instanceof RobotSpawner) {
+					((RobotSpawner) getTopTile(x, y)).setLocation(x * TileMap.TILE_DIMENSION, y * TileMap.TILE_DIMENSION);
+				}
+			}
+		}
+		
+		if(base == null) Gdx.app.log("TileMap", "No predefined base detected.");
+		
 		bounds = new Rectangle(xOffset, yOffset, tiles.length * TileMap.TILE_DIMENSION, tiles[0].length * TileMap.TILE_DIMENSION);
 	}
 	
@@ -56,7 +70,7 @@ public class TileMap {
 				float figX = x * TILE_DIMENSION + xOffset, figY = y * TILE_DIMENSION + yOffset;
 				batch.draw(tiles[x][y].getTextureRegion(), figX, figY, TILE_DIMENSION, TILE_DIMENSION);
 				if(topTiles[x][y] != null) {
-					if(topTiles[x][y] instanceof Tower) topTiles[x][y].render(batch, xOffset, yOffset);
+					if(topTiles[x][y] instanceof Tower || topTiles[x][y] instanceof Base || topTiles[x][y] instanceof RobotSpawner) topTiles[x][y].render(batch, xOffset, yOffset);
 					else topTiles[x][y].render(batch, figX, figY);
 				}
 			}
@@ -223,6 +237,10 @@ public class TileMap {
 		} catch(ArrayIndexOutOfBoundsException e) {
 			return null;
 		}
+	}
+	
+	public Base getBase() {
+		return base;
 	}
 	
 	public float getXOffset() {
