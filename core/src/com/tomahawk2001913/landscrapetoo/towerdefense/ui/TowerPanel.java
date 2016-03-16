@@ -134,11 +134,12 @@ public class TowerPanel extends Panel {
 				returnTrue = true;
 				if(tower.getPlace()) {
 					Tower towerToAdd = tower.getTower().copy();
-					int tX = (int) (x - tm.getXOffset()) / 16, tY = (int) (y - tm.getYOffset()) / 16;
+					int tX =  (int) ((x - tm.getXOffset()) / TileMap.TILE_DIMENSION), tY = (int) ((y - tm.getYOffset()) / TileMap.TILE_DIMENSION);
+					System.out.println(tX + " : " + tY);
 					
 					towerToAdd.setLocation(tX, tY);
 					
-					tm.placeTopTile(tX, tY, towerToAdd);
+					tm.placeTopTile(tX , tY , towerToAdd);
 					moved();
 				}
 			}

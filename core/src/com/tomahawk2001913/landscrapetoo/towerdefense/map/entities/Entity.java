@@ -16,8 +16,6 @@ public class Entity extends Sprite {
 	
 	private List<Vector2> path;
 	
-	private boolean modifyX, modifyY;
-	
 	private int pathSpot;
 	
 	private float width, height, speed, health, alpha, time, flickerTime;
@@ -43,8 +41,6 @@ public class Entity extends Sprite {
 		hb = new HealthBar(this);
 		
 		pathSpot = 1;
-		modifyX = false;
-		modifyY = false;
 	}
 	
 	public void render(SpriteBatch batch, float xOffset, float yOffset) {
