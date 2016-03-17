@@ -16,7 +16,7 @@ public class Base implements TopTile {
 	}
 	
 	public void render(SpriteBatch batch, float xOffset, float yOffset) {
-		batch.draw(baseAnimation.getKeyFrame(time), location.x + xOffset, location.y + yOffset);
+		batch.draw(baseAnimation.getKeyFrame(time), location.x + xOffset, location.y + yOffset, TileMap.TILE_DIMENSION, TileMap.TILE_DIMENSION);
 	}
 	
 	public void update(float delta) {

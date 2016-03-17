@@ -6,6 +6,7 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.tomahawk2001913.landscrapetoo.towerdefense.io.AssetHandler;
 import com.tomahawk2001913.landscrapetoo.towerdefense.map.TileMap;
+import com.tomahawk2001913.landscrapetoo.towerdefense.map.Tiles;
 import com.tomahawk2001913.landscrapetoo.towerdefense.map.towers.GatlingCannonTower;
 import com.tomahawk2001913.landscrapetoo.towerdefense.map.towers.Tower;
 
@@ -133,9 +134,14 @@ public class TowerPanel extends Panel {
 			if(tower.getBounds().contains(x, y)) {
 				returnTrue = true;
 				if(tower.getPlace()) {
-					Tower towerToAdd = tower.getTower().copy();
 					int tX =  (int) ((x - tm.getXOffset()) / TileMap.TILE_DIMENSION), tY = (int) ((y - tm.getYOffset()) / TileMap.TILE_DIMENSION);
 					
+					if(tm.getTile(tX, tY) != Tiles.BARRIER) {
+						moved();
+						return true;
+					}
+					
+					Tower towerToAdd = tower.getTower().copy();
 					towerToAdd.setLocation(tX * TileMap.TILE_DIMENSION, tY * TileMap.TILE_DIMENSION);
 					
 					tm.placeTopTile(tX , tY , towerToAdd);
