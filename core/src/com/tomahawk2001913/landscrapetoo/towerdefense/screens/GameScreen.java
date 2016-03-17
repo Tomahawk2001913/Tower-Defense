@@ -12,7 +12,7 @@ public class GameScreen implements Screen {
 	private GameStateManager gsm;
 	
 	// Constants
-	public static final float optimalGameHeight = 350.0f;
+	public static final float optimalGameHeight = 350.0f, MAX_DELTA = 0.1f;
 	
 	public static float scale, gameHeight, gameWidth;
 	
@@ -38,6 +38,8 @@ public class GameScreen implements Screen {
 
 	@Override
 	public void render(float delta) {
+		if(delta > MAX_DELTA) delta = MAX_DELTA;
+		
 		Gdx.gl.glClearColor(0.3f, 0.4f, 1, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		

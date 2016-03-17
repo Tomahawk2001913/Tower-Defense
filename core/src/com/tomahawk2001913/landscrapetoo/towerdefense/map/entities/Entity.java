@@ -63,7 +63,7 @@ public class Entity {
 			velocity.x = speed * Math.signum(path.get(pathSpot).x - location.x);
 			velocity.y = speed * Math.signum(path.get(pathSpot).y - location.y);
 			
-			if(tm.getDistance(path.get(pathSpot), location) < 0.1f) 
+			if(tm.getDistance(path.get(pathSpot), location) < 0.2f) 
 				pathSpot++;
 		}
 		
