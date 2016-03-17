@@ -20,6 +20,6 @@ public class HealthBar {
 	
 	public void render(SpriteBatch batch, float xOffset, float yOffset) {
 		// Could be optimized by only figuring health percent after damaged.
-		batch.draw(color, entity.getLocation().x * TileMap.TILE_DIMENSION + xOffset, entity.getLocation().y * TileMap.TILE_DIMENSION + yOffset + entity.getHeight(), entity.getWidth() * entity.getHealth() / originalHealth, 4);
+		batch.draw(color, entity.getLocation().x + xOffset, entity.getLocation().y + yOffset + entity.getHeight(), entity.getWidth() * entity.getHealth() / originalHealth, 4);
 	}
 }

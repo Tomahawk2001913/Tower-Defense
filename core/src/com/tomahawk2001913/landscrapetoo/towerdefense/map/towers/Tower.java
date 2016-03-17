@@ -65,10 +65,10 @@ public abstract class Tower implements TopTile {
 	@Override
 	public void render(SpriteBatch batch, float xOffset, float yOffset) {
 		if(isShooting) {
-			if(shootingTextureRegion != null) batch.draw(shootingTextureRegion, location.x * TileMap.TILE_DIMENSION + xOffset, location.y * TileMap.TILE_DIMENSION + yOffset, originValue, originValue, TileMap.TILE_DIMENSION, TileMap.TILE_DIMENSION, 1, 1, rotation);
-			else batch.draw(shootingAnimation.getKeyFrame(time), location.x * TileMap.TILE_DIMENSION + xOffset, location.y * TileMap.TILE_DIMENSION + yOffset, originValue, originValue, TileMap.TILE_DIMENSION, TileMap.TILE_DIMENSION, 1, 1, rotation);
+			if(shootingTextureRegion != null) batch.draw(shootingTextureRegion, location.x + xOffset, location.y + yOffset, originValue, originValue, TileMap.TILE_DIMENSION, TileMap.TILE_DIMENSION, 1, 1, rotation);
+			else batch.draw(shootingAnimation.getKeyFrame(time), location.x + xOffset, location.y + yOffset, originValue, originValue, TileMap.TILE_DIMENSION, TileMap.TILE_DIMENSION, 1, 1, rotation);
 		} else {
-			batch.draw(idleTextureRegion, location.x * TileMap.TILE_DIMENSION + xOffset, location.y * TileMap.TILE_DIMENSION + yOffset, originValue, originValue, TileMap.TILE_DIMENSION, TileMap.TILE_DIMENSION, 1, 1, rotation);
+			batch.draw(idleTextureRegion, location.x + xOffset, location.y + yOffset, originValue, originValue, TileMap.TILE_DIMENSION, TileMap.TILE_DIMENSION, 1, 1, rotation);
 		}
 	}
 	

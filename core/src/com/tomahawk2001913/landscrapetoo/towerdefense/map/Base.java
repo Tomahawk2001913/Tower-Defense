@@ -3,6 +3,7 @@ package com.tomahawk2001913.landscrapetoo.towerdefense.map;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
+import com.tomahawk2001913.landscrapetoo.towerdefense.io.AssetHandler;
 
 public class Base implements TopTile {
 	private float time;
@@ -11,6 +12,7 @@ public class Base implements TopTile {
 	
 	public Base() {
 		location = new Vector2();
+		baseAnimation = AssetHandler.gatlingCannonTowerShootingAnimation;
 	}
 	
 	public void render(SpriteBatch batch, float xOffset, float yOffset) {

@@ -16,7 +16,7 @@ public class Wave {
 	}
 	
 	public Entity nextSpawn(Vector2 location, TileMap tm) {
-		return new RobotInfantry(location, tm, tm.findPath(location, tm.getBase().getLocation()));
+		return new RobotInfantry(location, tm, tm.findPath(new Vector2(location.x / TileMap.TILE_DIMENSION, location.y / TileMap.TILE_DIMENSION), new Vector2((int) (tm.getBase().getLocation().x / TileMap.TILE_DIMENSION), (int) (tm.getBase().getLocation().y / TileMap.TILE_DIMENSION))));
 	}
 	
 	public int getNumber() {

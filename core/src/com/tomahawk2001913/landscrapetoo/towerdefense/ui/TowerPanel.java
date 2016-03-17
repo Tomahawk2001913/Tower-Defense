@@ -136,7 +136,7 @@ public class TowerPanel extends Panel {
 					Tower towerToAdd = tower.getTower().copy();
 					int tX =  (int) ((x - tm.getXOffset()) / TileMap.TILE_DIMENSION), tY = (int) ((y - tm.getYOffset()) / TileMap.TILE_DIMENSION);
 					
-					towerToAdd.setLocation(tX, tY);
+					towerToAdd.setLocation(tX * TileMap.TILE_DIMENSION, tY * TileMap.TILE_DIMENSION);
 					
 					tm.placeTopTile(tX , tY , towerToAdd);
 					moved();

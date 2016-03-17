@@ -31,8 +31,6 @@ public class Playing extends GameState {
 		Gdx.input.setInputProcessor(gsih);
 		tm = AssetHandler.loadMap("Maps/GrassyArea.tdm");
 		
-		tm.addEntity(new RobotInfantry(new Vector2(5, 2), tm, tm.findPath(new Vector2(5, 2), new Vector2(1, 1))));
-		
 		List<Tiles> tiles = new ArrayList<Tiles>();
 		
 		tiles.add(Tiles.BARRIER);

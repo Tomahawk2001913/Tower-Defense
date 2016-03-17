@@ -13,7 +13,7 @@ public class RobotInfantry extends Entity {
 	private Animation ria;
 	
 	public RobotInfantry(Vector2 location, TileMap tm, List<Vector2> path) {
-		super(location, Entity.DEFAULT_ENTITY_DIMENSION, Entity.DEFAULT_ENTITY_DIMENSION, 2.5f, 75, tm, path);
+		super(location, Entity.DEFAULT_ENTITY_DIMENSION, Entity.DEFAULT_ENTITY_DIMENSION, 20, 75, tm, path);
 		
 		ria = AssetHandler.robotInfantryAnimation;
 	}
@@ -24,7 +24,7 @@ public class RobotInfantry extends Entity {
 		
 		Color tempColor = batch.getColor();
 		batch.setColor(1, 1, 1, super.getAlpha());
-		batch.draw(ria.getKeyFrame(super.getTime()), super.getLocation().x * TileMap.TILE_DIMENSION + xOffset, super.getLocation().y * TileMap.TILE_DIMENSION + yOffset, 
+		batch.draw(ria.getKeyFrame(super.getTime()), super.getLocation().x + xOffset, super.getLocation().y + yOffset, 
 				TileMap.TILE_DIMENSION, TileMap.TILE_DIMENSION);
 		batch.setColor(tempColor);
 	}

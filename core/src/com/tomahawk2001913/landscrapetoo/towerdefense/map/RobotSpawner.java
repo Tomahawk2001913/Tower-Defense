@@ -35,7 +35,7 @@ public class RobotSpawner implements TopTile {
 		
 		if(spawnTimeCounter >= timeBetweenSpawns) {
 			spawnTimeCounter -= timeBetweenSpawns;
-			if(currentWave != null) currentWave.nextSpawn(location, tm);
+			if(currentWave != null) tm.addEntity(currentWave.nextSpawn(location.cpy(), tm));
 			
 		}
 	}

@@ -54,6 +54,7 @@ public class TileMap {
 					base.setLocation(x * TileMap.TILE_DIMENSION, y * TileMap.TILE_DIMENSION);
 				} else if(getTopTile(x, y) instanceof RobotSpawner) {
 					((RobotSpawner) getTopTile(x, y)).setLocation(x * TileMap.TILE_DIMENSION, y * TileMap.TILE_DIMENSION);
+					((RobotSpawner) getTopTile(x, y)).setTileMap(this);
 				}
 			}
 		}
@@ -135,10 +136,10 @@ public class TileMap {
 					
 					// This conversion to int means it is much better to give integer arguments.
 					int cXInt = (int) cX, cYInt = (int) cY;
-
+					
 					Tiles cT = getTile(cXInt, cYInt);
 					TopTile cTT = getTopTile(cXInt, cYInt);
-
+					System.out.println(current);
 					if(cT != null && (cTT == null || !cTT.isSolid()) && !cT.isSolid()) {
 						if(closest == null || (!closest.equals(current) && !closed.contains(currentCoords) &&
 								!use.contains(currentCoords) && getDistance(currentCoords, finish) < getDistance(closest, finish))) {
@@ -149,6 +150,7 @@ public class TileMap {
 							break ForLoops;
 						}
 					} else if(x == 2 && y == 2 && closest.equals(current)) {
+						if(getDistance(finish, current) < 2) return use;
 						break WhileLoop;
 					}
 				}
@@ -157,7 +159,13 @@ public class TileMap {
 			use.add(closest);
 		}
 		
-		return use;
+		List<Vector2> newUse = new ArrayList<Vector2>();
+		
+		for(Vector2 loc : use) {
+			newUse.add(loc.scl(TileMap.TILE_DIMENSION));
+		}
+		
+		return newUse;
 	}
 	
 	public boolean touchDown(float x, float y) {
@@ -198,6 +206,8 @@ public class TileMap {
 	}
 	
 	public void addEntity(Entity entity) {
+		System.out.println("ADDED");
+		
 		entities.add(entity);
 	}
 	
