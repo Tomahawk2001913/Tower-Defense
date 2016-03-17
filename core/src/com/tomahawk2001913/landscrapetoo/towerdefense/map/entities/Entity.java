@@ -63,8 +63,16 @@ public class Entity {
 			velocity.x = speed * Math.signum(path.get(pathSpot).x - location.x);
 			velocity.y = speed * Math.signum(path.get(pathSpot).y - location.y);
 			
-			if(tm.getDistance(path.get(pathSpot), location) < 0.2f) 
+			if(tm.getDistance(path.get(pathSpot), location) < 0.2f) {
 				pathSpot++;
+				
+				int spotTileX = (int) (path.get(pathSpot).x / TileMap.TILE_DIMENSION), spotTileY = (int) (path.get(pathSpot).y / TileMap.TILE_DIMENSION);
+				
+				if(tm.getTile(spotTileX, spotTileY).isSolid() ||
+						(tm.getTopTile(spotTileX, spotTileY) != null && tm.getTopTile(spotTileX, spotTileY).isSolid())) {
+					setPath(tm.findPath(new Vector2(location.x / TileMap.TILE_DIMENSION, location.y / TileMap.TILE_DIMENSION), new Vector2(path.get(path.size() - 1).x / TileMap.TILE_DIMENSION, path.get(path.size() - 1).y / TileMap.TILE_DIMENSION)));
+				}
+			}
 		}
 		
 		location.add(velocity.x * delta, velocity.y * delta);
