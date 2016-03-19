@@ -139,7 +139,7 @@ public class TileMap {
 					
 					Tiles cT = getTile(cXInt, cYInt);
 					TopTile cTT = getTopTile(cXInt, cYInt);
-					System.out.println(current);
+					
 					if(cT != null && (cTT == null || !cTT.isSolid()) && !cT.isSolid()) {
 						if(closest == null || (!closest.equals(current) && !closed.contains(currentCoords) &&
 								!use.contains(currentCoords) && getDistance(currentCoords, finish) < getDistance(closest, finish))) {
@@ -159,13 +159,13 @@ public class TileMap {
 			use.add(closest);
 		}
 		
-		List<Vector2> newUse = new ArrayList<Vector2>();
+		System.out.println(use);
 		
 		for(Vector2 loc : use) {
-			newUse.add(loc.scl(TileMap.TILE_DIMENSION));
+			loc.scl(TileMap.TILE_DIMENSION);
 		}
 		
-		return newUse;
+		return use;
 	}
 	
 	public boolean touchDown(float x, float y) {
