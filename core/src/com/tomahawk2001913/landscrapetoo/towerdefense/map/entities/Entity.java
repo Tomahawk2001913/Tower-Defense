@@ -60,10 +60,10 @@ public class Entity {
 		velocity.set(0, 0);
 		
 		if(path != null && path.size() > 0 && pathSpot < path.size()) {
-			velocity.x = (speed * Math.signum(path.get(pathSpot).x - location.x)) / TileMap.TILE_DIMENSION;
-			velocity.y = (speed * Math.signum(path.get(pathSpot).y - location.y)) / TileMap.TILE_DIMENSION;
+			velocity.x = speed * Math.signum(path.get(pathSpot).x - location.x);
+			velocity.y = speed * Math.signum(path.get(pathSpot).y - location.y);
 			
-			if(tm.getDistance(path.get(pathSpot), location) < 0.2f) {
+			if(tm.getDistance(path.get(pathSpot), location) < 0.4f) {
 				pathSpot++;
 				
 				// Finishes path.
@@ -78,6 +78,7 @@ public class Entity {
 						(tm.getTopTile(spotTileX, spotTileY) != null && tm.getTopTile(spotTileX, spotTileY).isSolid())) {
 					setPath(tm.findPath(new Vector2((int) (path.get(pathSpot - 1).x / TileMap.TILE_DIMENSION), (int) (path.get(pathSpot - 1).y / TileMap.TILE_DIMENSION)), 
 							new Vector2(path.get(path.size() - 1).x / TileMap.TILE_DIMENSION, path.get(path.size() - 1).y / TileMap.TILE_DIMENSION)));
+					pathSpot = 0;
 				}
 			}
 		}
