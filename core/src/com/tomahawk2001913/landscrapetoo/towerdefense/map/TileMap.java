@@ -52,6 +52,8 @@ public class TileMap {
 				if(getTopTile(x, y) instanceof Base) {
 					base = (Base) getTopTile(x, y);
 					base.setLocation(x * TileMap.TILE_DIMENSION, y * TileMap.TILE_DIMENSION);
+					
+					topTiles[x][y] = null;
 				} else if(getTopTile(x, y) instanceof RobotSpawner) {
 					((RobotSpawner) getTopTile(x, y)).setLocation(x * TileMap.TILE_DIMENSION, y * TileMap.TILE_DIMENSION);
 					((RobotSpawner) getTopTile(x, y)).setTileMap(this);
@@ -65,17 +67,20 @@ public class TileMap {
 	}
 	
 	public void render(SpriteBatch batch) {
-		// Render everything but entities.
+		// Render most of the stuff.
 		for(int x = 0; x < tiles.length; x++) {
 			for(int y = 0; y < tiles[0].length; y++) {
 				float figX = x * TILE_DIMENSION + xOffset, figY = y * TILE_DIMENSION + yOffset;
 				batch.draw(tiles[x][y].getTextureRegion(), figX, figY, TILE_DIMENSION, TILE_DIMENSION);
 				if(topTiles[x][y] != null) {
-					if(topTiles[x][y] instanceof Tower || topTiles[x][y] instanceof Base || topTiles[x][y] instanceof RobotSpawner) topTiles[x][y].render(batch, xOffset, yOffset);
+					if(topTiles[x][y] instanceof Tower || topTiles[x][y] instanceof RobotSpawner) topTiles[x][y].render(batch, xOffset, yOffset);
 					else topTiles[x][y].render(batch, figX, figY);
 				}
 			}
 		}
+		
+		// Render the base
+		base.render(batch, xOffset, yOffset);
 		
 		// Render the previously ignored entities.
 		for(Entity entity : entities) {
@@ -86,8 +91,6 @@ public class TileMap {
 	}
 	
 	public void update(float delta) {
-		bounds.set(xOffset, yOffset, tiles.length * TileMap.TILE_DIMENSION, tiles[0].length * TileMap.TILE_DIMENSION);
-		
 		for(Entity entity : deadEntities) {
 			entities.remove(entity);
 		}
@@ -98,6 +101,8 @@ public class TileMap {
 				if(topTiles[x][y] != null) topTiles[x][y].update(delta);
 			}
 		}
+		
+		base.update(delta);
 		
 		for(Entity entity : entities) {
 			if(entity == null) continue;
@@ -195,6 +200,9 @@ public class TileMap {
 		if(touched) {
 			xOffset = x + xTouchOffset;
 			yOffset = y + yTouchOffset;
+
+			bounds.set(xOffset, yOffset, tiles.length * TileMap.TILE_DIMENSION, tiles[0].length * TileMap.TILE_DIMENSION);
+			
 			return true;
 		}
 		

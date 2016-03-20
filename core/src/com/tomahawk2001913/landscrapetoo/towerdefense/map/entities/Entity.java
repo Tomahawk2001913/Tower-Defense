@@ -19,10 +19,12 @@ public class Entity {
 	
 	private float width, height, speed, health, alpha, time, flickerTime;
 	
+	private boolean isHostile;
+	
 	// Constants
 	public static final float DEFAULT_ENTITY_DIMENSION = 30, FLICKER_INTERVAL = 0.1f, DAMAGE_ALPHA = 0.5f;
 	
-	public Entity(Vector2 location, float width, float height, float speed, float health, TileMap tm, List<Vector2> path) {
+	public Entity(Vector2 location, float width, float height, float speed, float health, boolean hostile, TileMap tm, List<Vector2> path) {
 		this.location = location;
 		this.width = width;
 		this.height = height;
@@ -35,15 +37,17 @@ public class Entity {
 		
 		alpha = 1;
 		time = 0;
-		flickerTime = -0.5f;
+		flickerTime = -DAMAGE_ALPHA;
 		
-		hb = new HealthBar(this);
+		this.isHostile = false;
+		
+		hb = new HealthBar(this.health);
 		
 		pathSpot = 1;
 	}
 	
 	public void render(SpriteBatch batch, float xOffset, float yOffset) {
-		hb.render(batch, xOffset, yOffset);
+		hb.render(batch, location.x + xOffset, location.y + yOffset + height);
 	}
 	
 	public void update(float delta) {
@@ -92,6 +96,8 @@ public class Entity {
 	
 	public void damage(float damage) {
 		health -= damage;
+		
+		hb.setCurrentHealth(health);
 		
 		if(flickerTime <= -FLICKER_INTERVAL) flickerTime = FLICKER_INTERVAL;
 	}

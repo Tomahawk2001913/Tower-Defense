@@ -44,6 +44,10 @@ public class AssetHandler {
 	public static TextureRegion healthBarColor, robotInfantry1, robotInfantry2, drillBot;
 	public static Animation robotInfantryAnimation;
 	
+	// Base
+	public static TextureRegion factory1, factory2;
+	public static Animation factoryAnimation;
+	
 	public static void create() {
 		// Load everything-texture.
 		texture = new Texture(Gdx.files.internal("Textures/Texture.png"));
@@ -114,6 +118,15 @@ public class AssetHandler {
 		
 		drillBot = new TextureRegion(texture, 32, 48, 16, 16);
 		drillBot.flip(false, true);
+		
+		// Load base stuff
+		factory1 = new TextureRegion(texture, 0, 64, 32, 32);
+		factory1.flip(false, true);
+		factory2 = new TextureRegion(texture, 32, 64, 32, 32);
+		factory2.flip(false, true);
+		
+		factoryAnimation = new Animation(0.35f, new TextureRegion[] {factory1, factory2});
+		factoryAnimation.setPlayMode(PlayMode.LOOP);
 		
 		// Create Animation for grass
 		animatedGrass = new Animation(0.3f, new TextureRegion[] {grass1, grass2, grass3});
@@ -192,7 +205,7 @@ public class AssetHandler {
 							break;
 						}
 						case 10: {
-							tileColumn.add(Tiles.STONE);
+							tileColumn.add(Tiles.GRASS);
 							topColumn.add(new Base());
 						}
 						}

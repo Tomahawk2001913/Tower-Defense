@@ -9,17 +9,26 @@ import com.tomahawk2001913.landscrapetoo.towerdefense.map.entities.Entity;
 public class HealthBar {
 	private TextureRegion color;
 	
-	private Entity entity;
-	private float originalHealth;
+	private float originalHealth, width;
 	
-	public HealthBar(Entity entity) {
+	// Constants.
+	public static final float HEIGHT = 4;
+	
+	public HealthBar(float originalHealth) {
 		color = AssetHandler.healthBarColor;
-		this.entity = entity;
-		originalHealth = entity.getHealth();
+		this.originalHealth = originalHealth;
+		width = TileMap.TILE_DIMENSION;
 	}
 	
-	public void render(SpriteBatch batch, float xOffset, float yOffset) {
-		// Could be optimized by only figuring health percent after damaged.
-		batch.draw(color, entity.getLocation().x + xOffset, entity.getLocation().y + yOffset + entity.getHeight(), entity.getWidth() * entity.getHealth() / originalHealth, 4);
+	public void render(SpriteBatch batch, float x, float y) {
+		batch.draw(color, x, y, width, HEIGHT);
+	}
+	
+	public void setOriginalHealth(float original) {
+		originalHealth = original;
+	}
+	
+	public void setCurrentHealth(float health) {
+		width = TileMap.TILE_DIMENSION * (health / originalHealth);
 	}
 }

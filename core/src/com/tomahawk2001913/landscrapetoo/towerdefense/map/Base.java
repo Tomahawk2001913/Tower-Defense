@@ -4,23 +4,36 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.tomahawk2001913.landscrapetoo.towerdefense.io.AssetHandler;
+import com.tomahawk2001913.landscrapetoo.towerdefense.ui.HealthBar;
 
 public class Base implements TopTile {
 	private float time;
 	private Animation baseAnimation;
 	private Vector2 location;
+	private HealthBar hb;
+	
+	private float health;
 	
 	public Base() {
 		location = new Vector2();
-		baseAnimation = AssetHandler.gatlingCannonTowerShootingAnimation;
+		baseAnimation = AssetHandler.factoryAnimation;
+		health = 200;
+		
+		hb = new HealthBar(health);
 	}
 	
 	public void render(SpriteBatch batch, float xOffset, float yOffset) {
 		batch.draw(baseAnimation.getKeyFrame(time), location.x + xOffset, location.y + yOffset, TileMap.TILE_DIMENSION, TileMap.TILE_DIMENSION);
+		hb.render(batch, location.x + xOffset, location.y + yOffset + TileMap.TILE_DIMENSION);
 	}
 	
 	public void update(float delta) {
 		time += delta;
+	}
+	
+	public void damage(float damage) {
+		health -= damage;
+		hb.setCurrentHealth(health);
 	}
 	
 	public void setLocation(float x, float y) {
