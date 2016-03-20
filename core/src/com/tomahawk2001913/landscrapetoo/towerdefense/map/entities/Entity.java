@@ -3,6 +3,7 @@ package com.tomahawk2001913.landscrapetoo.towerdefense.map.entities;
 import java.util.List;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.tomahawk2001913.landscrapetoo.towerdefense.map.TileMap;
 import com.tomahawk2001913.landscrapetoo.towerdefense.ui.HealthBar;
@@ -10,6 +11,7 @@ import com.tomahawk2001913.landscrapetoo.towerdefense.ui.HealthBar;
 public class Entity {
 	private Vector2 location;
 	private Vector2 velocity;
+	private Rectangle bounds;
 	private TileMap tm;
 	private HealthBar hb;
 	
@@ -17,29 +19,32 @@ public class Entity {
 	
 	private int pathSpot;
 	
-	private float width, height, speed, health, alpha, time, flickerTime;
+	private float width, height, speed, health, damage, alpha, time, flickerTime;
 	
 	private boolean isHostile;
 	
 	// Constants
 	public static final float DEFAULT_ENTITY_DIMENSION = 30, FLICKER_INTERVAL = 0.1f, DAMAGE_ALPHA = 0.5f;
 	
-	public Entity(Vector2 location, float width, float height, float speed, float health, boolean hostile, TileMap tm, List<Vector2> path) {
+	public Entity(Vector2 location, float width, float height, float speed, float health, float damage, boolean hostile, TileMap tm, List<Vector2> path) {
 		this.location = location;
 		this.width = width;
 		this.height = height;
 		this.speed = speed;
 		this.health = health;
+		this.damage = damage;
 		this.tm = tm;
 		
 		velocity = new Vector2();
 		this.path = path;
 		
+		bounds = new Rectangle(location.x, location.y, TileMap.TILE_DIMENSION, TileMap.TILE_DIMENSION);
+		
 		alpha = 1;
 		time = 0;
 		flickerTime = -DAMAGE_ALPHA;
 		
-		this.isHostile = false;
+		this.isHostile = hostile;
 		
 		hb = new HealthBar(this.health);
 		
@@ -88,6 +93,12 @@ public class Entity {
 		}
 		
 		location.add(velocity.x * delta, velocity.y * delta);
+		
+		bounds.set(location.x, location.y, TileMap.TILE_DIMENSION, TileMap.TILE_DIMENSION);
+		
+		if(isHostile && bounds.overlaps(tm.getBase().getBounds())) {
+			tm.getBase().damage(damage * delta);
+		}
 	}
 	
 	public void setPath(List<Vector2> path) {
@@ -116,6 +127,10 @@ public class Entity {
 	
 	public Vector2 getVelocity() {
 		return velocity;
+	}
+	
+	public Rectangle getBounds() {
+		return bounds;
 	}
 	
 	public float getWidth() {

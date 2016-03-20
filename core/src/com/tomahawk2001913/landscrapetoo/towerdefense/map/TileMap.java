@@ -20,7 +20,7 @@ public class TileMap {
 	
 	private float xOffset = 0, yOffset = 0, xTouchOffset = 0, yTouchOffset = 0;
 	
-	private boolean touched = false;
+	private boolean touched = false, gameOver = false;
 	
 	// Constants
 	public static final float TILE_DIMENSION = 30;
@@ -96,6 +96,8 @@ public class TileMap {
 		}
 		deadEntities.clear();
 		
+		if(gameOver) return;
+		
 		for(int x = 0; x < tiles.length; x++) {
 			for(int y = 0; y < tiles[0].length; y++) {
 				if(topTiles[x][y] != null) topTiles[x][y].update(delta);
@@ -108,6 +110,10 @@ public class TileMap {
 			if(entity == null) continue;
 			
 			entity.update(delta);
+		}
+		
+		if(base.getHealth() <= 0) {
+			gameOver = true;
 		}
 	}
 	
@@ -164,8 +170,6 @@ public class TileMap {
 			use.add(closest);
 		}
 		
-		System.out.println(use);
-		
 		for(Vector2 loc : use) {
 			loc.scl(TileMap.TILE_DIMENSION);
 		}
@@ -214,8 +218,6 @@ public class TileMap {
 	}
 	
 	public void addEntity(Entity entity) {
-		System.out.println("ADDED");
-		
 		entities.add(entity);
 	}
 	
