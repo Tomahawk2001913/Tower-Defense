@@ -10,7 +10,6 @@ import com.tomahawk2001913.landscrapetoo.towerdefense.io.AssetHandler;
 import com.tomahawk2001913.landscrapetoo.towerdefense.io.GameStateInputHandler;
 import com.tomahawk2001913.landscrapetoo.towerdefense.map.TileMap;
 import com.tomahawk2001913.landscrapetoo.towerdefense.map.Tiles;
-import com.tomahawk2001913.landscrapetoo.towerdefense.map.entities.RobotInfantry;
 import com.tomahawk2001913.landscrapetoo.towerdefense.screens.GameScreen;
 import com.tomahawk2001913.landscrapetoo.towerdefense.ui.PanelHandler;
 import com.tomahawk2001913.landscrapetoo.towerdefense.ui.TilePanel;
@@ -55,6 +54,10 @@ public class Playing extends GameState {
 	public void update(float delta) {
 		tm.update(delta);
 		ph.update(delta);
+		
+		if(tm.isGameOver()) {
+			getCurrentGameStateManager().changeGameState(GameStates.GAMEOVER);;
+		}
 	}
 	
 	@Override

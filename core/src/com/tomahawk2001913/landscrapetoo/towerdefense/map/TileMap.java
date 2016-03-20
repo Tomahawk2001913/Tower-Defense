@@ -217,6 +217,10 @@ public class TileMap {
 		return Math.sqrt(Math.pow(start.x - finish.x, 2) + Math.pow(start.y - finish.y, 2));
 	}
 	
+	public boolean isGameOver() {
+		return gameOver;
+	}
+	
 	public void addEntity(Entity entity) {
 		entities.add(entity);
 	}
