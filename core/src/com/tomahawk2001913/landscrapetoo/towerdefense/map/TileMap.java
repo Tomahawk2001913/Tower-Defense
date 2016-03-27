@@ -169,8 +169,10 @@ public class TileMap {
 			
 			if(use.contains(closest) && use.contains(current) && use.size() > 2) {
 				closed.add(closest);
-				closed.add(use.get(use.size() - 1));
-				use.remove(use.get(use.size() - 1));
+				if(use.size() > 3) {
+					closed.add(use.get(use.size() - 1));
+					use.remove(use.get(use.size() - 1));
+				}
 				use.remove(use.indexOf(closest));
 			} else use.add(closest);
 		}
