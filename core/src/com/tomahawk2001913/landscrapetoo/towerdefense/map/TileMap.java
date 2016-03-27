@@ -152,22 +152,27 @@ public class TileMap {
 					TopTile cTT = getTopTile(cXInt, cYInt);
 					
 					if(cT != null && (cTT == null || !cTT.isSolid()) && !cT.isSolid()) {
-						if(closest == null || (!closest.equals(current) && !closed.contains(currentCoords) &&
-								!use.contains(currentCoords) && getDistance(currentCoords, finish) < getDistance(closest, finish))) {
+						if(!closed.contains(currentCoords) && (closest == null || (!closest.equals(current) &&
+								!use.contains(currentCoords) && getDistance(currentCoords, finish) < getDistance(closest, finish)))) {
 							closest = currentCoords;
 						}
 						
 						if(x == 2 && y == 2) {
 							break ForLoops;
 						}
-					} else if(x == 2 && y == 2 && closest.equals(current)) {
-						if(getDistance(finish, current) < 2) return use;
-						break WhileLoop;
+					} else if(x == 2 && y == 2) {
+						if(current.equals(closest) || closest == null)
+							break WhileLoop;
 					}
 				}
 			}
 			
-			use.add(closest);
+			if(use.contains(closest) && use.contains(current) && use.size() > 2) {
+				closed.add(closest);
+				closed.add(use.get(use.size() - 1));
+				use.remove(use.get(use.size() - 1));
+				use.remove(use.indexOf(closest));
+			} else use.add(closest);
 		}
 		
 		for(Vector2 loc : use) {
