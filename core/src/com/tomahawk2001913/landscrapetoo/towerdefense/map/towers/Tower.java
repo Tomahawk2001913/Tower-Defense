@@ -3,6 +3,7 @@ package com.tomahawk2001913.landscrapetoo.towerdefense.map.towers;
 import java.util.List;
 
 import com.badlogic.gdx.graphics.g2d.Animation;
+import com.badlogic.gdx.graphics.g2d.Animation.PlayMode;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
@@ -12,7 +13,7 @@ import com.tomahawk2001913.landscrapetoo.towerdefense.map.entities.Entity;
 
 public abstract class Tower implements TopTile {
 	public enum AimModes {
-		NEAREST, FIRST, STRONGEST;
+		NEAREST, FIRST, STRONGEST, WEAKEST;
 	}
 	
 	private TextureRegion idleTextureRegion, shootingTextureRegion;
@@ -23,20 +24,20 @@ public abstract class Tower implements TopTile {
 	
 	private AimModes aimMode;
 	
-	private float rotation, range, damage, time;
+	private float rotation, range, fireRate, time, shootTime;
 	
 	private boolean isShooting;
 	
 	private static float originValue;
 	
 	// Constants
-	public static final float DEFAULT_ROTATION = 90;
+	public static final float DEFAULT_ROTATION = 90.0f, FLICKER_FIRERATE = 0.1f;
 	
-	public Tower(Vector2 location, float rotation, float range, float damage, TextureRegion idle, TextureRegion shooting, TileMap tm) {
+	public Tower(Vector2 location, float rotation, float range, float fireRate, TextureRegion idle, TextureRegion shooting, TileMap tm) {
 		this.location = location;
 		this.rotation = rotation;
 		this.range = range;
-		this.damage = damage;
+		this.fireRate = fireRate;
 		idleTextureRegion = idle;
 		shootingTextureRegion = shooting;
 		this.tm = tm;
@@ -45,27 +46,17 @@ public abstract class Tower implements TopTile {
 		
 		originValue = TileMap.TILE_DIMENSION / 2;
 		time = 0;
-	}
-	
-	public Tower(Vector2 location, float rotation, float range, float damage, TextureRegion idle, Animation shootingAnimation, TileMap tm) {
-		this.location = location;
-		this.rotation = rotation;
-		this.range = range;
-		this.damage = damage;
-		idleTextureRegion = idle;
-		this.shootingAnimation = shootingAnimation;
-		this.tm = tm;
 		
-		aimMode = AimModes.NEAREST;
-		
-		originValue = TileMap.TILE_DIMENSION / 2;
-		time = 0;
+		if(fireRate <= FLICKER_FIRERATE) {
+			shootingAnimation = new Animation(fireRate, new TextureRegion[] {idleTextureRegion, shootingTextureRegion});
+			shootingAnimation.setPlayMode(PlayMode.LOOP);
+		} else shootingAnimation = null;
 	}
 	
 	@Override
 	public void render(SpriteBatch batch, float xOffset, float yOffset) {
 		if(isShooting) {
-			if(shootingTextureRegion != null) batch.draw(shootingTextureRegion, location.x + xOffset, location.y + yOffset, originValue, originValue, TileMap.TILE_DIMENSION, TileMap.TILE_DIMENSION, 1, 1, rotation);
+			if(shootingAnimation == null) batch.draw(shootingTextureRegion, location.x + xOffset, location.y + yOffset, originValue, originValue, TileMap.TILE_DIMENSION, TileMap.TILE_DIMENSION, 1, 1, rotation);
 			else batch.draw(shootingAnimation.getKeyFrame(time), location.x + xOffset, location.y + yOffset, originValue, originValue, TileMap.TILE_DIMENSION, TileMap.TILE_DIMENSION, 1, 1, rotation);
 		} else {
 			batch.draw(idleTextureRegion, location.x + xOffset, location.y + yOffset, originValue, originValue, TileMap.TILE_DIMENSION, TileMap.TILE_DIMENSION, 1, 1, rotation);
@@ -75,35 +66,52 @@ public abstract class Tower implements TopTile {
 	@Override
 	public void update(float delta) {
 		time += delta;
+		
 		isShooting = false;
-		
-		findNearestTarget();
-		
 		if(target != null) {
+			shootTime += delta;
 			rotation = aimAngle(target, 1);
-			isShooting = true;
-			target.damage(damage * delta);
+			if(shootTime >= fireRate) {
+				isShooting = true;
+				shoot(target, delta);
+				shootTime -= fireRate;
+			}
 		}
+		
+		findTarget();
 	}
 	
-	public void findNearestTarget() {
+	public void findTarget() {
 		target = null;
 		List<Entity> entities = tm.getEntities();
 		
-		Entity nearest = null;
+		Entity check = null;
 		for(Entity entity : entities) {
-			if(nearest == null) {
+			if(!entity.isHostile()) continue;
+			
+			if(check == null) {
 				if(targetWithinRange(entity)) {
-					nearest = entity;
+					check = entity;
 				}
 				continue;
 			}
 			
-			if(tm.getDistance(nearest.getLocation(), location) > tm.getDistance(entity.getLocation(), location))
-				nearest = entity;
+			switch(aimMode) {
+			case NEAREST:
+				if(tm.getDistance(check.getLocation(), location) > tm.getDistance(entity.getLocation(), location))
+					check = entity;
+				break;
+			case FIRST:
+				break;
+			case STRONGEST:
+				break;
+			case WEAKEST:
+				break;
+				
+			}
 		}
 		
-		target = nearest;
+		target = check;
 	}
 	
 	public float aimAngle(Entity target, float bulletSpeed) {
@@ -140,6 +148,14 @@ public abstract class Tower implements TopTile {
 		location.set(x, y);
 	}
 	
+	public void setAimMode(AimModes aimMode) {
+		this.aimMode = aimMode;
+	}
+	
+	public float getRotation() {
+		return rotation;
+	}
+	
 	public Vector2 getLocation() {
 		return location;
 	}
@@ -147,6 +163,8 @@ public abstract class Tower implements TopTile {
 	public TileMap getTileMap() {
 		return tm;
 	}
+	
+	public abstract void shoot(Entity target, float delta);
 	
 	public abstract Tower copy();
 }

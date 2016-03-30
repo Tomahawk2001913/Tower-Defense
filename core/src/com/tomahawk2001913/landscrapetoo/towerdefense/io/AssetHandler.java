@@ -93,15 +93,15 @@ public class AssetHandler {
 		laserCannonTowerShooting = new TextureRegion(texture, 16, 32, 16, 16);
 		laserCannonTowerShooting.flip(false, true);
 		
-		zapperTower = new TextureRegion(texture, 48, 32, 16, 16);
+		zapperTower = new TextureRegion(texture, 32, 32, 16, 16);
 		zapperTower.flip(false, true);
-		zapperTowerShooting = new TextureRegion(texture, 64, 32, 16, 16);
+		zapperTowerShooting = new TextureRegion(texture, 48, 32, 16, 16);
 		zapperTowerShooting.flip(false, true);
 		
 		laserBeam = new TextureRegion(texture, 112, 16, 16, 16);
 		laserBeam.flip(false, true);
 		
-		zapperBolt = new TextureRegion(texture, 80, 32, 16, 16);
+		zapperBolt = new TextureRegion(texture, 64, 32, 16, 16);
 		zapperBolt.flip(false, true);
 		
 		// Load health bar color

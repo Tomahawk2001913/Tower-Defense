@@ -9,10 +9,12 @@ import com.tomahawk2001913.landscrapetoo.towerdefense.map.TileMap;
 import com.tomahawk2001913.landscrapetoo.towerdefense.map.Tiles;
 import com.tomahawk2001913.landscrapetoo.towerdefense.map.towers.GatlingCannonTower;
 import com.tomahawk2001913.landscrapetoo.towerdefense.map.towers.Tower;
+import com.tomahawk2001913.landscrapetoo.towerdefense.map.towers.ZapperTower;
 
 public class TowerPanel extends Panel {
 	private enum Towers {
-		GATLINGCANNON(AssetHandler.gatlingCannonTower, new GatlingCannonTower(new Vector2(0, 0), null));
+		GATLINGCANNON(AssetHandler.gatlingCannonTower, new GatlingCannonTower(new Vector2(0, 0), null)), 
+		ZAPPER(AssetHandler.zapperTower, new ZapperTower(new Vector2(0, 0), null));
 		
 		private TextureRegion img;
 		private Tower tower;

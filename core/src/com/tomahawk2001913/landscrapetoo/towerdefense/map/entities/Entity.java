@@ -66,8 +66,6 @@ public class Entity {
 			alpha = 1;
 		}
 		
-		velocity.set(0, 0);
-		
 		if(path != null && path.size() > 0 && pathSpot < path.size()) {
 			velocity.x = speed * Math.signum(path.get(pathSpot).x - location.x);
 			velocity.y = speed * Math.signum(path.get(pathSpot).y - location.y);
@@ -78,6 +76,7 @@ public class Entity {
 				// Finishes path.
 				if(pathSpot >= path.size()) {
 					path = null;
+					velocity.set(0, 0);
 					return;
 				}
 				
@@ -117,8 +116,20 @@ public class Entity {
 		tm.removeEntity(this);
 	}
 	
+	public boolean isHostile() {
+		return isHostile;
+	}
+	
 	public float getHealth() {
 		return health;
+	}
+	
+	public float getSpeed() {
+		return speed;
+	}
+	
+	public float getDamage() {
+		return damage;
 	}
 	
 	public Vector2 getLocation() {
