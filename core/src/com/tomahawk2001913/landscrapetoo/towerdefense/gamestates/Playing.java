@@ -20,6 +20,8 @@ public class Playing extends GameState {
 	private GameStateInputHandler gsih;
 	private PanelHandler ph;
 	
+	private int money;
+	
 	public Playing() {
 		gsih = new GameStateInputHandler(this);
 	}
@@ -29,6 +31,8 @@ public class Playing extends GameState {
 		super.changeTo(superManager);
 		Gdx.input.setInputProcessor(gsih);
 		tm = AssetHandler.loadMap("Maps/GrassyArea.tdm");
+		
+		money = 0;
 		
 		List<Tiles> tiles = new ArrayList<Tiles>();
 		
