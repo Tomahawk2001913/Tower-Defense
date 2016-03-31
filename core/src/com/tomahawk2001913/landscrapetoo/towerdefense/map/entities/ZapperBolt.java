@@ -12,6 +12,8 @@ public class ZapperBolt extends Bullet {
 
 	@Override
 	public void hit(Entity entity) {
-		entity.damage(getDamage());
+		for(Entity check : getTileMap().getEntities()) {
+			if(getTileMap().getDistance(check.getLocation(), entity.getLocation()) < 75) check.damage(getDamage());
+		}
 	}
 }
