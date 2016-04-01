@@ -12,6 +12,7 @@ import com.tomahawk2001913.landscrapetoo.towerdefense.map.TileMap;
 import com.tomahawk2001913.landscrapetoo.towerdefense.map.Tiles;
 import com.tomahawk2001913.landscrapetoo.towerdefense.screens.GameScreen;
 import com.tomahawk2001913.landscrapetoo.towerdefense.ui.PanelHandler;
+import com.tomahawk2001913.landscrapetoo.towerdefense.ui.Text;
 import com.tomahawk2001913.landscrapetoo.towerdefense.ui.TilePanel;
 import com.tomahawk2001913.landscrapetoo.towerdefense.ui.TowerPanel;
 
@@ -21,6 +22,8 @@ public class Playing extends GameState {
 	private PanelHandler ph;
 	
 	private int money;
+	
+	private Text text = new Text("TEXT!", 64, 5, 5);
 	
 	public Playing() {
 		gsih = new GameStateInputHandler(this);
@@ -39,8 +42,8 @@ public class Playing extends GameState {
 		tiles.add(Tiles.BARRIER);
 		
 		ph = new PanelHandler();
-		ph.addPanel(new TowerPanel(new Vector2(GameScreen.gameWidth - TowerPanel.WIDTH, 0), this.tm));
-		ph.addPanel(new TilePanel(new Vector2(GameScreen.gameWidth - TowerPanel.WIDTH, TowerPanel.HEIGHT), tiles, this.tm));
+		ph.addPanel(new TowerPanel(new Vector2(GameScreen.gameWidth - TowerPanel.WIDTH, 0), this.tm, true));
+		ph.addPanel(new TilePanel(new Vector2(GameScreen.gameWidth - TowerPanel.WIDTH, TowerPanel.HEIGHT), tiles, this.tm, true));
 	}
 	
 	@Override
@@ -52,6 +55,8 @@ public class Playing extends GameState {
 	public void render(SpriteBatch batch) {
 		tm.render(batch);
 		ph.render(batch);
+		
+		text.render(batch);
 	}
 
 	@Override

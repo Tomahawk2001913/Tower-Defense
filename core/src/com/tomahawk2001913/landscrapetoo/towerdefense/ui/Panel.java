@@ -18,14 +18,16 @@ public abstract class Panel {
 	// Constants.
 	public static final float ALPHA = 0.85f;
 	
-	private boolean touched;
+	private boolean touched, moveable;
 	
-	public Panel(Vector2 location, float width, float height) {
+	public Panel(Vector2 location, float width, float height, boolean moveable) {
 		this.location = location;
 		bounds = new Rectangle(location.x, location.y, width, height);
 		
 		this.width = width;
 		this.height = height;
+		
+		this.moveable = moveable;
 		
 		xTouchOffset = 0;
 		yTouchOffset = 0;
@@ -52,7 +54,7 @@ public abstract class Panel {
 	}
 	
 	public boolean touchDown(float x, float y) {
-		if(bounds.contains(x, y)) {
+		if(moveable && bounds.contains(x, y)) {
 			touched = true;
 			xTouchOffset = location.x - x;
 			yTouchOffset = location.y - y;

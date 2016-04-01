@@ -3,12 +3,16 @@ package com.tomahawk2001913.landscrapetoo.towerdefense.io;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Animation.PlayMode;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
+import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator.FreeTypeFontParameter;
 import com.badlogic.gdx.math.Vector2;
 import com.tomahawk2001913.landscrapetoo.towerdefense.map.AnimatedGrassTile;
 import com.tomahawk2001913.landscrapetoo.towerdefense.map.Base;
@@ -47,6 +51,9 @@ public class AssetHandler {
 	// Base
 	public static TextureRegion factory1, factory2;
 	public static Animation factoryAnimation;
+	
+	// Font stuff
+	public static HashMap<Integer, BitmapFont> fonts;
 	
 	public static void create() {
 		// Load everything-texture.
@@ -131,6 +138,9 @@ public class AssetHandler {
 		// Create Animation for grass
 		animatedGrass = new Animation(0.3f, new TextureRegion[] {grass1, grass2, grass3});
 		animatedGrass.setPlayMode(PlayMode.LOOP_PINGPONG);
+		
+		// Font stuff
+		fonts = new HashMap<Integer, BitmapFont>();
 	}
 	
 	public static TileMap loadMap(String internalPath) {
@@ -232,6 +242,23 @@ public class AssetHandler {
 			e.printStackTrace();
 			return null;
 		}
+	}
+	
+	public static void generateFont(int size) {
+		FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("Fonts/VCR_OSD_MONO_1.001.ttf"));
+		FreeTypeFontParameter parameter = new FreeTypeFontParameter();
+		parameter.size = size;
+		parameter.flip = true;
+		fonts.put(size, generator.generateFont(parameter));
+		generator.dispose();
+	}
+	
+	public static boolean fontExists(int size) {
+		return fonts.containsKey(size);
+	}
+	
+	public static BitmapFont getFont(int size) {
+		return fonts.get(size);
 	}
 	
 	public static void dispose() {

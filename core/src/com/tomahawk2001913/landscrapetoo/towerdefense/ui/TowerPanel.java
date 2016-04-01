@@ -90,8 +90,8 @@ public class TowerPanel extends Panel {
 	// Constants.
 	public static final float WIDTH = 80, HEIGHT = 120, TOWERS_PER_ROW = 3;
 	
-	public TowerPanel(Vector2 location, TileMap tm) {
-		super(location, WIDTH, HEIGHT);
+	public TowerPanel(Vector2 location, TileMap tm, boolean moveable) {
+		super(location, WIDTH, HEIGHT, moveable);
 		
 		this.tm = tm;
 		

@@ -17,8 +17,8 @@ public class TilePanel extends Panel {
 	// Constants.
 	public static final float TILESPERROW = 2;
 	
-	public TilePanel(Vector2 location, List<Tiles> tiles, TileMap tm) {
-		super(location, TileMap.TILE_DIMENSION * 1.5f, TileMap.TILE_DIMENSION * 1.5f);
+	public TilePanel(Vector2 location, List<Tiles> tiles, TileMap tm, boolean moveable) {
+		super(location, TileMap.TILE_DIMENSION * 1.5f, TileMap.TILE_DIMENSION * 1.5f, moveable);
 		
 		this.tiles = new ArrayList<TilesData>();
 		
