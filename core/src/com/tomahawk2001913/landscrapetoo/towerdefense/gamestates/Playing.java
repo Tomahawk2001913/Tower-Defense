@@ -13,6 +13,7 @@ import com.tomahawk2001913.landscrapetoo.towerdefense.map.TileMap;
 import com.tomahawk2001913.landscrapetoo.towerdefense.map.Tiles;
 import com.tomahawk2001913.landscrapetoo.towerdefense.screens.GameScreen;
 import com.tomahawk2001913.landscrapetoo.towerdefense.ui.PanelHandler;
+import com.tomahawk2001913.landscrapetoo.towerdefense.ui.Text;
 import com.tomahawk2001913.landscrapetoo.towerdefense.ui.TextPanel;
 import com.tomahawk2001913.landscrapetoo.towerdefense.ui.TilePanel;
 import com.tomahawk2001913.landscrapetoo.towerdefense.ui.TowerPanel;
@@ -40,15 +41,15 @@ public class Playing extends GameState {
 		
 		tiles.add(Tiles.BARRIER);
 		
-		HashMap<String, Integer> texts = new HashMap<String, Integer>();
+		List<Text> texts = new ArrayList<Text>();
 		
-		texts.put("Test Text 1", 26);
-		texts.put("Another text.", 26);
+		texts.add(new Text("Test Text 1", 26, 0, 0));
+		texts.add(new Text("Another text.", 26, 0, 0));
 		
 		ph = new PanelHandler();
 		ph.addPanel(new TowerPanel(new Vector2(GameScreen.gameWidth - TowerPanel.WIDTH, 0), this.tm, true));
 		ph.addPanel(new TilePanel(new Vector2(GameScreen.gameWidth - TowerPanel.WIDTH, TowerPanel.HEIGHT), tiles, this.tm, true));
-		ph.addPanel(new TextPanel(new Vector2(0, 0), 0, 0, true, 2, 1, texts));
+		ph.addPanel(new TextPanel(new Vector2(0, 0), 0, 0, true, 2, 50, texts));
 	}
 	
 	@Override

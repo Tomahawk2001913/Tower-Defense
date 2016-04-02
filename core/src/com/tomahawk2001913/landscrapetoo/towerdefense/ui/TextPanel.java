@@ -1,7 +1,5 @@
 package com.tomahawk2001913.landscrapetoo.towerdefense.ui;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -11,17 +9,13 @@ public class TextPanel extends Panel {
 	private List<Text> texts;
 	private float lineGap, border;
 	
-	public TextPanel(Vector2 location, float width, float height, boolean moveable, float lineGap, float border, HashMap<String, Integer> text) {
+	public TextPanel(Vector2 location, float width, float height, boolean moveable, float lineGap, float border, List<Text> texts) {
 		super(location, width, height, moveable);
 		
 		this.lineGap = lineGap;
 		this.border = border;
 		
-		texts = new ArrayList<Text>();
-		
-		for(String line : text.keySet()) {
-			texts.add(new Text(line, text.get(line), 0, 0));
-		}
+		this.texts = texts;
 		
 		moved();
 	}
@@ -49,10 +43,10 @@ public class TextPanel extends Panel {
 			float testWidth = temp.getWidth(), testHeight = (lineGap + temp.getHeight()) * (i + 1);
 			
 			if(testWidth > getWidth())
-				setWidth(testWidth);
+				setWidth(testWidth + border * 2);
 			
 			if(testHeight > getHeight()) 
-				setHeight(testHeight);
+				setHeight(testHeight + border * 2);
 		}
 		// TODO: Fix stuff here! //
 	}
