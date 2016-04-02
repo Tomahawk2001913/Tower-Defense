@@ -250,9 +250,13 @@ public class TileMap {
 			tiles[x][y] = tile;
 	}
 	
-	public void placeTopTile(int x, int y, TopTile topTile) {
-		if(x < topTiles.length  && x > -1 && y < topTiles[0].length && y > -1)
+	public boolean placeTopTile(int x, int y, TopTile topTile) {
+		if(x < topTiles.length  && x > -1 && y < topTiles[0].length && y > -1) {
 			topTiles[x][y] = topTile;
+			return true;
+		}
+		
+		return false;
 	}
 	
 	public Tiles getTile(int x, int y) {

@@ -31,6 +31,10 @@ public class Text {
 		location.set(x, y);
 	}
 	
+	public void setText(String text) {
+		content = text;
+	}
+	
 	public Vector2 getLocation() {
 		return location;
 	}

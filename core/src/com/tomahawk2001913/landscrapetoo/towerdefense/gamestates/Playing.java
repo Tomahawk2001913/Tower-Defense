@@ -1,7 +1,6 @@
 package com.tomahawk2001913.landscrapetoo.towerdefense.gamestates;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 import com.badlogic.gdx.Gdx;
@@ -23,7 +22,9 @@ public class Playing extends GameState {
 	private GameStateInputHandler gsih;
 	private PanelHandler ph;
 	
-	private int money;
+	private static TextPanel moneyPanel;
+	
+	public static int money;
 	
 	public Playing() {
 		gsih = new GameStateInputHandler(this);
@@ -35,7 +36,7 @@ public class Playing extends GameState {
 		Gdx.input.setInputProcessor(gsih);
 		tm = AssetHandler.loadMap("Maps/GrassyArea.tdm");
 		
-		money = 0;
+		money = 200;
 		
 		List<Tiles> tiles = new ArrayList<Tiles>();
 		
@@ -43,13 +44,14 @@ public class Playing extends GameState {
 		
 		List<Text> texts = new ArrayList<Text>();
 		
-		texts.add(new Text("Test Text 1", 26, 0, 0));
-		texts.add(new Text("Another text.", 26, 0, 0));
+		texts.add(new Text("$" + money, 26, 0, 0));
+		
+		moneyPanel = new TextPanel(new Vector2(0, 0), 0, 0, true, 4, 10, texts);
 		
 		ph = new PanelHandler();
 		ph.addPanel(new TowerPanel(new Vector2(GameScreen.gameWidth - TowerPanel.WIDTH, 0), this.tm, true));
 		ph.addPanel(new TilePanel(new Vector2(GameScreen.gameWidth - TowerPanel.WIDTH, TowerPanel.HEIGHT), tiles, this.tm, true));
-		ph.addPanel(new TextPanel(new Vector2(0, 0), 0, 0, true, 2, 50, texts));
+		ph.addPanel(moneyPanel);
 	}
 	
 	@Override
@@ -91,5 +93,28 @@ public class Playing extends GameState {
 	@Override
 	public boolean touchDragged(float x, float y) {
 		return ph.touchDragged(x, y) || tm.touchDragged(x, y);
+	}
+	
+	public static void moneyChanged() {
+		moneyPanel.setText("$" + money);
+	}
+	
+	public static boolean hasMoney(int money) {
+		return Playing.money >= money;
+	}
+	
+	public static boolean subtractMoney(int money) {
+		if(hasMoney(money)) {
+			Playing.money -= money;
+			moneyChanged();
+			return true;
+		}
+		
+		return false;
+	}
+	
+	public static void addMoney(int money) {
+		Playing.money += money;
+		moneyChanged();
 	}
 }

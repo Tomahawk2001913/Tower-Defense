@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
+import com.tomahawk2001913.landscrapetoo.towerdefense.gamestates.Playing;
 import com.tomahawk2001913.landscrapetoo.towerdefense.io.AssetHandler;
 import com.tomahawk2001913.landscrapetoo.towerdefense.map.TileMap;
 import com.tomahawk2001913.landscrapetoo.towerdefense.map.Tiles;
@@ -21,6 +22,7 @@ public class TowerPanel extends Panel {
 		private Rectangle bounds;
 		
 		private float xTouchOffset, yTouchOffset;
+		private int price;
 		
 		private boolean touched, place;
 		
@@ -82,6 +84,10 @@ public class TowerPanel extends Panel {
 		
 		public boolean getTouched() {
 			return touched;
+		}
+		
+		public int getPrice() {
+			return tower.getPrice();
 		}
 	}
 	
@@ -146,7 +152,10 @@ public class TowerPanel extends Panel {
 					Tower towerToAdd = tower.getTower().copy();
 					towerToAdd.setLocation(tX * TileMap.TILE_DIMENSION, tY * TileMap.TILE_DIMENSION);
 					
-					tm.placeTopTile(tX , tY , towerToAdd);
+					if(Playing.hasMoney(tower.getPrice()) && tm.placeTopTile(tX , tY , towerToAdd)) {
+						Playing.subtractMoney(tower.getPrice());
+					}
+					
 					moved();
 				}
 			}

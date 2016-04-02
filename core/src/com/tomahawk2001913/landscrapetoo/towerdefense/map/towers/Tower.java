@@ -166,5 +166,7 @@ public abstract class Tower implements TopTile {
 	
 	public abstract void shoot(Entity target, float delta);
 	
+	public abstract int getPrice();
+	
 	public abstract Tower copy();
 }

@@ -43,11 +43,20 @@ public class TextPanel extends Panel {
 			float testWidth = temp.getWidth(), testHeight = (lineGap + temp.getHeight()) * (i + 1);
 			
 			if(testWidth > getWidth())
-				setWidth(testWidth + border * 2);
+				setWidth(testWidth);
 			
 			if(testHeight > getHeight()) 
-				setHeight(testHeight + border * 2);
+				setHeight(testHeight);
 		}
-		// TODO: Fix stuff here! //
+		
+		setWidth(getWidth() + border * 2);
+		setHeight(getHeight() + border * 2);
+	}
+	
+	public void setText(String text) {
+		Text temp = texts.get(0);
+		texts.clear();
+		temp.setText(text);
+		texts.add(temp);
 	}
 }

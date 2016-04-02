@@ -17,6 +17,11 @@ public class ZapperTower extends Tower {
 	}
 	
 	@Override
+	public int getPrice() {
+		return 200;
+	}
+	
+	@Override
 	public Tower copy() {
 		return new ZapperTower(getLocation().cpy(), getTileMap());
 	}

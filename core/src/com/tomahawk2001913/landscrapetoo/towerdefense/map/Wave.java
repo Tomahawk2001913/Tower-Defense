@@ -5,6 +5,16 @@ import com.tomahawk2001913.landscrapetoo.towerdefense.map.entities.Entity;
 import com.tomahawk2001913.landscrapetoo.towerdefense.map.entities.RobotInfantry;
 
 public class Wave {
+	private enum Waves {
+		ONE(new Entity[] { /* Add stuff or find a better way? */ });
+		
+		private Entity[] entities;
+		
+		private Waves(Entity[] entities) {
+			this.entities = entities;
+		}
+	}
+	
 	private RobotSpawner rs;
 	
 	private int number;
