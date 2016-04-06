@@ -49,8 +49,8 @@ public abstract class Panel {
 	public void update(float delta) {
 		bounds.set(location.x, location.y, width , height);
 		
-		if(location.x < 0) location.x = 0;
-		if(location.y < 0) location.y = 0;
+		if(location.x < 0) setLocation(0, location.y);
+		if(location.y < 0) setLocation(location.x, 0);
 	}
 	
 	public boolean touchDown(float x, float y) {
