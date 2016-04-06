@@ -58,5 +58,11 @@ public class TextPanel extends Panel {
 		texts.clear();
 		temp.setText(text);
 		texts.add(temp);
+		moved();
+	}
+	
+	public void setTexts(List<Text> texts) {
+		this.texts = texts;
+		moved();
 	}
 }

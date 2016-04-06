@@ -84,6 +84,11 @@ public abstract class Panel {
 	
 	public abstract void moved();
 	
+	public void setLocation(float x, float y) {
+		location.set(x, y);
+		moved();
+	}
+	
 	public void setWidth(float width) {
 		this.width = width;
 	}

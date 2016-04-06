@@ -11,6 +11,7 @@ import com.tomahawk2001913.landscrapetoo.towerdefense.io.GameStateInputHandler;
 import com.tomahawk2001913.landscrapetoo.towerdefense.map.TileMap;
 import com.tomahawk2001913.landscrapetoo.towerdefense.map.Tiles;
 import com.tomahawk2001913.landscrapetoo.towerdefense.screens.GameScreen;
+import com.tomahawk2001913.landscrapetoo.towerdefense.ui.Panel;
 import com.tomahawk2001913.landscrapetoo.towerdefense.ui.PanelHandler;
 import com.tomahawk2001913.landscrapetoo.towerdefense.ui.Text;
 import com.tomahawk2001913.landscrapetoo.towerdefense.ui.TextPanel;
@@ -23,8 +24,12 @@ public class Playing extends GameState {
 	private PanelHandler ph;
 	
 	private static TextPanel moneyPanel;
+	public static TextPanel informationPanel;
 	
 	public static int money;
+	
+	// Constants.
+	public static final int STARTING_MONEY = 500;
 	
 	public Playing() {
 		gsih = new GameStateInputHandler(this);
@@ -36,11 +41,7 @@ public class Playing extends GameState {
 		Gdx.input.setInputProcessor(gsih);
 		tm = AssetHandler.loadMap("Maps/GrassyArea.tdm");
 		
-		money = 200;
-		
-		List<Tiles> tiles = new ArrayList<Tiles>();
-		
-		tiles.add(Tiles.BARRIER);
+		money = STARTING_MONEY;
 		
 		List<Text> texts = new ArrayList<Text>();
 		
@@ -48,10 +49,18 @@ public class Playing extends GameState {
 		
 		moneyPanel = new TextPanel(new Vector2(0, 0), 0, 0, true, 4, 10, texts);
 		
+		informationPanel = new TextPanel(new Vector2(0, 0), 20, 10, true, 4, 10, new ArrayList<Text>() {{ add(new Text("Good luck!", 16, 0, 0)); }});
+		informationPanel.setLocation(0, GameScreen.gameHeight - informationPanel.getHeight());
+		
+		List<Tiles> tiles = new ArrayList<Tiles>();
+		
+		tiles.add(Tiles.BARRIER);
+		
 		ph = new PanelHandler();
-		ph.addPanel(new TowerPanel(new Vector2(GameScreen.gameWidth - TowerPanel.WIDTH, 0), this.tm, true));
+		ph.addPanel(new TowerPanel(new Vector2(GameScreen.gameWidth - TowerPanel.WIDTH, 0), this.tm, this, true));
 		ph.addPanel(new TilePanel(new Vector2(GameScreen.gameWidth - TowerPanel.WIDTH, TowerPanel.HEIGHT), tiles, this.tm, true));
 		ph.addPanel(moneyPanel);
+		ph.addPanel(informationPanel);
 	}
 	
 	@Override
@@ -93,6 +102,18 @@ public class Playing extends GameState {
 	@Override
 	public boolean touchDragged(float x, float y) {
 		return ph.touchDragged(x, y) || tm.touchDragged(x, y);
+	}
+	
+	public void addPanel(Panel panel) {
+		ph.addPanel(panel);
+	}
+	
+	public void removePanel(Panel panel) {
+		ph.removePanel(panel);
+	}
+	
+	public void setInformationPanelInfo(List<Text> info) {
+		informationPanel.setTexts(info);
 	}
 	
 	public static void moneyChanged() {

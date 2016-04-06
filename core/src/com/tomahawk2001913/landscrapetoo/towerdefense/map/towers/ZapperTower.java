@@ -22,6 +22,11 @@ public class ZapperTower extends Tower {
 	}
 	
 	@Override
+	public String getName() {
+		return "Zapper Tower";
+	}
+	
+	@Override
 	public Tower copy() {
 		return new ZapperTower(getLocation().cpy(), getTileMap());
 	}

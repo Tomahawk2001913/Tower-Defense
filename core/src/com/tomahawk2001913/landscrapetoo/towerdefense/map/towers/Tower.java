@@ -168,5 +168,7 @@ public abstract class Tower implements TopTile {
 	
 	public abstract int getPrice();
 	
+	public abstract String getName();
+	
 	public abstract Tower copy();
 }

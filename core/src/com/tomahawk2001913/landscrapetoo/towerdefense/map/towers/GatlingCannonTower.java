@@ -25,6 +25,11 @@ public class GatlingCannonTower extends Tower {
 	}
 	
 	@Override
+	public String getName() {
+		return "Gatling Cannon Tower";
+	}
+	
+	@Override
 	public GatlingCannonTower copy() {
 		return new GatlingCannonTower(getLocation().cpy(), getTileMap());
 	}

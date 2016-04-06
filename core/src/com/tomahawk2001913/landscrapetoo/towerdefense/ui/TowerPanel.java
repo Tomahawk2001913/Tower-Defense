@@ -1,5 +1,8 @@
 package com.tomahawk2001913.landscrapetoo.towerdefense.ui;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
@@ -89,17 +92,24 @@ public class TowerPanel extends Panel {
 		public int getPrice() {
 			return tower.getPrice();
 		}
+		
+		public String getName() {
+			return tower.getName();
+		}
 	}
 	
 	private TileMap tm;
+	private Playing playing;
 	
 	// Constants.
 	public static final float WIDTH = 80, HEIGHT = 120, TOWERS_PER_ROW = 3;
 	
-	public TowerPanel(Vector2 location, TileMap tm, boolean moveable) {
+	public TowerPanel(Vector2 location, TileMap tm, Playing playing, boolean moveable) {
 		super(location, WIDTH, HEIGHT, moveable);
 		
 		this.tm = tm;
+		
+		this.playing = playing;
 		
 		for(Towers tower : Towers.values()) {
 			tower.getTower().setTileMap(tm);
@@ -134,6 +144,14 @@ public class TowerPanel extends Panel {
 		boolean returnTrue = false;
 		
 		for(Towers tower : Towers.values()) {
+			if(tower.getTouched()) {
+				List<Text> info = new ArrayList<Text>();
+				info.add(new Text(tower.getName(), 18, 0, 0));
+				info.add(new Text("$" + tower.getPrice(), 16, 0, 0));
+				
+				playing.setInformationPanelInfo(info);
+			}
+			
 			tower.setTouched(false);
 			
 			tower.setXTouchOffset(0);
@@ -142,18 +160,20 @@ public class TowerPanel extends Panel {
 			if(tower.getBounds().contains(x, y)) {
 				returnTrue = true;
 				if(tower.getPlace()) {
-					int tX =  (int) ((x - tm.getXOffset()) / TileMap.TILE_DIMENSION), tY = (int) ((y - tm.getYOffset()) / TileMap.TILE_DIMENSION);
-					
-					if(tm.getTile(tX, tY) != Tiles.BARRIER) {
-						moved();
-						return true;
-					}
-					
-					Tower towerToAdd = tower.getTower().copy();
-					towerToAdd.setLocation(tX * TileMap.TILE_DIMENSION, tY * TileMap.TILE_DIMENSION);
-					
-					if(Playing.hasMoney(tower.getPrice()) && tm.placeTopTile(tX , tY , towerToAdd)) {
-						Playing.subtractMoney(tower.getPrice());
+					if(!super.getBounds().contains(x, y)) {
+						int tX =  (int) ((x - tm.getXOffset()) / TileMap.TILE_DIMENSION), tY = (int) ((y - tm.getYOffset()) / TileMap.TILE_DIMENSION);
+						
+						if(tm.getTile(tX, tY) != Tiles.BARRIER) {
+							moved();
+							return true;
+						}
+						
+						Tower towerToAdd = tower.getTower().copy();
+						towerToAdd.setLocation(tX * TileMap.TILE_DIMENSION, tY * TileMap.TILE_DIMENSION);
+						
+						if(Playing.hasMoney(tower.getPrice()) && tm.placeTopTile(tX , tY , towerToAdd)) {
+							Playing.subtractMoney(tower.getPrice());
+						}
 					}
 					
 					moved();
