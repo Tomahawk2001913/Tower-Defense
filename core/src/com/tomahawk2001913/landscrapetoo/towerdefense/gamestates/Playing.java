@@ -113,6 +113,7 @@ public class Playing extends GameState {
 	}
 	
 	public void setInformationPanelInfo(List<Text> info) {
+		float tempX = informationPanel.getLocation().x + informationPanel.getWidth(), tempY = informationPanel.getLocation().y + informationPanel.getHeight();
 		informationPanel.setTexts(info);
 	}
 	
