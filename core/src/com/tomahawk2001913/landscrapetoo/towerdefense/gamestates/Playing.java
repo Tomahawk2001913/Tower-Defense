@@ -113,9 +113,9 @@ public class Playing extends GameState {
 	}
 	
 	public void setInformationPanelInfo(List<Text> info) {
-		float tempX = informationPanel.getLocation().x + informationPanel.getWidth(), tempY = informationPanel.getLocation().y + informationPanel.getHeight();
+		float tempY = informationPanel.getLocation().y + informationPanel.getHeight();
 		informationPanel.setTexts(info);
-		informationPanel.setLocation(tempX - informationPanel.getWidth(), tempY - informationPanel.getHeight());
+		if(!informationPanel.hasMoved()) informationPanel.setLocation(informationPanel.getLocation().x, tempY - informationPanel.getHeight());
 	}
 	
 	public static void moneyChanged() {

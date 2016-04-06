@@ -18,7 +18,7 @@ public abstract class Panel {
 	// Constants.
 	public static final float ALPHA = 0.85f;
 	
-	private boolean touched, moveable;
+	private boolean touched, moveable, hasMoved;
 	
 	public Panel(Vector2 location, float width, float height, boolean moveable) {
 		this.location = location;
@@ -33,6 +33,7 @@ public abstract class Panel {
 		yTouchOffset = 0;
 		
 		touched = false;
+		hasMoved = false;
 		
 		moved();
 		
@@ -76,6 +77,7 @@ public abstract class Panel {
 		if(touched) {
 			location.set(x + xTouchOffset, y + yTouchOffset);
 			moved();
+			hasMoved = true;
 			return true;
 		}
 		
@@ -103,6 +105,10 @@ public abstract class Panel {
 	
 	public float getHeight() {
 		return height;
+	}
+	
+	public boolean hasMoved() {
+		return hasMoved;
 	}
 	
 	public Vector2 getLocation() {
