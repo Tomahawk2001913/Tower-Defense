@@ -12,8 +12,11 @@ import com.tomahawk2001913.landscrapetoo.towerdefense.map.TileMap;
 public class RobotInfantry extends Entity {
 	private Animation ria;
 	
+	// Constants
+	public static final int DEFAULT_WORTH = 15;
+	
 	public RobotInfantry(Vector2 location, TileMap tm, List<Vector2> path) {
-		super(location, Entity.DEFAULT_ENTITY_DIMENSION, Entity.DEFAULT_ENTITY_DIMENSION, 20, 75, 10, true, tm, path);
+		super(location, Entity.DEFAULT_ENTITY_DIMENSION, Entity.DEFAULT_ENTITY_DIMENSION, 20, 75, 10, DEFAULT_WORTH, true, tm, path);
 		
 		ria = AssetHandler.robotInfantryAnimation;
 	}
@@ -25,7 +28,7 @@ public class RobotInfantry extends Entity {
 		Color tempColor = batch.getColor();
 		batch.setColor(1, 1, 1, super.getAlpha());
 		batch.draw(ria.getKeyFrame(super.getTime()), super.getLocation().x + xOffset, super.getLocation().y + yOffset, 
-				TileMap.TILE_DIMENSION, TileMap.TILE_DIMENSION);
+				getWidth(), getHeight());
 		batch.setColor(tempColor);
 	}
 

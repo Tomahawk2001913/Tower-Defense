@@ -5,6 +5,7 @@ import java.util.List;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
+import com.tomahawk2001913.landscrapetoo.towerdefense.gamestates.Playing;
 import com.tomahawk2001913.landscrapetoo.towerdefense.map.TileMap;
 import com.tomahawk2001913.landscrapetoo.towerdefense.ui.HealthBar;
 
@@ -17,7 +18,7 @@ public class Entity {
 	
 	private List<Vector2> path;
 	
-	private int pathSpot;
+	private int pathSpot, worth;
 	
 	private float width, height, speed, health, damage, alpha, time, flickerTime;
 	
@@ -26,13 +27,14 @@ public class Entity {
 	// Constants
 	public static final float DEFAULT_ENTITY_DIMENSION = 30, FLICKER_INTERVAL = 0.1f, DAMAGE_ALPHA = 0.5f;
 	
-	public Entity(Vector2 location, float width, float height, float speed, float health, float damage, boolean hostile, TileMap tm, List<Vector2> path) {
+	public Entity(Vector2 location, float width, float height, float speed, float health, float damage, int worth, boolean hostile, TileMap tm, List<Vector2> path) {
 		this.location = location;
 		this.width = width;
 		this.height = height;
 		this.speed = speed;
 		this.health = health;
 		this.damage = damage;
+		this.worth = worth;
 		this.tm = tm;
 		
 		velocity = new Vector2();
@@ -113,6 +115,8 @@ public class Entity {
 	}
 	
 	public void die() {
+		Playing.addMoney(getWorth());
+		
 		tm.removeEntity(this);
 	}
 	
@@ -130,6 +134,10 @@ public class Entity {
 	
 	public float getDamage() {
 		return damage;
+	}
+	
+	public int getWorth() {
+		return worth;
 	}
 	
 	public Vector2 getLocation() {

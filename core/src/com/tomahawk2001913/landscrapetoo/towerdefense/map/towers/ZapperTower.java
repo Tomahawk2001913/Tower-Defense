@@ -7,13 +7,21 @@ import com.tomahawk2001913.landscrapetoo.towerdefense.map.entities.Entity;
 import com.tomahawk2001913.landscrapetoo.towerdefense.map.entities.ZapperBolt;
 
 public class ZapperTower extends Tower {
+	private float bulletDamage;
+	
 	public ZapperTower(Vector2 location, TileMap tm) {
 		super(location, Tower.DEFAULT_ROTATION, 80, 2, AssetHandler.zapperTower, AssetHandler.zapperTowerShooting, tm);
+		bulletDamage = 20;
 	}
 	
 	@Override
 	public void shoot(Entity target, float delta) {
-		getTileMap().addEntity(new ZapperBolt(getLocation().cpy(), 60, getRotation(), 1, 20, false, getTileMap(), AssetHandler.zapperBolt));
+		getTileMap().addEntity(new ZapperBolt(getLocation().cpy(), 60, getRotation(), 1, bulletDamage, false, getTileMap(), AssetHandler.zapperBolt));
+	}
+	
+	@Override
+	public float getDamage() {
+		return bulletDamage;
 	}
 	
 	@Override

@@ -93,6 +93,14 @@ public class TowerPanel extends Panel {
 			return tower.getPrice();
 		}
 		
+		public float getDamage() {
+			return tower.getDamage();
+		}
+		
+		public float getFireRate() {
+			return tower.getFireRate();
+		}
+		
 		public String getName() {
 			return tower.getName();
 		}
@@ -147,6 +155,8 @@ public class TowerPanel extends Panel {
 			if(tower.getTouched()) {
 				List<Text> info = new ArrayList<Text>();
 				info.add(new Text(tower.getName(), 18, 0, 0));
+				info.add(new Text("Dmg: " + tower.getDamage(), 16, 0, 0));
+				info.add(new Text("Spd: " + tower.getFireRate(), 16, 0, 0));
 				info.add(new Text("$" + tower.getPrice(), 16, 0, 0));
 				
 				playing.setInformationPanelInfo(info);

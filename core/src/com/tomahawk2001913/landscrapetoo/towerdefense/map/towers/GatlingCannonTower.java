@@ -20,6 +20,11 @@ public class GatlingCannonTower extends Tower {
 	}
 	
 	@Override
+	public float getDamage() {
+		return damage;
+	}
+	
+	@Override
 	public int getPrice() {
 		return 100;
 	}
