@@ -33,6 +33,7 @@ public class Text {
 	
 	public void setText(String text) {
 		content = text;
+		layout.setText(font, text);
 	}
 	
 	public Vector2 getLocation() {

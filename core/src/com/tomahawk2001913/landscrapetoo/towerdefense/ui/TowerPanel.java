@@ -25,7 +25,6 @@ public class TowerPanel extends Panel {
 		private Rectangle bounds;
 		
 		private float xTouchOffset, yTouchOffset;
-		private int price;
 		
 		private boolean touched, place;
 		
