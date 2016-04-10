@@ -156,10 +156,6 @@ public abstract class Tower implements TopTile {
 		return rotation;
 	}
 	
-	public float getFireRate() {
-		return fireRate;
-	}
-	
 	public Vector2 getLocation() {
 		return location;
 	}
@@ -169,12 +165,6 @@ public abstract class Tower implements TopTile {
 	}
 	
 	public abstract void shoot(Entity target, float delta);
-	
-	public abstract float getDamage();
-	
-	public abstract int getPrice();
-	
-	public abstract String getName();
 	
 	public abstract Tower copy();
 }
