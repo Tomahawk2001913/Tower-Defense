@@ -167,14 +167,16 @@ public class TileMap {
 				}
 			}
 			
-			if(use.contains(closest) && use.contains(current) && use.size() > 2) {
-				closed.add(closest);
-				
-				if(use.size() > 3) {
+			if(use.contains(closest) && use.contains(current)) {
+				if(use.size() > 2) {
 					closed.add(use.get(use.size() - 1));
 					use.remove(use.get(use.size() - 1));
 				}
-				use.remove(use.indexOf(closest));
+				
+				if(use.size() > 1) {
+					closed.add(closest);
+					use.remove(use.indexOf(closest));
+				}
 			} else use.add(closest);
 		}
 		
