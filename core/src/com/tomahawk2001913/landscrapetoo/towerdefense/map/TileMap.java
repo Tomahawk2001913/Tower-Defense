@@ -1,6 +1,7 @@
 package com.tomahawk2001913.landscrapetoo.towerdefense.map;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import com.badlogic.gdx.Gdx;
@@ -117,7 +118,7 @@ public class TileMap {
 		}
 	}
 	
-	public List<Vector2> findPath(Vector2 start, Vector2 finish) {
+	public List<Vector2> oldPathFinding(Vector2 start, Vector2 finish) {
 		List<Vector2> use = new ArrayList<Vector2>();
 		List<Vector2> closed = new ArrayList<Vector2>();
 		
@@ -167,15 +168,16 @@ public class TileMap {
 				}
 			}
 			
-			if(use.contains(closest) && use.contains(current)) {
-				if(use.size() > 2) {
+			// Attempt to prevent an infinite loop.
+			if(use.contains(closest)) {
+				if(use.size() > 1) {
 					closed.add(use.get(use.size() - 1));
 					use.remove(use.get(use.size() - 1));
-				}
-				
-				if(use.size() > 1) {
-					closed.add(closest);
-					use.remove(use.indexOf(closest));
+					
+					if(use.size() > 2) {
+						closed.add(closest);
+						use.remove(use.indexOf(closest));
+					}
 				}
 			} else use.add(closest);
 		}
@@ -185,6 +187,85 @@ public class TileMap {
 		}
 		
 		return use;
+	}
+	
+	public List<Vector2> findPath(Vector2 start, Vector2 end) {
+		List<Node> open = new ArrayList<Node>();
+		List<Node> closed = new ArrayList<Node>();
+		
+		Node findPath = null;
+		
+		open.add(new Node(start, null, end));
+		
+		while(!open.isEmpty()) {
+			Node current = null;
+			
+			for(Node check : open) {
+				if(current == null || check.getFCost() < current.getFCost()) current = check;
+			}
+			
+			open.remove(current);
+			if(listContainsNode(closed, current)) System.out.println("Uh oh.");
+			closed.add(current);
+			
+			if(current.getLocation().equals(end)) {
+				System.out.println("found end");
+				findPath = current;
+				break;
+			}
+			
+			for(int x = -1; x < 2; x++) {
+				for(int y = -1; y < 2; y++) {
+					if(x == 0 && y == 0) continue;
+					
+					Node check = new Node(current.getLocation().cpy().add(x, y), current, end);
+					
+					if(!isTraversable((int) (check.getLocation().x), (int) (check.getLocation().y)) || listContainsNode(closed, check)) 
+						continue;
+					
+					if(!listContainsNode(open, check)) {
+						open.add(check);
+					} else {
+						Node tempNode = findNode(open, check);
+						
+						if(check.getGCost() < tempNode.getGCost()) {
+							open.remove(tempNode);
+							open.add(check);
+						}
+					}
+				}
+			}
+			
+			// Avoid NullPointerException?
+			findPath = current;
+		}
+		
+		List<Vector2> path = new ArrayList<Vector2>();
+		
+		while(findPath.getParent() != null) {
+			path.add(findPath.getLocation().scl(TILE_DIMENSION));
+			findPath = findPath.getParent();
+		}
+		
+		Collections.reverse(path);
+		
+		return path;
+	}
+	
+	public boolean listContainsNode(List<Node> list, Node check) {
+		for(Node node : list) {
+			if(node.getLocation().equals(check.getLocation())) return true;
+		}
+		
+		return false;
+	}
+	
+	public Node findNode(List<Node> list, Node find) {
+		for(Node node : list) {
+			if(node.getLocation().equals(find.getLocation())) return node;
+		}
+		
+		return null;
 	}
 	
 	public boolean touchDown(float x, float y) {
@@ -223,7 +304,7 @@ public class TileMap {
 		return false;
 	}
 	
-	public double getDistance(Vector2 start, Vector2 finish) {
+	public static double getDistance(Vector2 start, Vector2 finish) {
 		return Math.sqrt(Math.pow(start.x - finish.x, 2) + Math.pow(start.y - finish.y, 2));
 	}
 	
@@ -275,6 +356,10 @@ public class TileMap {
 		} catch(ArrayIndexOutOfBoundsException e) {
 			return null;
 		}
+	}
+	
+	public boolean isTraversable(int x, int y) {
+		return getTile(x, y) != null && !getTile(x, y).isSolid() && (getTopTile(x, y) == null || !getTopTile(x, y).isSolid());
 	}
 	
 	public Base getBase() {
