@@ -7,7 +7,7 @@ import com.tomahawk2001913.landscrapetoo.towerdefense.ui.Text;
 import com.tomahawk2001913.landscrapetoo.towerdefense.ui.TextPanel;
 
 public enum LaserCannonUpgrades implements TowerUpgrades {
-	ORIGINAL(100, 0.5f, 500, "No upgrades for this beast of a tower!");
+	ORIGINAL(100, 0.5f, 600, "No upgrades for this beast of a tower!");
 	
 	private float damage, fireRate;
 	private int price;
