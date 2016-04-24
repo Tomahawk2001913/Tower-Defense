@@ -35,7 +35,7 @@ public enum GatlingCannonUpgrades implements TowerUpgrades {
 	}
 	
 	@Override
-	public float getPrice() {
+	public int getPrice() {
 		return price;
 	}
 	

@@ -10,6 +10,6 @@ public class NextWaveButton extends Button {
 	
 	@Override
 	public void action() {
-		TileMap.nextWave();
+		if(!TileMap.isWaveInProgress()) TileMap.nextWave();
 	}
 }

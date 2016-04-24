@@ -167,6 +167,10 @@ public abstract class Tower implements TopTile {
 		this.fireRate = fireRate;
 	}
 	
+	public TowerUpgrades getUpgrade() {
+		return upgrade;
+	}
+	
 	public TextPanel getInformation() {
 		return upgrade.getInformation();
 	}
@@ -199,6 +203,8 @@ public abstract class Tower implements TopTile {
 	}
 	
 	public abstract void shoot(Entity target, float delta);
+	
+	public abstract void upgrade();
 	
 	public abstract float getDamage();
 	

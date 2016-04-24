@@ -30,6 +30,8 @@ public abstract class Bullet extends Entity {
 	public void update(float delta) {
 		super.update(delta);
 		
+		if(getTime() > 10) die();
+		
 		for(Entity entity : getTileMap().getEntities()) {
 			if(getBounds().overlaps(entity.getBounds()) && !(entity instanceof Bullet)) {
 				hit(entity);

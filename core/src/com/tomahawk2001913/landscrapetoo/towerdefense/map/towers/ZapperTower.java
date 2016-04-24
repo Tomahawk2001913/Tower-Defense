@@ -8,15 +8,25 @@ import com.tomahawk2001913.landscrapetoo.towerdefense.map.entities.ZapperBolt;
 
 public class ZapperTower extends Tower {
 	private float bulletDamage;
+	private int robots;
 	
 	public ZapperTower(Vector2 location, TileMap tm) {
 		super(location, Tower.DEFAULT_ROTATION, 80, 2, AssetHandler.zapperTower, AssetHandler.zapperTowerShooting, ZapperTowerUpgrades.HIGHPOWER, tm);
+		super.setFireRate(ZapperTowerUpgrades.ORIGINAL.getFireRate());
 		bulletDamage = ZapperTowerUpgrades.ORIGINAL.getDamage();
+		robots = ZapperTowerUpgrades.ORIGINAL.getRobotsAtOnce();
 	}
 	
 	@Override
 	public void shoot(Entity target, float delta) {
-		getTileMap().addEntity(new ZapperBolt(getLocation().cpy(), 60, getRotation(), 1, bulletDamage, getTileMap(), AssetHandler.zapperBolt));
+		getTileMap().addEntity(new ZapperBolt(getLocation().cpy(), 60, getRotation(), 1, bulletDamage, robots, getTileMap(), AssetHandler.zapperBolt));
+	}
+	
+	@Override
+	public void upgrade() {
+		setFireRate(getUpgrade().getFireRate());
+		bulletDamage = getUpgrade().getDamage();
+		robots = ((ZapperTowerUpgrades) getUpgrade()).getRobotsAtOnce();
 	}
 	
 	@Override

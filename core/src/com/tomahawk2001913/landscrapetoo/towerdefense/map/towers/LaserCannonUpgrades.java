@@ -6,19 +6,17 @@ import com.badlogic.gdx.math.Vector2;
 import com.tomahawk2001913.landscrapetoo.towerdefense.ui.Text;
 import com.tomahawk2001913.landscrapetoo.towerdefense.ui.TextPanel;
 
-public enum ZapperTowerUpgrades implements TowerUpgrades {
-	ORIGINAL(20, 2, 0, 1, "Original... Why are you seeing this?"), 
-	HIGHPOWER(35, 2, 200, 10, "Zap 10 robots at once!");
+public enum LaserCannonUpgrades implements TowerUpgrades {
+	ORIGINAL(100, 0.5f, 500, "No upgrades for this beast of a tower!");
 	
 	private float damage, fireRate;
-	private int price, robots;
+	private int price;
 	private TextPanel information;
 	
-	private ZapperTowerUpgrades(float damage, float fireRate, int price, int robots, String name) {
+	private LaserCannonUpgrades(float damage, float fireRate, int price, String name) {
 		this.damage = damage;
 		this.fireRate = fireRate;
 		this.price = price;
-		this.robots = robots;
 		
 		List<Text> texts = Tower.towerInformationBuilder(name, damage, fireRate, price);
 		
@@ -38,10 +36,6 @@ public enum ZapperTowerUpgrades implements TowerUpgrades {
 	@Override
 	public int getPrice() {
 		return price;
-	}
-	
-	public int getRobotsAtOnce() {
-		return robots;
 	}
 	
 	@Override

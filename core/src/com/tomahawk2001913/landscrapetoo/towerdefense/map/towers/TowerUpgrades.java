@@ -5,6 +5,6 @@ import com.tomahawk2001913.landscrapetoo.towerdefense.ui.TextPanel;
 public interface TowerUpgrades {
 	public float getDamage();
 	public float getFireRate();
-	public float getPrice();
+	public int getPrice();
 	public TextPanel getInformation();
 }

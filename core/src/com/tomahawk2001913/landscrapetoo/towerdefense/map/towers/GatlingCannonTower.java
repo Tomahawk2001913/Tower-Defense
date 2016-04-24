@@ -11,13 +11,19 @@ public class GatlingCannonTower extends Tower {
 	public GatlingCannonTower(Vector2 location, TileMap tm) {
 		super(location, Tower.DEFAULT_ROTATION, 60, 0.01f, AssetHandler.gatlingCannonTower, AssetHandler.gatlingCannonTowerShooting, GatlingCannonUpgrades.LEADBULLETS, tm);
 		
-		//super.setFireRate(GatlingCannonUpgrades.ORIGINAL.getFireRate());
-		//damage = GatlingCannonUpgrades.ORIGINAL.getDamage();
+		super.setFireRate(GatlingCannonUpgrades.ORIGINAL.getFireRate());
+		damage = GatlingCannonUpgrades.ORIGINAL.getDamage();
 	}
 	
 	@Override
 	public void shoot(Entity target, float delta) {
 		target.damage(damage * delta);
+	}
+	
+	@Override
+	public void upgrade() {
+		setFireRate(getUpgrade().getFireRate());
+		damage = getUpgrade().getDamage();
 	}
 	
 	@Override
