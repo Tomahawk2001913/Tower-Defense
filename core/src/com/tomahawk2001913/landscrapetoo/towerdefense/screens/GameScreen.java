@@ -1,5 +1,7 @@
 package com.tomahawk2001913.landscrapetoo.towerdefense.screens;
 
+import java.util.Random;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
@@ -10,6 +12,9 @@ import com.tomahawk2001913.landscrapetoo.towerdefense.gamestates.GameStates;
 
 public class GameScreen implements Screen {
 	private GameStateManager gsm;
+	
+	// Random
+	private static Random random;
 	
 	// Constants
 	public static final float optimalGameHeight = 350.0f, MAX_DELTA = 0.1f;
@@ -23,6 +28,8 @@ public class GameScreen implements Screen {
 	public GameScreen() {
 		Gdx.app.log("GameScreen", "Created.");
 		gsm = new GameStateManager(GameStates.MAINMENU);
+		
+		random = new Random();
 	}
 	
 	@Override
@@ -62,6 +69,10 @@ public class GameScreen implements Screen {
 	
 	public void changeGameState(GameStates gs) {
 		gsm.changeGameState(gs);
+	}
+	
+	public static Random getRandom() {
+		return random;
 	}
 
 	@Override

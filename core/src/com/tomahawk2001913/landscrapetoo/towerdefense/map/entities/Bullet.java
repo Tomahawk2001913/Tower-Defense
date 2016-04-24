@@ -11,8 +11,8 @@ public abstract class Bullet extends Entity {
 	private float rotation;
 	private static float origin;
 	
-	public Bullet(Vector2 location, float speed, float rotation, float health, float damage, boolean hostile, TileMap tm, TextureRegion img) {
-		super(location, TileMap.TILE_DIMENSION, TileMap.TILE_DIMENSION, speed, 1, damage, 0, hostile, tm, null);
+	public Bullet(Vector2 location, float speed, float rotation, float health, float damage, TileMap tm, TextureRegion img) {
+		super(location, TileMap.TILE_DIMENSION, TileMap.TILE_DIMENSION, speed, 1, damage, 0, tm, null);
 		this.rotation = rotation;
 		origin = TileMap.TILE_DIMENSION / 2;
 		

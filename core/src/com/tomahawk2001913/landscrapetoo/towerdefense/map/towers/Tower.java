@@ -1,5 +1,6 @@
 package com.tomahawk2001913.landscrapetoo.towerdefense.map.towers;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.badlogic.gdx.graphics.g2d.Animation;
@@ -9,7 +10,10 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.tomahawk2001913.landscrapetoo.towerdefense.map.TileMap;
 import com.tomahawk2001913.landscrapetoo.towerdefense.map.TopTile;
+import com.tomahawk2001913.landscrapetoo.towerdefense.map.entities.Enemy;
 import com.tomahawk2001913.landscrapetoo.towerdefense.map.entities.Entity;
+import com.tomahawk2001913.landscrapetoo.towerdefense.ui.Text;
+import com.tomahawk2001913.landscrapetoo.towerdefense.ui.TextPanel;
 
 public abstract class Tower implements TopTile {
 	public enum AimModes {
@@ -30,16 +34,19 @@ public abstract class Tower implements TopTile {
 	
 	private static float originValue;
 	
+	private TowerUpgrades upgrade;
+	
 	// Constants
 	public static final float DEFAULT_ROTATION = 90.0f, FLICKER_FIRERATE = 0.1f;
 	
-	public Tower(Vector2 location, float rotation, float range, float fireRate, TextureRegion idle, TextureRegion shooting, TileMap tm) {
+	public Tower(Vector2 location, float rotation, float range, float fireRate, TextureRegion idle, TextureRegion shooting, TowerUpgrades upgrades, TileMap tm) {
 		this.location = location;
 		this.rotation = rotation;
 		this.range = range;
 		this.fireRate = fireRate;
 		idleTextureRegion = idle;
 		shootingTextureRegion = shooting;
+		this.upgrade = upgrades;
 		this.tm = tm;
 		
 		aimMode = AimModes.NEAREST;
@@ -87,7 +94,7 @@ public abstract class Tower implements TopTile {
 		
 		Entity check = null;
 		for(Entity entity : entities) {
-			if(!entity.isHostile()) continue;
+			if(!(entity instanceof Enemy)) continue;
 			
 			if(check == null) {
 				if(targetWithinRange(entity)) {
@@ -98,7 +105,7 @@ public abstract class Tower implements TopTile {
 			
 			switch(aimMode) {
 			case NEAREST:
-				if(tm.getDistance(check.getLocation(), location) > tm.getDistance(entity.getLocation(), location))
+				if(TileMap.getDistance(check.getLocation(), location) > TileMap.getDistance(entity.getLocation(), location))
 					check = entity;
 				break;
 			case FIRST:
@@ -131,7 +138,7 @@ public abstract class Tower implements TopTile {
 	}
 	
 	public boolean targetWithinRange(Entity entity) {
-		if(tm.getDistance(entity.getLocation(), location) <= range) return true;
+		if(TileMap.getDistance(entity.getLocation(), location) <= range) return true;
 		return false;
 	}
 	
@@ -152,6 +159,18 @@ public abstract class Tower implements TopTile {
 		this.aimMode = aimMode;
 	}
 	
+	public void setUpgrade(TowerUpgrades upgrade) {
+		this.upgrade = upgrade;
+	}
+	
+	public void setFireRate(float fireRate) {
+		this.fireRate = fireRate;
+	}
+	
+	public TextPanel getInformation() {
+		return upgrade.getInformation();
+	}
+	
 	public float getRotation() {
 		return rotation;
 	}
@@ -166,6 +185,17 @@ public abstract class Tower implements TopTile {
 	
 	public TileMap getTileMap() {
 		return tm;
+	}
+	
+	public static List<Text> towerInformationBuilder(String name, float damage, float fireRate, int price) {
+		List<Text> texts = new ArrayList<Text>();
+		
+		texts.add(new Text(name, 18, 0, 0));
+		texts.add(new Text("Dmg: " + damage, 16, 0, 0));
+		texts.add(new Text("Spd: " + fireRate, 16, 0, 0));
+		texts.add(new Text("$" + price, 16, 0, 0));
+		
+		return texts;
 	}
 	
 	public abstract void shoot(Entity target, float delta);

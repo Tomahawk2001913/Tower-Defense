@@ -36,6 +36,10 @@ public class Text {
 		layout.setText(font, text);
 	}
 	
+	public String getText() {
+		return content;
+	}
+	
 	public Vector2 getLocation() {
 		return location;
 	}

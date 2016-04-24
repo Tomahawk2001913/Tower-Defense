@@ -7,16 +7,17 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.tomahawk2001913.landscrapetoo.towerdefense.io.AssetHandler;
+import com.tomahawk2001913.landscrapetoo.towerdefense.map.Base;
 import com.tomahawk2001913.landscrapetoo.towerdefense.map.TileMap;
 
-public class RobotInfantry extends Entity {
+public class RobotInfantry extends Enemy {
 	private Animation ria;
 	
 	// Constants
 	public static final int DEFAULT_WORTH = 15;
 	
 	public RobotInfantry(Vector2 location, TileMap tm, List<Vector2> path) {
-		super(location, Entity.DEFAULT_ENTITY_DIMENSION, Entity.DEFAULT_ENTITY_DIMENSION, 20, 75, 10, DEFAULT_WORTH, true, tm, path);
+		super(location, Entity.DEFAULT_ENTITY_DIMENSION, Entity.DEFAULT_ENTITY_DIMENSION, 20, 75, 10, DEFAULT_WORTH, tm, path);
 		
 		ria = AssetHandler.robotInfantryAnimation;
 	}
@@ -35,5 +36,11 @@ public class RobotInfantry extends Entity {
 	@Override
 	public void update(float delta) {
 		super.update(delta);
+	}
+	
+	@Override
+	public void attackBase(Base base, float damage, float delta) {
+		base.damage(damage);
+		getTileMap().removeEntity(this);
 	}
 }

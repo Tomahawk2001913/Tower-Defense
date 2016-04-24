@@ -10,13 +10,13 @@ public class ZapperTower extends Tower {
 	private float bulletDamage;
 	
 	public ZapperTower(Vector2 location, TileMap tm) {
-		super(location, Tower.DEFAULT_ROTATION, 80, 2, AssetHandler.zapperTower, AssetHandler.zapperTowerShooting, tm);
-		bulletDamage = 20;
+		super(location, Tower.DEFAULT_ROTATION, 80, 2, AssetHandler.zapperTower, AssetHandler.zapperTowerShooting, ZapperTowerUpgrades.HIGHPOWER, tm);
+		bulletDamage = ZapperTowerUpgrades.ORIGINAL.getDamage();
 	}
 	
 	@Override
 	public void shoot(Entity target, float delta) {
-		getTileMap().addEntity(new ZapperBolt(getLocation().cpy(), 60, getRotation(), 1, bulletDamage, false, getTileMap(), AssetHandler.zapperBolt));
+		getTileMap().addEntity(new ZapperBolt(getLocation().cpy(), 60, getRotation(), 1, bulletDamage, getTileMap(), AssetHandler.zapperBolt));
 	}
 	
 	@Override

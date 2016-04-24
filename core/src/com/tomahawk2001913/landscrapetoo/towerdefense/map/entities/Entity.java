@@ -9,7 +9,7 @@ import com.tomahawk2001913.landscrapetoo.towerdefense.gamestates.Playing;
 import com.tomahawk2001913.landscrapetoo.towerdefense.map.TileMap;
 import com.tomahawk2001913.landscrapetoo.towerdefense.ui.HealthBar;
 
-public class Entity {
+public abstract class Entity {
 	private Vector2 location;
 	private Vector2 velocity;
 	private Rectangle bounds;
@@ -22,12 +22,10 @@ public class Entity {
 	
 	private float width, height, speed, health, damage, alpha, time, flickerTime;
 	
-	private boolean isHostile;
-	
 	// Constants
 	public static final float DEFAULT_ENTITY_DIMENSION = 30, FLICKER_INTERVAL = 0.1f, DAMAGE_ALPHA = 0.5f;
 	
-	public Entity(Vector2 location, float width, float height, float speed, float health, float damage, int worth, boolean hostile, TileMap tm, List<Vector2> path) {
+	public Entity(Vector2 location, float width, float height, float speed, float health, float damage, int worth, TileMap tm, List<Vector2> path) {
 		this.location = location;
 		this.width = width;
 		this.height = height;
@@ -46,11 +44,9 @@ public class Entity {
 		time = 0;
 		flickerTime = -DAMAGE_ALPHA;
 		
-		this.isHostile = hostile;
-		
 		hb = new HealthBar(this.health);
 		
-		pathSpot = 1;
+		pathSpot = 0;
 	}
 	
 	public void render(SpriteBatch batch, float xOffset, float yOffset) {
@@ -72,7 +68,7 @@ public class Entity {
 			velocity.x = speed * Math.signum(path.get(pathSpot).x - location.x);
 			velocity.y = speed * Math.signum(path.get(pathSpot).y - location.y);
 			
-			if(tm.getDistance(path.get(pathSpot), location) < 0.4f) {
+			if(TileMap.getDistance(path.get(pathSpot), location) < 0.4f) {
 				pathSpot++;
 				
 				// Finishes path.
@@ -96,10 +92,6 @@ public class Entity {
 		location.add(velocity.x * delta, velocity.y * delta);
 		
 		bounds.set(location.x, location.y, TileMap.TILE_DIMENSION, TileMap.TILE_DIMENSION);
-		
-		if(isHostile && bounds.overlaps(tm.getBase().getBounds())) {
-			tm.getBase().damage(damage * delta);
-		}
 	}
 	
 	public void setPath(List<Vector2> path) {
@@ -118,10 +110,6 @@ public class Entity {
 		Playing.addMoney(getWorth());
 		
 		tm.removeEntity(this);
-	}
-	
-	public boolean isHostile() {
-		return isHostile;
 	}
 	
 	public float getHealth() {

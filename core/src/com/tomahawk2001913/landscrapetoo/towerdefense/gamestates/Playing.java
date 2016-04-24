@@ -11,7 +11,10 @@ import com.tomahawk2001913.landscrapetoo.towerdefense.io.GameStateInputHandler;
 import com.tomahawk2001913.landscrapetoo.towerdefense.map.TileMap;
 import com.tomahawk2001913.landscrapetoo.towerdefense.map.Tiles;
 import com.tomahawk2001913.landscrapetoo.towerdefense.screens.GameScreen;
+import com.tomahawk2001913.landscrapetoo.towerdefense.ui.ButtonPanel;
+import com.tomahawk2001913.landscrapetoo.towerdefense.ui.NextWaveButton;
 import com.tomahawk2001913.landscrapetoo.towerdefense.ui.Panel;
+import com.tomahawk2001913.landscrapetoo.towerdefense.ui.PanelCluster;
 import com.tomahawk2001913.landscrapetoo.towerdefense.ui.PanelHandler;
 import com.tomahawk2001913.landscrapetoo.towerdefense.ui.Text;
 import com.tomahawk2001913.landscrapetoo.towerdefense.ui.TextPanel;
@@ -23,8 +26,8 @@ public class Playing extends GameState {
 	private GameStateInputHandler gsih;
 	private PanelHandler ph;
 	
-	private static TextPanel moneyPanel;
-	public static TextPanel informationPanel;
+	private static PanelCluster optionsPanel;
+	public static PanelCluster informationPanel;
 	
 	public static int money;
 	
@@ -47,9 +50,13 @@ public class Playing extends GameState {
 		
 		texts.add(new Text("$" + money, 26, 0, 0));
 		
-		moneyPanel = new TextPanel(new Vector2(0, 0), 0, 0, true, 4, 10, texts);
+		TextPanel moneyPanel = new TextPanel(new Vector2(0, 0), 0, 0, false, 4, 10, texts);
+		ButtonPanel nextWave = new ButtonPanel(new Vector2(0, 0), false, new NextWaveButton(0, 0, TileMap.TILE_DIMENSION * 2, TileMap.TILE_DIMENSION * 2, true, AssetHandler.grassTile));
 		
-		informationPanel = new TextPanel(new Vector2(0, 0), 20, 10, true, 4, 10, new ArrayList<Text>() {{ add(new Text("Good luck!", 16, 0, 0)); }});
+		optionsPanel = new PanelCluster(new Vector2(0, 0), new Panel[] {moneyPanel, nextWave});
+		
+		TextPanel info = new TextPanel(new Vector2(0, 0), 20, 10, false, 4, 10, new ArrayList<Text>() {{ add(new Text("Good luck!", 16, 0, 0)); }});
+		informationPanel = new PanelCluster(new Vector2(0, 0), new Panel[] {info});
 		informationPanel.setLocation(0, GameScreen.gameHeight - informationPanel.getHeight());
 		
 		List<Tiles> tiles = new ArrayList<Tiles>();
@@ -59,7 +66,7 @@ public class Playing extends GameState {
 		ph = new PanelHandler();
 		ph.addPanel(new TowerPanel(new Vector2(GameScreen.gameWidth - TowerPanel.WIDTH, 0), this.tm, this, true));
 		ph.addPanel(new TilePanel(new Vector2(GameScreen.gameWidth - TowerPanel.WIDTH, TowerPanel.HEIGHT), tiles, this.tm, true));
-		ph.addPanel(moneyPanel);
+		ph.addPanel(optionsPanel);
 		ph.addPanel(informationPanel);
 	}
 	
@@ -113,13 +120,12 @@ public class Playing extends GameState {
 	}
 	
 	public void setInformationPanelInfo(List<Text> info) {
-		float tempY = informationPanel.getLocation().y + informationPanel.getHeight();
-		informationPanel.setTexts(info);
-		if(!informationPanel.hasMoved()) informationPanel.setLocation(informationPanel.getLocation().x, tempY - informationPanel.getHeight());
+		TextPanel tp = new TextPanel(new Vector2(0, 0), 0, 0, false, 4, 10, info);
+		informationPanel.setPanels(new Panel[] {tp});
 	}
 	
 	public static void moneyChanged() {
-		moneyPanel.setText("$" + money);
+		((TextPanel) optionsPanel.getPanels()[0]).setText("$" + money);
 	}
 	
 	public static boolean hasMoney(int money) {

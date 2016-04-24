@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.tomahawk2001913.landscrapetoo.towerdefense.io.AssetHandler;
+import com.tomahawk2001913.landscrapetoo.towerdefense.screens.GameScreen;
 
 public abstract class Panel {
 	private TextureRegion bg;
@@ -51,7 +52,9 @@ public abstract class Panel {
 		bounds.set(location.x, location.y, width , height);
 		
 		if(location.x < 0) setLocation(0, location.y);
+		else if(location.x + width > GameScreen.gameWidth) setLocation(GameScreen.gameWidth - width, location.y);
 		if(location.y < 0) setLocation(location.x, 0);
+		else if(location.y + height > GameScreen.gameHeight) setLocation(location.x, GameScreen.gameHeight - height);
 	}
 	
 	public boolean touchDown(float x, float y) {

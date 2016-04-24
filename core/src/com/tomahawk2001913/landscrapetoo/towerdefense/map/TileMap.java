@@ -8,13 +8,20 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
+import com.tomahawk2001913.landscrapetoo.towerdefense.gamestates.Playing;
 import com.tomahawk2001913.landscrapetoo.towerdefense.map.entities.Entity;
 import com.tomahawk2001913.landscrapetoo.towerdefense.map.towers.Tower;
+import com.tomahawk2001913.landscrapetoo.towerdefense.ui.ButtonPanel;
+import com.tomahawk2001913.landscrapetoo.towerdefense.ui.Panel;
+import com.tomahawk2001913.landscrapetoo.towerdefense.ui.Text;
+import com.tomahawk2001913.landscrapetoo.towerdefense.ui.TextPanel;
+import com.tomahawk2001913.landscrapetoo.towerdefense.ui.UpgradeTowerButton;
 
 public class TileMap {
 	private Tiles tiles[][];
 	private TopTile topTiles[][];
 	private List<Entity> entities, deadEntities;
+	private static List<RobotSpawner> spawners;
 	private Base base;
 	
 	private Rectangle bounds;
@@ -31,6 +38,7 @@ public class TileMap {
 		topTiles = new TopTile[width][height];
 		entities = new ArrayList<Entity>();
 		deadEntities = new ArrayList<Entity>();
+		spawners = new ArrayList<RobotSpawner>();
 		
 		for(int x = 0; x < tiles.length; x++) {
 			for(int y = 0; y < tiles[0].length; y++) {
@@ -47,6 +55,7 @@ public class TileMap {
 		this.topTiles = topTiles;
 		entities = new ArrayList<Entity>();
 		deadEntities = new ArrayList<Entity>();
+		spawners = new ArrayList<RobotSpawner>();
 		
 		for(int x = 0; x < topTiles.length; x++) {
 			for(int y = 0; y < topTiles[0].length; y++) {
@@ -56,8 +65,11 @@ public class TileMap {
 					
 					topTiles[x][y] = null;
 				} else if(getTopTile(x, y) instanceof RobotSpawner) {
+					spawners.add(((RobotSpawner) getTopTile(x, y)));
 					((RobotSpawner) getTopTile(x, y)).setLocation(x * TileMap.TILE_DIMENSION, y * TileMap.TILE_DIMENSION);
 					((RobotSpawner) getTopTile(x, y)).setTileMap(this);
+					
+					topTiles[x][y] = null;
 				}
 			}
 		}
@@ -74,10 +86,14 @@ public class TileMap {
 				float figX = x * TILE_DIMENSION + xOffset, figY = y * TILE_DIMENSION + yOffset;
 				batch.draw(tiles[x][y].getTextureRegion(), figX, figY, TILE_DIMENSION, TILE_DIMENSION);
 				if(topTiles[x][y] != null) {
-					if(topTiles[x][y] instanceof Tower || topTiles[x][y] instanceof RobotSpawner) topTiles[x][y].render(batch, xOffset, yOffset);
+					if(topTiles[x][y] instanceof Tower) topTiles[x][y].render(batch, xOffset, yOffset);
 					else topTiles[x][y].render(batch, figX, figY);
 				}
 			}
+		}
+		
+		for(RobotSpawner spawner : spawners) {
+			spawner.render(batch, xOffset, yOffset);
 		}
 		
 		// Render the base
@@ -105,6 +121,10 @@ public class TileMap {
 			}
 		}
 		
+		for(RobotSpawner spawner : spawners) {
+			spawner.update(delta);
+		}
+		
 		base.update(delta);
 		
 		for(Entity entity : entities) {
@@ -116,6 +136,20 @@ public class TileMap {
 		if(base.getHealth() <= 0) {
 			gameOver = true;
 		}
+	}
+	
+	public static void nextWave() {
+		for(RobotSpawner spawner : spawners) {
+			spawner.startWave();
+		}
+	}
+	
+	public static boolean isWaveInProgress() {
+		for(RobotSpawner spawner : spawners) {
+			if(spawner.getWave() != null) return true;
+		}
+		
+		return false;
 	}
 	
 	public List<Vector2> findPath(Vector2 start, Vector2 end) {
@@ -138,7 +172,6 @@ public class TileMap {
 			closed.add(current);
 			
 			if(current.getLocation().equals(end)) {
-				System.out.println("found end");
 				findPath = current;
 				break;
 			}
@@ -198,6 +231,26 @@ public class TileMap {
 	}
 	
 	public boolean touchDown(float x, float y) {
+		int tileX = (int) ((x - xOffset) / TILE_DIMENSION), tileY = (int) ((y - yOffset) / TILE_DIMENSION);
+		
+		if(getTopTile(tileX, tileY) instanceof Tower) {
+			Tower tower = ((Tower) getTopTile(tileX, tileY));
+			
+			List<Text> texts = new ArrayList<Text>();
+			
+			texts.add(new Text(tower.getName(), 18, 0, 0));
+			texts.add(new Text("Dmg: " + tower.getDamage(), 16, 0, 0));
+			texts.add(new Text("Spd: " + tower.getFireRate(), 16, 0, 0));
+			texts.add(new Text("$" + tower.getPrice(), 16, 0, 0));
+			
+			TextPanel tp = tower.getInformation();
+			ButtonPanel bp = new ButtonPanel(new Vector2(0, 0), false, new UpgradeTowerButton(0, 0, 20, 20, true, tower));
+			
+			Panel[] panels = {tp, bp};
+			
+			Playing.informationPanel.setPanels(panels);
+		}
+		
 		if(bounds.contains(x, y)) {
 			touched = true;
 			
@@ -257,14 +310,30 @@ public class TileMap {
 		return entities;
 	}
 	
+	public List<RobotSpawner> getSpawners() {
+		return spawners;
+	}
+	
+	public void refreshSpawnersPaths() {
+		for(RobotSpawner spawner : spawners) {
+			spawner.refreshPath();
+		}
+	}
+	
 	public void replaceTile(int x, int y, Tiles tile) {
-		if(x < tiles.length && x > -1 && y < tiles[0].length && y > -1)
+		if(x < tiles.length && x > -1 && y < tiles[0].length && y > -1) {
 			tiles[x][y] = tile;
+			
+			refreshSpawnersPaths();
+		}
 	}
 	
 	public boolean placeTopTile(int x, int y, TopTile topTile) {
 		if(x < topTiles.length  && x > -1 && y < topTiles[0].length && y > -1) {
 			topTiles[x][y] = topTile;
+			
+			refreshSpawnersPaths();
+			
 			return true;
 		}
 		

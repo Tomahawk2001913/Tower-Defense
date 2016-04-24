@@ -9,9 +9,10 @@ public class GatlingCannonTower extends Tower {
 	private float damage;
 	
 	public GatlingCannonTower(Vector2 location, TileMap tm) {
-		super(location, Tower.DEFAULT_ROTATION, 60, 0.01f, AssetHandler.gatlingCannonTower, AssetHandler.gatlingCannonTowerShooting, tm);
+		super(location, Tower.DEFAULT_ROTATION, 60, 0.01f, AssetHandler.gatlingCannonTower, AssetHandler.gatlingCannonTowerShooting, GatlingCannonUpgrades.LEADBULLETS, tm);
 		
-		damage = 20;
+		//super.setFireRate(GatlingCannonUpgrades.ORIGINAL.getFireRate());
+		//damage = GatlingCannonUpgrades.ORIGINAL.getDamage();
 	}
 	
 	@Override

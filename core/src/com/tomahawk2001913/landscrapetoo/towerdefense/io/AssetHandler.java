@@ -166,7 +166,7 @@ public class AssetHandler {
 						switch(id) {
 						case 0: {
 							tileColumn.add(Tiles.STONE);
-							topColumn.add(new RobotSpawner(new Vector2(0, 0), 2));
+							topColumn.add(new RobotSpawner(new Vector2(0, 0)));
 							break;
 						}
 						case 1:  {
